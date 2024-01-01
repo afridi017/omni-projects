@@ -16,8 +16,8 @@ New-Item -ItemType Directory -Force -Path $full | Out-Null
 Set-Location $root
 
 if (-not (Test-Path $logFile)) {
-  "# Daily Dev Log"
-} | Set-Content -Encoding utf8 $logFile
+  Set-Content -Path $logFile -Value "# Daily Dev Log" -Encoding utf8
+}
 
 $startDate = [datetime]::ParseExact($Start, "yyyy-MM-dd", $null)
 $endDate   = [datetime]::ParseExact($End,   "yyyy-MM-dd", $null)
