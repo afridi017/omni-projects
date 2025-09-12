@@ -7,16 +7,32 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$root     = "C:\CODEX"
-$folder   = "daily-dev-log"
-$full     = Join-Path $root $folder
-$logFile  = Join-Path $full "log.md"
+$root    = "C:\CODEX"
+$folder  = "daily-dev-log"
+$full    = Join-Path $root $folder
+$logFile = Join-Path $full "log.md"
 
 New-Item -ItemType Directory -Force -Path $full | Out-Null
 Set-Location $root
 
 if (-not (Test-Path $logFile)) {
   Set-Content -Path $logFile -Value "# Daily Dev Log" -Encoding utf8
+}
+
+# Append with retry: Windows AV / indexer sometimes briefly locks the file.
+function Add-LogLine {
+  param([string]$Line)
+  for ($try = 0; $try -lt 40; $try++) {
+    try {
+      $sw = [System.IO.File]::AppendText($logFile)
+      $sw.WriteLine($Line)
+      $sw.Dispose()
+      return
+    } catch {
+      Start-Sleep -Milliseconds 250
+    }
+  }
+  throw ("Could not append to {0}" -f $logFile)
 }
 
 $startDate = [datetime]::ParseExact($Start, "yyyy-MM-dd", $null)
@@ -32,10 +48,10 @@ for ($d = $startDate; $d -le $endDate; $d = $d.AddDays(1)) {
           -Hour ($rand.Next(8, 23)) -Minute ($rand.Next(0, 60)) -Second ($rand.Next(0, 60))
     $iso = $dt.ToString("yyyy-MM-ddTHH:mm:ss") + "+05:00"
 
-    $env:GIT_AUTHOR_DATE   = $iso
+    $env:GIT_AUTHOR_DATE    = $iso
     $env:GIT_COMMITTER_DATE = $iso
 
-    Add-Content -Path $logFile -Value ("- {0}  work item #{1}" -f $iso, ($total + 1)) -Encoding utf8
+    Add-LogLine ("- {0}  work item #{1}" -f $iso, ($total + 1))
     git commit -q -a -m ("chore: daily log {0}" -f $dt.ToString("yyyy-MM-dd HH:mm"))
     $total++
   }
@@ -47,6 +63,6 @@ for ($d = $startDate; $d -le $endDate; $d = $d.AddDays(1)) {
 Write-Host ("Generated {0} commits for {1}..{2}" -f $total, $Start, $End)
 
 if (-not $NoPush) {
-  git push -q origin main
+  git push origin main
   Write-Host "Pushed to origin/main"
 }
