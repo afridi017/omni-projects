@@ -1,0 +1,9 @@
+{
+  "appId": "pk.khyberverse.superapp",
+  "appName": "KhyberVerse",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}

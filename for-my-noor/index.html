@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#0b0f19" />
+    <meta name="description" content="For My Noor — Same Moon, Same Sky" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>For My Noor — Same Moon, Same Sky</title>
+    <style>
+      :root {
+        --night: #0b0f19;
+        --ink: #f4efe4;
+        --soft: #c6c8d0;
+        --line: rgba(255, 255, 255, 0.12);
+        --gold: #ddc187;
+        --blue: #94b8d7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--night);
+        color: var(--ink);
+        font-family: "DM Sans", sans-serif;
+      }
+      body {
+        overflow: hidden;
+      }
+      #stars {
+        position: fixed;
+        inset: 0;
+        z-index: -3;
+      }
+      .map-line {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        opacity: 0.17;
+        pointer-events: none;
+        background:
+          linear-gradient(
+            157deg,
+            transparent 48%,
+            rgba(160, 192, 211, 0.28) 48.2%,
+            transparent 48.5%
+          ),
+          linear-gradient(
+            18deg,
+            transparent 56%,
+            rgba(160, 192, 211, 0.2) 56.2%,
+            transparent 56.5%
+          );
+        mask-image: radial-gradient(ellipse at center, #000, transparent 72%);
+      }
+      .moon {
+        position: fixed;
+        right: 9vw;
+        top: 5vh;
+        width: clamp(105px, 14vw, 185px);
+        height: clamp(105px, 14vw, 185px);
+        border-radius: 50%;
+        z-index: -1;
+        background: radial-gradient(
+          circle at 34% 29%,
+          #fffdf0,
+          #e8e4cd 39%,
+          #b6c3ca 100%
+        );
+        box-shadow:
+          0 0 35px rgba(231, 231, 202, 0.32),
+          0 0 120px rgba(126, 161, 188, 0.13);
+      }
+      .moon:after {
+        content: "";
+        position: absolute;
+        inset: 18%;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 28% 36%, #aab5b8 0 5%, transparent 6%),
+          radial-gradient(circle at 68% 62%, #aab5b8 0 8%, transparent 9%),
+          radial-gradient(circle at 58% 27%, #c0c6c1 0 5%, transparent 6%);
+        opacity: 0.23;
+      }
+      .app {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 28px;
+      }
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.08);
+        z-index: 30;
+      }
+      .progress i {
+        display: block;
+        height: 100%;
+        width: 2.85%;
+        background: linear-gradient(90deg, var(--gold), var(--blue));
+        box-shadow: 0 0 14px #ddc18788;
+        transition: width 0.5s ease;
+      }
+      .top-meta {
+        position: fixed;
+        top: 20px;
+        left: 28px;
+        right: 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #8795a6;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        z-index: 10;
+      }
+      .top-meta b {
+        color: var(--soft);
+        font-weight: 500;
+      }
+      .control {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        color: #aeb9c4;
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-size: 10px;
+        cursor: pointer;
+      }
+      .diary {
+        width: min(800px, 100%);
+        min-height: 490px;
+        display: grid;
+        align-items: center;
+        position: relative;
+        padding: clamp(30px, 7vw, 78px);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: linear-gradient(
+          135deg,
+          rgba(28, 35, 51, 0.66),
+          rgba(12, 16, 27, 0.72)
+        );
+        backdrop-filter: blur(18px);
+        box-shadow: 0 25px 100px rgba(0, 0, 0, 0.28);
+        overflow: hidden;
+      }
+      .diary:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          130deg,
+          rgba(255, 255, 255, 0.08),
+          transparent 25%,
+          transparent 72%,
+          rgba(148, 184, 215, 0.06)
+        );
+      }
+      .chapter {
+        position: relative;
+        color: var(--gold);
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+      }
+      .slide-number {
+        position: absolute;
+        top: 27px;
+        right: 30px;
+        color: #8292a5;
+        font-size: 10px;
+      }
+      .slide-number b {
+        color: var(--gold);
+        font-weight: 500;
+      }
+      .slide-text {
+        position: relative;
+        max-width: 650px;
+        font:
+          400 clamp(38px, 6vw, 72px)/1.02 "Instrument Serif",
+          serif;
+        letter-spacing: -0.03em;
+        margin: 0;
+      }
+      .slide-text em {
+        color: var(--gold);
+        font-style: italic;
+      }
+      .slide-sub {
+        position: relative;
+        margin: 22px 0 0;
+        color: var(--soft);
+        font-size: 13px;
+        line-height: 1.8;
+        max-width: 490px;
+      }
+      .nav-row {
+        position: absolute;
+        left: clamp(30px, 7vw, 78px);
+        right: clamp(30px, 7vw, 78px);
+        bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .nav-row button {
+        border: 0;
+        background: transparent;
+        color: #8e9aab;
+        font-size: 11px;
+        cursor: pointer;
+      }
+      .nav-row button:hover {
+        color: var(--ink);
+      }
+      .nav-row .next {
+        color: var(--gold);
+        border: 1px solid rgba(221, 193, 135, 0.42);
+        background: rgba(221, 193, 135, 0.08);
+        border-radius: 999px;
+        padding: 11px 18px;
+        letter-spacing: 0.04em;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      .nav-row .next:hover {
+        color: var(--ink);
+        background: rgba(221, 193, 135, 0.17);
+        box-shadow: 0 0 22px rgba(221, 193, 135, 0.13);
+        transform: translateY(-2px);
+      }
+      .dots {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+      .dots i {
+        display: block;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: #526071;
+      }
+      .dots i.active {
+        width: 18px;
+        border-radius: 4px;
+        background: var(--gold);
+      }
+      .continue-hint {
+        position: absolute;
+        right: clamp(30px, 7vw, 78px);
+        bottom: 31px;
+        color: #758294;
+        font-size: 9px;
+        letter-spacing: 0.06em;
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      .locked {
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 35px;
+      }
+      .envelope {
+        width: min(440px, 100%);
+        position: relative;
+        padding: 42px 30px 34px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(19, 25, 39, 0.76);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 30px 100px rgba(0, 0, 0, 0.42);
+        overflow: hidden;
+      }
+      .envelope:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 46%;
+        background:
+          linear-gradient(
+            146deg,
+            transparent 49%,
+            rgba(255, 255, 255, 0.05) 50%,
+            transparent 51%
+          ),
+          linear-gradient(
+            214deg,
+            transparent 49%,
+            rgba(255, 255, 255, 0.05) 50%,
+            transparent 51%
+          );
+        pointer-events: none;
+      }
+      .seal {
+        width: 58px;
+        height: 58px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 22px;
+        border: 1px solid var(--gold);
+        border-radius: 50%;
+        color: var(--gold);
+        font: italic 28px "Instrument Serif";
+        box-shadow: 0 0 28px #ddc18722;
+      }
+      .locked h1 {
+        font: 400 40px "Instrument Serif";
+        margin: 0 0 9px;
+      }
+      .locked p {
+        color: var(--soft);
+        font-size: 12px;
+        margin: 0 0 26px;
+      }
+      .password {
+        display: flex;
+        gap: 8px;
+        position: relative;
+        z-index: 2;
+      }
+      .password input {
+        flex: 1;
+        min-width: 0;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: rgba(0, 0, 0, 0.2);
+        color: var(--ink);
+        padding: 12px;
+        font-size: 12px;
+        outline: none;
+      }
+      .password input:focus {
+        border-color: var(--gold);
+      }
+      .password button {
+        border: 1px solid var(--gold);
+        border-radius: 7px;
+        background: rgba(221, 193, 135, 0.12);
+        color: var(--gold);
+        padding: 0 16px;
+        font-size: 11px;
+      }
+      .locked small {
+        display: block;
+        color: #7c8999;
+        font-size: 9px;
+        margin-top: 22px;
+      }
+      .error {
+        height: 18px;
+        color: #ed9a98;
+        font-size: 10px;
+        margin: 10px 0 -3px;
+      }
+      .envelope.opening {
+        animation: open 0.9s ease forwards;
+      }
+      @keyframes open {
+        0% {
+          transform: perspective(900px) rotateX(0) scale(1);
+        }
+        50% {
+          transform: perspective(900px) rotateX(-18deg) scale(1.03);
+          box-shadow: 0 0 100px #ddc18788;
+        }
+        100% {
+          transform: perspective(900px) rotateX(0) scale(0);
+          opacity: 0;
+        }
+      }
+      .fade-up {
+        animation: pageIn 0.75s ease both;
+      }
+      @keyframes pageIn {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+          filter: blur(4px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+          filter: none;
+        }
+      }
+      .final .slide-text {
+        font-size: clamp(44px, 8vw, 86px);
+      }
+      .final-moon {
+        display: inline-block;
+        color: #f3e9bd;
+        text-shadow: 0 0 30px #f3e9bd66;
+      }
+      .reply {
+        display: flex;
+        gap: 10px;
+        margin-top: 28px;
+        position: relative;
+      }
+      .reply button {
+        border: 1px solid var(--gold);
+        border-radius: 7px;
+        background: rgba(221, 193, 135, 0.1);
+        color: var(--gold);
+        padding: 12px 15px;
+        font-size: 11px;
+      }
+      .reply button.alt {
+        border-color: var(--line);
+        color: #bac4d0;
+      }
+      .signature {
+        margin-top: 24px;
+        color: #a9b6c1;
+        font: italic 23px "Instrument Serif";
+      }
+      .moon-confetti {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 20;
+      }
+      .moon-confetti i {
+        position: absolute;
+        color: #f3e9bd;
+        font-size: 13px;
+        animation: fall 3.5s linear forwards;
+      }
+      @keyframes fall {
+        from {
+          transform: translateY(-10vh) rotate(0);
+          opacity: 0;
+        }
+        15% {
+          opacity: 1;
+        }
+        to {
+          transform: translateY(110vh) rotate(300deg);
+          opacity: 0;
+        }
+      }
+      .sound-on {
+        color: var(--gold);
+      }
+      @media (max-width: 620px) {
+        body {
+          overflow: hidden;
+        }
+        .app {
+          padding: 17px;
+        }
+        .top-meta {
+          left: 17px;
+          right: 17px;
+          top: 15px;
+          font-size: 8px;
+        }
+        .top-meta .control {
+          padding: 7px 9px;
+        }
+        .diary {
+          min-height: 535px;
+          padding: 34px 25px 72px;
+          border-radius: 22px;
+        }
+        .slide-number {
+          top: 20px;
+          right: 22px;
+        }
+        .slide-text {
+          font-size: 45px;
+        }
+        .nav-row {
+          left: 25px;
+          right: 25px;
+        }
+        .dots {
+          display: none;
+        }
+        .password {
+          flex-direction: column;
+        }
+        .password button {
+          height: 43px;
+        }
+        .locked h1 {
+          font-size: 34px;
+        }
+        .moon {
+          right: 8vw;
+          top: 8vh;
+          width: 100px;
+          height: 100px;
+        }
+        .reply {
+          flex-direction: column;
+        }
+        .reply button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="stars"></canvas>
+    <div class="map-line"></div>
+    <div class="moon"></div>
+    <div class="progress"><i id="progressBar"></i></div>
+    <div class="top-meta">
+      <span>SAME MOON, SAME SKY</span
+      ><span
+        ><b id="progressLabel">Slide 1/35 - 4500km closer</b>
+        <button class="control" id="soundToggle">Ambient off</button></span
+      >
+    </div>
+    <main class="app" id="app">
+      <section class="locked" id="lockScreen">
+        <div class="envelope" id="envelope">
+          <div class="seal">N</div>
+          <h1>This story is only for Noor</h1>
+          <p>Some words travelled from Pakistan to Kenya.</p>
+          <div class="password">
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter our secret"
+              autocomplete="off"
+            /><button id="unlock">Open letter</button>
+          </div>
+          <div class="error" id="error"></div>
+          <small>Hint: the name I keep close.</small>
+        </div>
+      </section>
+      <section class="diary hidden" id="diary">
+        <div class="slide-number"><b id="slideNumber">01</b> / 35</div>
+        <div id="slideContent"></div>
+        <div class="nav-row">
+          <div class="dots" id="dots"></div>
+          <button class="next" id="next">Continue <span>→</span></button>
+        </div>
+        <span class="continue-hint">tap the page to continue</span>
+      </section>
+    </main>
+    <div class="moon-confetti" id="confetti"></div>
+    <script>
+      const slides = [
+        [
+          "KAL RAAT",
+          "Suno, <em>Meri Noor.</em>",
+          "I have something honest to say before the night moves any further.",
+        ],
+        [
+          "KAL RAAT",
+          "Kal raat main baghair bat kiye so gaya.",
+          "I know the silence after that can feel heavier than the distance between us.",
+        ],
+        [
+          "KAL RAAT",
+          "Subah sheher gaya tha, shaam ko dair se aya.",
+          "The day became long, noisy, and unexpectedly tiring.",
+        ],
+        [
+          "KAL RAAT",
+          "Phone haath mein tha, tumhara intezaar karte karte aankh lag gayi.",
+          "I was waiting for you when my body quietly gave in.",
+        ],
+        [
+          "KAL RAAT",
+          "It was never that you were not important.",
+          "Please do not let one tired moment tell you a story that is not true.",
+        ],
+        [
+          "KAL RAAT",
+          "My body gave up before my heart did.",
+          "And I am sorry I did not say goodnight.",
+        ],
+        [
+          "TUM",
+          "You are the eldest daughter.",
+          "You carry more than people notice, and still try to make the house feel held.",
+        ],
+        [
+          "TUM",
+          "You carry the whole house on your shoulders, <em>let me carry your worries.</em>",
+          "Even for a little while. Even from 4500km away.",
+        ],
+        [
+          "TUM",
+          "I know you get scolded for small mistakes.",
+          "That does not make you small. It only means you are human in a place that asks too much.",
+        ],
+        [
+          "TUM",
+          "You get tired.",
+          "The kind of tiredness that does not always have words.",
+        ],
+        [
+          "TUM",
+          "And sometimes you cry silently.",
+          "No audience. No explanation. Just you trying to be strong again.",
+        ],
+        [
+          "TUM",
+          "When you go offline, I know something in you may be hurting.",
+          "You do not have to return with a perfect explanation.",
+        ],
+        ["TUM", "You are not your mistakes.", "You are the love you give."],
+        [
+          "TUM",
+          "You do not have to earn rest.",
+          "You do not have to be useful every minute to deserve gentleness.",
+        ],
+        [
+          "TUM",
+          "You bring light even when yours feels dark.",
+          "Meri Noor, that light is not measured by how much you do for everyone else.",
+        ],
+        [
+          "DISTANCE",
+          "Pakistan to Kenya.",
+          "4500km of roads, borders, weather, and waiting.",
+        ],
+        [
+          "DISTANCE",
+          "Still, we look up at the same moon.",
+          "Different windows. Same quiet witness.",
+        ],
+        [
+          "DISTANCE",
+          "Same sky.",
+          "Sometimes that is the closest thing to holding hands across an ocean.",
+        ],
+        [
+          "DISTANCE",
+          "I can’t hug you right now...",
+          "so I’m sending you these words to hold.",
+        ],
+        [
+          "DISTANCE",
+          "A warm hug across the ocean.",
+          "Not loud. Not dramatic. Just here, around you.",
+        ],
+        [
+          "DISTANCE",
+          "If distance had a softer name,",
+          "I think it would be patience.",
+        ],
+        [
+          "DISTANCE",
+          "And I am learning it.",
+          "Slowly, imperfectly, with you in mind.",
+        ],
+        [
+          "AAJ",
+          "Some things need morning.",
+          "Some need distance. Some just need sleep.",
+        ],
+        [
+          "AAJ",
+          "I am here.",
+          "Not only when you are cheerful. Not only when you have energy to talk.",
+        ],
+        [
+          "AAJ",
+          "Main hoon na.",
+          "You can be quiet. I will not turn your quiet into a punishment.",
+        ],
+        [
+          "AAJ",
+          "You do not have to be perfect with me.",
+          "You can be tired, confused, upset, and still completely loved.",
+        ],
+        [
+          "AAJ",
+          "Rest first.",
+          "The world can wait a little while for you to breathe.",
+        ],
+        [
+          "AAJ",
+          "I will wait.",
+          "No pressure. No scoreboard. Just a door left open.",
+        ],
+        [
+          "AAJ",
+          "And when you are ready,",
+          "we will talk like two people who care more about each other than about winning.",
+        ],
+        ["AAJ", "Chal ab so ja.", "Let tonight be gentle with you."],
+        [
+          "MAAFI",
+          "To kya kal wala gila yahin khatam karein?",
+          "I am not asking you to skip your feelings. I am asking for a chance to make them lighter.",
+        ],
+        [
+          "MAAFI",
+          "No more gila. Just us.",
+          "A little more honesty. A little more care.",
+        ],
+        [
+          "MAAFI",
+          "Will you forgive your tired Ishaq?",
+          "He is sorry. He is listening. He will try to say goodnight before sleep finds him.",
+        ],
+        [
+          "MAAFI",
+          "I can’t undo yesterday.",
+          "But I can meet you more carefully today.",
+        ],
+        [
+          "MAAFI",
+          "You are my Noor. My Light. Always.",
+          '<span class="final-moon">☾</span><div class="signature">- Ishaq, Pakistan to Kenya</div>',
+        ],
+      ];
+      let current = Number(localStorage.getItem("noorSlide") || 1);
+      let unlocked = false;
+      const lockScreen = document.getElementById("lockScreen"),
+        diary = document.getElementById("diary"),
+        slideContent = document.getElementById("slideContent"),
+        slideNumber = document.getElementById("slideNumber"),
+        progressBar = document.getElementById("progressBar"),
+        progressLabel = document.getElementById("progressLabel"),
+        dots = document.getElementById("dots");
+      function renderDots() {
+        dots.innerHTML = slides
+          .map((_, i) => `<i class="${i + 1 === current ? "active" : ""}"></i>`)
+          .join("");
+      }
+      function render() {
+        const s = slides[current - 1];
+        slideNumber.textContent = String(current).padStart(2, "0");
+        progressBar.style.width = `${(current / 35) * 100}%`;
+        progressLabel.textContent = `Slide ${current}/35 - 4500km closer`;
+        slideContent.innerHTML = `<div class="fade-up ${current === 35 ? "final" : ""}"><div class="chapter">${s[0]}</div><h1 class="slide-text">${s[1]}</h1><p class="slide-sub">${s[2]}</p>${current === 33 ? '<div class="reply"><button id="yes">Haan, maaf kiya</button><button class="alt" id="more">Thoda aur manao</button></div>' : ""}${current === 35 ? '<div class="reply"><button id="moonBack">Send a Moon Back 🌙</button></div>' : ""}</div>`;
+        renderDots();
+        localStorage.setItem("noorSlide", current);
+        if (current === 33) {
+          document.getElementById("yes").onclick = () => {
+            notify("Meri Noor, thank you.");
+            next();
+          };
+          document.getElementById("more").onclick = () => {
+            document.getElementById("more").textContent =
+              "Main hoon na, aur manata hoon";
+            document.getElementById("more").classList.add("sound-on");
+            notify("Main hoon na, aur manata hoon.");
+          };
+        }
+        if (current === 35)
+          document.getElementById("moonBack").onclick = () => {
+            confetti();
+            notify("A moon sent from Pakistan to Kenya.");
+          };
+      }
+      function next() {
+        if (current < 35) {
+          current++;
+          render();
+          clickSound();
+        }
+      }
+      function prev() {
+        if (current > 1) {
+          current--;
+          render();
+          clickSound();
+        }
+      }
+      document.getElementById("next").onclick = next;
+      document.getElementById("diary").addEventListener("click", (event) => {
+        if (event.target.closest("button, a, input")) return;
+        const bounds = event.currentTarget.getBoundingClientRect();
+        if (event.clientX < bounds.left + bounds.width * 0.34) prev();
+        else next();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (!unlocked) return;
+        if (e.key === "ArrowRight" || e.key === " ") {
+          e.preventDefault();
+          next();
+        }
+        if (e.key === "ArrowLeft") prev();
+      });
+      let touchX = 0;
+      document.addEventListener(
+        "touchstart",
+        (e) => (touchX = e.changedTouches[0].screenX),
+      );
+      document.addEventListener("touchend", (e) => {
+        const d = e.changedTouches[0].screenX - touchX;
+        if (Math.abs(d) > 45) d < 0 ? next() : prev();
+      });
+      const input = document.getElementById("password"),
+        error = document.getElementById("error");
+      document.getElementById("unlock").onclick = unlock;
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") unlock();
+      });
+      function unlock() {
+        if (
+          input.value === "MeriNoor" ||
+          input.value.toLowerCase() === "noor"
+        ) {
+          unlocked = true;
+          clickSound();
+          document.getElementById("envelope").classList.add("opening");
+          setTimeout(() => {
+            lockScreen.classList.add("hidden");
+            diary.classList.remove("hidden");
+            render();
+          }, 700);
+        } else {
+          error.textContent = "Suno, try again Meri Noor";
+          input.animate(
+            [
+              { transform: "translateX(-8px)" },
+              { transform: "translateX(8px)" },
+              { transform: "translateX(0)" },
+            ],
+            { duration: 300 },
+          );
+          input.focus();
+        }
+      }
+      let audioCtx;
+      function clickSound() {
+        try {
+          audioCtx = audioCtx || new AudioContext();
+          const o = audioCtx.createOscillator(),
+            g = audioCtx.createGain();
+          o.frequency.value = 520;
+          g.gain.setValueAtTime(0.035, audioCtx.currentTime);
+          g.gain.exponentialRampToValueAtTime(
+            0.001,
+            audioCtx.currentTime + 0.12,
+          );
+          o.connect(g).connect(audioCtx.destination);
+          o.start();
+          o.stop(audioCtx.currentTime + 0.12);
+        } catch (e) {}
+      }
+      let ambient = false;
+      document.getElementById("soundToggle").onclick = () => {
+        ambient = !ambient;
+        document.getElementById("soundToggle").textContent = ambient
+          ? "Ambient on"
+          : "Ambient off";
+        notify(
+          ambient ? "A quiet room around the words." : "Ambient sound off",
+        );
+      };
+      function notify(m) {
+        const el = document.createElement("div");
+        el.textContent = m;
+        el.style =
+          "position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:10px 14px;border:1px solid #ddc187;background:#111827;color:#ddc187;border-radius:8px;font:11px DM Sans;z-index:50";
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 2200);
+      }
+      function confetti() {
+        const c = document.getElementById("confetti");
+        for (let i = 0; i < 30; i++) {
+          const x = document.createElement("i");
+          x.textContent = "☾";
+          x.style.left = Math.random() * 100 + "%";
+          x.style.animationDelay = Math.random() * 1.5 + "s";
+          x.style.fontSize = 8 + Math.random() * 12 + "px";
+          c.appendChild(x);
+          setTimeout(() => x.remove(), 4500);
+        }
+      }
+      const sc = document.getElementById("stars"),
+        ctx = sc.getContext("2d");
+      let w,
+        h,
+        stars = [];
+      function resize() {
+        w = sc.width = innerWidth;
+        h = sc.height = innerHeight;
+        stars = Array.from({ length: 130 }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.3,
+          s: 0.1 + Math.random() * 0.3,
+        }));
+      }
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = "#dceaff";
+        stars.forEach((s) => {
+          s.y -= s.s;
+          if (s.y < 0) s.y = h;
+          ctx.globalAlpha = 0.18 + Math.random() * 0.4;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      resize();
+      draw();
+      addEventListener("resize", resize);
+    </script>
+  </body>
+</html>

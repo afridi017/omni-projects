@@ -1,0 +1,10 @@
+{
+  "name": "SehatVerse & QanoonVerse KPK",
+  "short_name": "SehatVerse",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f8f8",
+  "theme_color": "#0b7f78",
+  "description": "Health and justice operating system for KPK citizens.",
+  "icons": []
+}

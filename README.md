@@ -4,6 +4,10 @@
 
 <img src="https://raw.githubusercontent.com/afridi017/afridi017/main/assets/banner.svg" width="100%" alt="IB Afridi banner" />
 
+# CODEX
+
+### IB Afridi's Project Universe — Security, Web3D, AI, and Real-World Products
+
 ![Profile views](https://komarev.com/ghpvc/?username=afridi017&label=PROFILE%20VIEWS&color=7B2FF7&style=for-the-badge)
 ![Projects](https://img.shields.io/badge/PROJECTS-13%2B-22D3EE?style=for-the-badge)
 ![Security modules](https://img.shields.io/badge/SECURITY%20MODULES-21%2B-F107A3?style=for-the-badge)
@@ -14,7 +18,7 @@
 <div align="center">
 
 ```text
-┌──(ib.afridi㉿kali)-[~/omni-projects]
+┌──(ib.afridi㉿kali)-[~/CODEX]
 └─$ whoami
 > Cybersecurity Enthusiast | Python Tool Developer | Web & 3D Explorer
 └─$ status
@@ -42,7 +46,7 @@
 
 > I build practical security tools, immersive web experiences, and real-world digital products from Peshawar, Khyber Pakhtunkhwa, Pakistan.
 
-I am a self-taught cybersecurity enthusiast and developer working across **Python automation, reconnaissance, web security, Three.js, React Three Fiber, Capacitor, and AI-assisted products**. This repository is the public workspace behind the experiments: from a 13-module Kali Linux toolkit to city-scale super-app concepts.
+I am a self-taught cybersecurity enthusiast and developer working across **Python automation, reconnaissance, web security, Three.js, React Three Fiber, Capacitor, and AI-assisted products**. **CODEX** is the public workspace behind the experiments: from a 13-module Kali Linux toolkit to city-scale super-app concepts.
 
 ```yaml
 Name: IB Afridi (Ishaq Afridi)
@@ -175,7 +179,7 @@ Private full-stack multi-vendor marketplace concept with TypeScript, vendor anal
 </tr>
 </table>
 
-## 🧭 Project Atlas
+## 🧭 CODEX Project Atlas
 
 |  #  | Project                         | Type                 | Technology                    | Access                                                             |
 | :-: | :------------------------------ | :------------------- | :---------------------------- | :----------------------------------------------------------------- |
@@ -197,7 +201,7 @@ Private full-stack multi-vendor marketplace concept with TypeScript, vendor anal
 <summary><strong>View the local monorepo structure</strong></summary>
 
 ```text
-omni-projects/
+CODEX/
 ├── README.md
 ├── ib-afridi-huntverse/       # Bug bounty arena prototype
 ├── ib-afridi-portfolio/       # Dark luxury cybersecurity portfolio

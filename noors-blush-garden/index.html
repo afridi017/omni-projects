@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#fff8f9" />
+    <meta
+      name="description"
+      content="Noor's Blush Garden - A bright morning garden for Noor"
+    />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Fraunces:opsz,wght@9..144,500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <title>Noor's Blush Garden - For My Light</title>
+    <style>
+      :root {
+        --cream: #fff8f9;
+        --blush: #ffd6e7;
+        --rose: #ff8fab;
+        --peony: #ff5d8f;
+        --sage: #a8d5ba;
+        --gold: #ffc978;
+        --brown: #4a2c2a;
+        --white: rgba(255, 255, 255, 0.86);
+        --line: #f5c7d9;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--cream);
+        color: var(--brown);
+        font-family: "Plus Jakarta Sans", sans-serif;
+        overflow-x: hidden;
+      }
+      body:before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -3;
+        background:
+          radial-gradient(circle at 12% 16%, #ffd6e7 0, transparent 28%),
+          radial-gradient(circle at 90% 82%, #e4f4e6 0, transparent 28%),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
+      }
+      body:after {
+        content: "";
+        position: fixed;
+        inset: 12px;
+        border: 1px dashed #f4b9cf;
+        border-radius: 25px;
+        pointer-events: none;
+        z-index: 8;
+      }
+      .garden {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 7;
+        overflow: hidden;
+      }
+      .corner {
+        position: absolute;
+        font-size: 30px;
+        animation: sway 4s ease-in-out infinite;
+        filter: drop-shadow(0 4px 5px #c66b8433);
+      }
+      .c1 {
+        top: 3%;
+        left: 2%;
+      }
+      .c2 {
+        top: 10%;
+        right: 2%;
+        font-size: 38px;
+      }
+      .c3 {
+        bottom: 5%;
+        left: 2%;
+        font-size: 34px;
+      }
+      .c4 {
+        bottom: 3%;
+        right: 3%;
+      }
+      .petal {
+        position: fixed;
+        top: -30px;
+        z-index: 6;
+        cursor: pointer;
+        animation: fall linear forwards;
+        pointer-events: auto;
+      }
+      .petal:hover {
+        filter: drop-shadow(0 0 10px var(--peony));
+        transform: scale(1.5);
+      }
+      @keyframes sway {
+        50% {
+          transform: rotate(10deg) translateY(-5px);
+        }
+      }
+      @keyframes fall {
+        to {
+          transform: translate3d(var(--drift), 110vh, 0) rotate(var(--spin));
+          opacity: 0.1;
+        }
+      }
+      .shell {
+        max-width: 960px;
+        margin: auto;
+        padding: 38px 26px 75px;
+      }
+      .letter {
+        background: var(--white);
+        backdrop-filter: blur(20px);
+        border: 2px solid var(--blush);
+        border-radius: 32px;
+        box-shadow: 0 20px 60px #ff8fab40;
+        overflow: hidden;
+      }
+      .pressed {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: -15px;
+        position: relative;
+        z-index: 2;
+        font-size: 23px;
+      }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        padding: 18px 24px;
+        color: #b26d82;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 10px;
+      }
+      .piano {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff5f8;
+        color: var(--peony);
+        padding: 7px 11px;
+        font-size: 10px;
+        cursor: pointer;
+      }
+      .piano.on {
+        background: var(--gold);
+        color: var(--brown);
+      }
+      .hero {
+        text-align: center;
+        min-height: 650px;
+        display: grid;
+        place-items: center;
+        padding: 76px 8%;
+      }
+      .eyebrow {
+        color: #c4758d;
+        text-transform: uppercase;
+        letter-spacing: 0.17em;
+        font-weight: 700;
+        font-size: 10px;
+      }
+      .hero h1 {
+        font: 600 clamp(54px, 9vw, 96px)/0.9 Fraunces;
+        margin: 18px 0 12px;
+        letter-spacing: -0.06em;
+      }
+      .hero h1 em {
+        color: var(--peony);
+      }
+      .hero p,
+      .copy {
+        color: #88676b;
+        line-height: 1.8;
+        font-size: 14px;
+      }
+      .script {
+        font: 600 31px Caveat;
+        color: var(--peony);
+        margin-top: 20px;
+      }
+      .morning-badge {
+        display: inline-block;
+        background: #fff1c9;
+        color: #b17b2b;
+        border: 1px solid #f1d38e;
+        border-radius: 999px;
+        padding: 8px 13px;
+        font-size: 10px;
+        margin-top: 23px;
+      }
+      .scroll-note {
+        margin-top: 35px;
+        color: #c08094;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+      }
+      .section {
+        border-top: 1px solid #ffdce8;
+        padding: 75px 8%;
+      }
+      .section-head {
+        text-align: center;
+        max-width: 690px;
+        margin: 0 auto 34px;
+      }
+      .section h2 {
+        font: 600 clamp(35px, 5vw, 59px)/1 Fraunces;
+        margin: 9px 0 14px;
+      }
+      .copy {
+        max-width: 580px;
+        margin: 0 auto;
+      }
+      .soft-card {
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid var(--blush);
+        border-radius: 22px;
+        padding: 28px;
+        box-shadow: 0 13px 35px #ffadc122;
+      }
+      .bright-note {
+        text-align: center;
+        background: linear-gradient(135deg, #fff2f7, #fff8e7);
+        padding: 52px 25px;
+      }
+      .bright-note h3 {
+        font: 600 clamp(30px, 5vw, 54px) Fraunces;
+        color: var(--peony);
+        margin: 0;
+      }
+      .bright-note p {
+        color: #957277;
+        line-height: 1.8;
+        margin: 16px auto 0;
+        max-width: 510px;
+      }
+      .joy-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .joy-card {
+        border: 1px solid var(--blush);
+        background: #fffafb;
+        border-radius: 20px;
+        padding: 22px;
+        text-align: left;
+        min-height: 165px;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+      .joy-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 13px 25px #ff8fab25;
+      }
+      .joy-card.open {
+        background: #eff9ed;
+        border-color: var(--sage);
+      }
+      .joy-icon {
+        font-size: 30px;
+        display: block;
+        margin-bottom: 15px;
+      }
+      .joy-card b,
+      .joy-card small {
+        display: block;
+      }
+      .joy-card b {
+        font: 600 21px Fraunces;
+        color: var(--peony);
+      }
+      .joy-card small {
+        font-size: 10px;
+        color: #926e73;
+        line-height: 1.6;
+        margin-top: 7px;
+      }
+      .joy-card.open small:after {
+        content: "  ✿ unlocked";
+        color: #78a57e;
+      }
+      .quote {
+        padding: 60px 22px;
+        text-align: center;
+        background: #fffdf3;
+      }
+      .quote blockquote {
+        font: 600 clamp(35px, 6vw, 62px)/1.04 Fraunces;
+        color: #d58199;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      .quote small {
+        display: block;
+        color: #a47a7d;
+        margin-top: 20px;
+      }
+      .moon-wrap {
+        text-align: center;
+      }
+      .moon {
+        width: 155px;
+        height: 155px;
+        border-radius: 50%;
+        margin: 18px auto 25px;
+        background: radial-gradient(
+          circle at 32% 28%,
+          #fffef3,
+          #ffd6e7 48%,
+          #ff8fab
+        );
+        box-shadow: 0 0 40px #ff8fab55;
+        transition: clip-path 0.3s;
+      }
+      .moon-wrap input {
+        width: min(440px, 100%);
+        accent-color: var(--peony);
+      }
+      .times {
+        display: flex;
+        justify-content: center;
+        gap: 35px;
+        color: #ad7b84;
+        font-size: 10px;
+        margin-top: 22px;
+      }
+      .times b {
+        display: block;
+        color: var(--brown);
+        font: 600 23px Fraunces;
+        margin-top: 5px;
+      }
+      .garden-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      .garden-card {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        border: 1px solid var(--blush);
+        border-radius: 18px;
+        background: #fffafb;
+        padding: 19px;
+      }
+      .garden-card span {
+        font-size: 29px;
+      }
+      .garden-card b,
+      .garden-card small {
+        display: block;
+      }
+      .garden-card b {
+        font: 600 20px Fraunces;
+        color: var(--peony);
+      }
+      .garden-card small {
+        font-size: 10px;
+        color: #936f75;
+        line-height: 1.6;
+        margin-top: 5px;
+      }
+      .route {
+        position: relative;
+        min-height: 240px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #fff0f5, #eef8ed);
+        text-align: center;
+        padding: 35px 20px;
+      }
+      .route-line {
+        height: 2px;
+        position: absolute;
+        left: 14%;
+        right: 14%;
+        top: 53%;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--peony) 0 7px,
+          transparent 7px 14px
+        );
+        transform: rotate(-7deg);
+      }
+      .route-pin {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--peony);
+        color: #fff;
+        font-size: 10px;
+        z-index: 1;
+        box-shadow: 0 0 0 6px #ff8fab2e;
+      }
+      .pak {
+        left: 13%;
+        top: 47%;
+      }
+      .ken {
+        right: 13%;
+        top: 58%;
+        background: var(--sage);
+      }
+      .plane {
+        position: absolute;
+        left: 47%;
+        top: 43%;
+        color: var(--gold);
+        font-size: 24px;
+        animation: fly 5s ease-in-out infinite;
+      }
+      @keyframes fly {
+        50% {
+          transform: translate(35px, -15px) rotate(-5deg);
+        }
+      }
+      .route h3 {
+        position: relative;
+        font: 600 27px Fraunces;
+        margin: 0;
+      }
+      .route p {
+        position: relative;
+        color: #926e75;
+        font-size: 11px;
+      }
+      .promise-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 13px;
+      }
+      .promise {
+        background: #fffafb;
+        border: 1px solid var(--blush);
+        border-radius: 17px;
+        padding: 19px;
+        min-height: 140px;
+        text-align: left;
+        cursor: pointer;
+        position: relative;
+      }
+      .promise:hover {
+        transform: translateY(-3px);
+      }
+      .promise:after {
+        content: "✿";
+        position: absolute;
+        right: 12px;
+        bottom: 9px;
+        color: var(--rose);
+        font-size: 21px;
+      }
+      .promise.sealed {
+        background: #fff5d9;
+        border-color: var(--gold);
+      }
+      .promise.sealed:before {
+        content: "FOR NOOR";
+        position: absolute;
+        top: 11px;
+        right: 11px;
+        color: #b88b3b;
+        font-size: 8px;
+        letter-spacing: 0.1em;
+      }
+      .promise b,
+      .promise small {
+        display: block;
+      }
+      .promise b {
+        font: 600 21px Fraunces;
+        color: var(--peony);
+      }
+      .promise small {
+        font-size: 10px;
+        color: #926e75;
+        line-height: 1.6;
+        margin-top: 9px;
+      }
+      .final {
+        text-align: center;
+        background: linear-gradient(135deg, #fff0f5, #fff9e8);
+        padding: 80px 20px;
+      }
+      .final h2 {
+        font: 600 clamp(46px, 8vw, 80px) Fraunces;
+        color: var(--peony);
+        margin: 10px 0;
+      }
+      .final p {
+        color: #8b676b;
+        line-height: 1.8;
+      }
+      .final-actions {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+      }
+      .final-actions button {
+        border: 1px solid var(--rose);
+        border-radius: 999px;
+        padding: 12px 18px;
+        background: #fff;
+        color: var(--peony);
+        font-size: 11px;
+        transition: 0.2s;
+      }
+      .final-actions button:first-child {
+        background: var(--peony);
+        color: #fff;
+      }
+      .signature {
+        font: 600 29px Caveat;
+        color: #c56d87;
+        margin-top: 27px;
+      }
+      .tip {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 50;
+        background: #fff;
+        border: 1px solid var(--rose);
+        color: #a94a68;
+        border-radius: 999px;
+        padding: 10px 15px;
+        font-size: 11px;
+        box-shadow: 0 8px 25px #ff8fab33;
+      }
+      .flower-shower {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        pointer-events: none;
+      }
+      .flower-shower i {
+        position: absolute;
+        font-style: normal;
+        font-size: 20px;
+        animation: shower 4s linear forwards;
+      }
+      @keyframes shower {
+        from {
+          transform: translateY(-10vh) rotate(0);
+          opacity: 0;
+        }
+        15% {
+          opacity: 1;
+        }
+        to {
+          transform: translateY(110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+      footer {
+        text-align: center;
+        color: #bc8694;
+        font: 600 19px Caveat;
+        padding: 0 0 50px;
+      }
+      .lock {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at 77% 12%, #fff 0, transparent 18%),
+          var(--cream);
+        padding: 20px;
+        transition: 0.8s;
+      }
+      .lock.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .envelope {
+        width: min(430px, 100%);
+        padding: 43px 28px 31px;
+        text-align: center;
+        background: #fff;
+        border: 1px solid var(--blush);
+        border-radius: 20px;
+        box-shadow: 0 25px 75px #ff8fab44;
+        position: relative;
+      }
+      .envelope:before {
+        content: "✿";
+        position: absolute;
+        top: -19px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--peony);
+        color: #fff;
+      }
+      .wax {
+        width: 62px;
+        height: 62px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 22px;
+        border-radius: 50%;
+        background: var(--peony);
+        color: #fff;
+        font: 600 30px Fraunces;
+        box-shadow: inset 4px 4px 10px #b73d6088;
+      }
+      .lock h1 {
+        font: 600 37px Fraunces;
+        margin: 0 0 8px;
+      }
+      .lock p {
+        color: #9a737a;
+        font-size: 12px;
+      }
+      .secret {
+        display: flex;
+        gap: 7px;
+        margin-top: 22px;
+      }
+      .secret input {
+        flex: 1;
+        min-width: 0;
+        padding: 12px;
+        border: 1px solid var(--blush);
+        border-radius: 7px;
+        outline: 0;
+        color: var(--brown);
+      }
+      .secret button {
+        padding: 0 15px;
+        border: 0;
+        border-radius: 7px;
+        background: var(--peony);
+        color: #fff;
+        font-size: 11px;
+      }
+      .lock-error {
+        height: 18px;
+        color: #d25169;
+        font-size: 10px;
+        margin-top: 10px;
+      }
+      .open-envelope {
+        animation: open 0.9s ease forwards;
+      }
+      @keyframes open {
+        50% {
+          transform: perspective(900px) rotateX(-20deg) scale(1.04);
+          box-shadow: 0 0 100px #ffc97899;
+        }
+        100% {
+          transform: scale(0);
+          opacity: 0;
+        }
+      }
+      @media (max-width: 700px) {
+        .shell {
+          padding: 25px 15px 70px;
+        }
+        .topbar {
+          padding: 14px 18px;
+        }
+        .hero {
+          padding: 65px 7%;
+          min-height: 560px;
+        }
+        .section {
+          padding: 60px 7%;
+        }
+        .joy-grid,
+        .garden-list,
+        .promise-grid {
+          grid-template-columns: 1fr;
+        }
+        .route-line {
+          left: 8%;
+          right: 8%;
+        }
+        .pak {
+          left: 8%;
+        }
+        .ken {
+          right: 8%;
+        }
+        .secret {
+          flex-direction: column;
+        }
+        .secret button {
+          height: 42px;
+        }
+        .pressed {
+          margin-top: -11px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="garden">
+      <span class="corner c1">🌸</span><span class="corner c2">🌿</span
+      ><span class="corner c3">🌼</span><span class="corner c4">🌹</span>
+    </div>
+    <div id="petals"></div>
+    <div class="lock" id="lock">
+      <div class="envelope" id="envelope">
+        <div class="wax">N</div>
+        <h1>A little morning garden for Noor</h1>
+        <p>Not a heavy letter. Just a soft place for your smile.</p>
+        <div class="secret">
+          <input
+            id="secret"
+            type="password"
+            placeholder="Enter our secret"
+          /><button id="open">Open garden</button>
+        </div>
+        <div class="lock-error" id="lockError"></div>
+        <small>Hint: Pinky, Noor, or MeriNoor.</small>
+      </div>
+    </div>
+    <main class="shell">
+      <article class="letter">
+        <div class="pressed">🌸 ✿ 🌼</div>
+        <div class="topbar">
+          <span>Noor's Blush Garden · Pakistan to Kenya</span
+          ><button class="piano" id="piano">♪ Piano off</button>
+        </div>
+        <section class="hero">
+          <div>
+            <small class="eyebrow">A bright little beginning</small>
+            <h1>Good morning,<br /><em>Noor.</em></h1>
+            <p>
+              Today is not for fixing anything. Today is simply for reminding
+              you how much light you bring into the world.
+            </p>
+            <div class="script">Suno, meri roshni...</div>
+            <div class="morning-badge">
+              ☀ Your smile has a reserved seat today
+            </div>
+            <div class="scroll-note">
+              scroll gently · your garden is blooming ↓
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="section-head">
+            <small class="eyebrow">01 · Aaj ka din</small>
+            <h2>Aaj ka din tumhare naam.</h2>
+            <p class="copy">
+              No guilt, no heavy explanations, no old mood. Bas ek soft morning,
+              a little warmth, and the reminder that you are allowed to enjoy
+              your own day.
+            </p>
+          </div>
+          <div class="soft-card bright-note">
+            <h3>You deserve a day that feels kind.</h3>
+            <p>
+              Choti choti khushiyan collect karna. A good tea. A quiet minute. A
+              laugh that arrives without permission. Aaj sirf halka rehna hai.
+            </p>
+          </div>
+        </section>
+        <section class="section">
+          <div class="section-head">
+            <small class="eyebrow">02 · I see your light</small>
+            <h2>The beautiful things about you.</h2>
+            <p class="copy">
+              You carry a lot, but you are more than what you carry. Tap a
+              flower and let one compliment bloom.
+            </p>
+          </div>
+          <div class="joy-grid">
+            <button class="joy-card">
+              <span class="joy-icon">🌷</span><b>Your quiet strength</b
+              ><small
+                >You handle more than people know, and still find a way to be
+                kind.</small
+              ></button
+            ><button class="joy-card">
+              <span class="joy-icon">🌼</span><b>Your thoughtful heart</b
+              ><small
+                >You notice the little things. That is a rare and beautiful way
+                to move through life.</small
+              ></button
+            ><button class="joy-card">
+              <span class="joy-icon">🌹</span><b>Your light</b
+              ><small
+                >You bring light to my world, even when your own day feels
+                cloudy.</small
+              >
+            </button>
+          </div>
+        </section>
+        <section class="section">
+          <div class="soft-card quote">
+            <small class="eyebrow">03 · Keep this close</small>
+            <blockquote>
+              You do not have to do something extraordinary to be extraordinary.
+            </blockquote>
+            <small>Being Noor is already its own kind of light.</small>
+          </div>
+        </section>
+        <section class="section">
+          <div class="section-head">
+            <small class="eyebrow">04 · Same moon, brighter morning</small>
+            <h2>Good morning from 4500km away.</h2>
+            <p class="copy">
+              Drag the moon a little. Peshawar is looking up at the same sky as
+              Kenya.
+            </p>
+          </div>
+          <div class="soft-card moon-wrap">
+            <div class="moon" id="moon"></div>
+            <input id="moonRange" type="range" min="10" max="90" value="60" />
+            <div class="times">
+              <span>Peshawar PKT<b id="pkt">09:42 AM</b></span
+              ><span>☀</span><span>Nairobi EAT<b id="eat">07:42 AM</b></span>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="section-head">
+            <small class="eyebrow">05 · Little journey</small>
+            <h2>4500km, and still close.</h2>
+            <p class="copy">
+              Distance is a number. Care is the thing that keeps finding its way
+              across it.
+            </p>
+          </div>
+          <div class="soft-card route">
+            <span class="route-pin pak">PK</span
+            ><span class="route-pin ken">KE</span><span class="plane">✈</span>
+            <div class="route-line"></div>
+            <h3>Pakistan · · · · · Kenya</h3>
+            <p>Same sky. New morning. One Noor.</p>
+          </div>
+        </section>
+        <section class="section">
+          <div class="section-head">
+            <small class="eyebrow">06 · Your happiness menu</small>
+            <h2>Choose one small joy.</h2>
+            <p class="copy">
+              No pressure. Just options for a day that deserves to feel good.
+            </p>
+          </div>
+          <div class="garden-list">
+            <div class="garden-card">
+              <span>☕</span>
+              <div>
+                <b>Something warm</b
+                ><small
+                  >Tea, coffee, or whatever makes the first hour softer.</small
+                >
+              </div>
+            </div>
+            <div class="garden-card">
+              <span>🎶</span>
+              <div>
+                <b>One favorite song</b
+                ><small>Let it play loudly enough to change the room.</small>
+              </div>
+            </div>
+            <div class="garden-card">
+              <span>🌤</span>
+              <div>
+                <b>Ten quiet minutes</b
+                ><small>No chores, no expectations, just a little sky.</small>
+              </div>
+            </div>
+            <div class="garden-card">
+              <span>🍰</span>
+              <div>
+                <b>A sweet reward</b
+                ><small>Because a good day is allowed to taste good too.</small>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="section-head">
+            <small class="eyebrow">07 · My happy promises</small>
+            <h2>Things I want to add to your days.</h2>
+            <p class="copy">
+              Tap to seal the little promises that make this garden yours.
+            </p>
+          </div>
+          <div class="promise-grid">
+            <button class="promise">
+              <b>01</b
+              ><small
+                >More reasons to smile before the day gets busy.</small
+              ></button
+            ><button class="promise">
+              <b>02</b
+              ><small
+                >A safe place to be fully yourself, without performing.</small
+              ></button
+            ><button class="promise">
+              <b>03</b
+              ><small
+                >Respect for your time, your quiet, and your dreams.</small
+              ></button
+            ><button class="promise">
+              <b>04</b
+              ><small
+                >Celebrating the small wins nobody else notices.</small
+              ></button
+            ><button class="promise">
+              <b>05</b
+              ><small
+                >Warm words from Pakistan whenever Kenya feels far.</small
+              ></button
+            ><button class="promise">
+              <b>06</b
+              ><small>Choosing your happiness in the ordinary moments.</small>
+            </button>
+          </div>
+        </section>
+        <section class="section final">
+          <small class="eyebrow">08 · The only question</small>
+          <h2>Aaj smile ki?</h2>
+          <p>
+            If yes, keep it. If not, I have a whole garden left to show you.<br /><span
+              class="script"
+              >Main hoon na, khushi bhejne ke liye.</span
+            >
+          </p>
+          <div class="final-actions">
+            <button id="smile">Haan, thodi si ♡</button
+            ><button id="moreJoy">Aur khush karo</button>
+          </div>
+          <div class="signature">
+            ~ Noor, my light ~<br />Ishaq · 4500km door se
+          </div>
+        </section>
+      </article>
+      <footer>Made for a bright morning · from Pakistan to Kenya ✿</footer>
+    </main>
+    <div class="flower-shower" id="shower"></div>
+    <script>
+      const types = ["🌸", "🌹", "🌼", "✿", "🍃"];
+      function petal() {
+        const p = document.createElement("span");
+        p.className = "petal";
+        p.textContent = types[Math.floor(Math.random() * types.length)];
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.fontSize = 10 + Math.random() * 14 + "px";
+        p.style.setProperty("--drift", Math.random() * 180 - 90 + "px");
+        p.style.setProperty("--spin", Math.random() * 720 - 360 + "deg");
+        p.style.animationDuration = 8 + Math.random() * 9 + "s";
+        p.onclick = () => {
+          p.style.filter = "drop-shadow(0 0 12px #ff5d8f)";
+          setTimeout(() => p.remove(), 450);
+        };
+        document.getElementById("petals").appendChild(p);
+        setTimeout(() => p.remove(), 18000);
+      }
+      setInterval(petal, 700);
+      for (let i = 0; i < 8; i++) setTimeout(petal, i * 250);
+      document.querySelectorAll(".joy-card").forEach(
+        (card) =>
+          (card.onclick = () => {
+            card.classList.toggle("open");
+            if (card.classList.contains("open")) {
+              card.querySelector(".joy-icon").textContent = "✿";
+              notify("A little compliment has bloomed.");
+            }
+          }),
+      );
+      document.querySelectorAll(".promise").forEach((card, i) => {
+        const key = "happyPromise" + i;
+        if (localStorage.getItem(key) === "yes") card.classList.add("sealed");
+        card.onclick = () => {
+          card.classList.toggle("sealed");
+          localStorage.setItem(
+            key,
+            card.classList.contains("sealed") ? "yes" : "no",
+          );
+        };
+      });
+      const moonRange = document.getElementById("moonRange");
+      moonRange.oninput = () => {
+        const value = moonRange.value;
+        document.getElementById("moon").style.clipPath =
+          `inset(0 ${100 - value}% 0 0 round 50%)`;
+        document.getElementById("pkt").textContent =
+          value > 50 ? "09:42 AM" : "07:42 AM";
+        document.getElementById("eat").textContent =
+          value > 50 ? "07:42 AM" : "05:42 AM";
+      };
+      let piano = false;
+      document.getElementById("piano").onclick = () => {
+        piano = !piano;
+        document.getElementById("piano").textContent = piano
+          ? "♪ Piano on"
+          : "♪ Piano off";
+        document.getElementById("piano").classList.toggle("on", piano);
+        notify(piano ? "A soft piano mood is on." : "Piano off");
+      };
+      document.getElementById("smile").onclick = () => {
+        notify("I knew there was a smile somewhere. Keep it all day.");
+        for (let i = 0; i < 32; i++) setTimeout(shower, i * 35);
+      };
+      document.getElementById("moreJoy").onclick = () => {
+        const b = document.getElementById("moreJoy");
+        b.textContent = "One more flower for Noor ✿";
+        b.style.transform = `translate(${Math.random() * 45 - 22}px,${Math.random() * 22 - 11}px)`;
+        notify("A whole extra bouquet is coming.");
+        for (let i = 0; i < 15; i++) setTimeout(shower, i * 70);
+      };
+      function shower() {
+        const x = document.createElement("i");
+        x.textContent = types[Math.floor(Math.random() * types.length)];
+        x.style.left = Math.random() * 100 + "%";
+        x.style.animationDelay = Math.random() + "s";
+        document.getElementById("shower").appendChild(x);
+        setTimeout(() => x.remove(), 4300);
+      }
+      function notify(message) {
+        const n = document.createElement("div");
+        n.className = "tip";
+        n.textContent = message;
+        document.body.appendChild(n);
+        setTimeout(() => n.remove(), 2300);
+      }
+      const lock = document.getElementById("lock");
+      document.getElementById("open").onclick = unlock;
+      document.getElementById("secret").onkeydown = (e) => {
+        if (e.key === "Enter") unlock();
+      };
+      function unlock() {
+        const value = document.getElementById("secret").value.toLowerCase();
+        if (["pinky", "noor", "merinoor"].includes(value)) {
+          document.getElementById("envelope").classList.add("open-envelope");
+          setTimeout(() => lock.classList.add("hidden"), 800);
+        } else {
+          document.getElementById("lockError").textContent =
+            "Try again gently ✿";
+          document
+            .getElementById("secret")
+            .animate(
+              [
+                { transform: "translateX(-7px)" },
+                { transform: "translateX(7px)" },
+                { transform: "translateX(0)" },
+              ],
+              { duration: 300 },
+            );
+        }
+      }
+      document.addEventListener("mousemove", (event) => {
+        if (Math.random() > 0.86) {
+          const f = document.createElement("span");
+          f.textContent = "✿";
+          f.style = `position:fixed;left:${event.clientX}px;top:${event.clientY}px;color:#ff8fab;pointer-events:none;z-index:9;font-size:10px;transition:transform .7s,opacity .7s`;
+          document.body.appendChild(f);
+          requestAnimationFrame(() => {
+            f.style.transform = "translateY(-13px) scale(.5)";
+            f.style.opacity = 0;
+          });
+          setTimeout(() => f.remove(), 700);
+        }
+      });
+    </script>
+  </body>
+</html>

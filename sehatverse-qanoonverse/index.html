@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b7f78" />
+    <meta
+      name="description"
+      content="SehatVerse & QanoonVerse: Pakistan's health and justice operating system for KPK."
+    />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>SehatVerse & QanoonVerse | KPK Citizen OS</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#patient"
+          ><span class="brand-mark">+</span
+          ><span
+            ><strong>SehatVerse</strong><small>QANOONVERSE · KPK</small></span
+          ></a
+        >
+        <div class="location">
+          <span class="location-dot"></span>
+          <div><small>Your care region</small><b>Bara · Peshawar</b></div>
+          <span>⌄</span>
+        </div>
+        <nav class="nav" aria-label="Platform panels">
+          <small class="nav-label">Care workspace</small>
+          <button class="nav-item active" data-panel="patient">
+            <span>♥</span>Patient app
+          </button>
+          <button class="nav-item" data-panel="doctor">
+            <span>♙</span>Doctor panel
+          </button>
+          <button class="nav-item" data-panel="lab">
+            <span>⌁</span>Lab panel <em>5</em>
+          </button>
+          <button class="nav-item" data-panel="pharmacy">
+            <span>✚</span>Pharmacy panel
+          </button>
+          <button class="nav-item" data-panel="hospital">
+            <span>▦</span>Hospital admin
+          </button>
+          <button class="nav-item" data-panel="rider">
+            <span>⌁</span>Rider panel
+          </button>
+          <small class="nav-label group">Justice & governance</small>
+          <button class="nav-item" data-panel="lawyer">
+            <span>⚖</span>Lawyer panel
+          </button>
+          <button class="nav-item" data-panel="inspector">
+            <span>◉</span>Health inspector
+          </button>
+          <button class="nav-item" data-panel="finance">
+            <span>₨</span>Finance & cards
+          </button>
+          <button class="nav-item" data-panel="brain">
+            <span>✦</span>AI Brain
+          </button>
+        </nav>
+        <div class="sidebar-foot">
+          <button class="nav-item" data-panel="records">
+            <span>▤</span>Medical record vault
+          </button>
+          <div class="privacy">
+            <span>✓</span>
+            <div>
+              <b>Your data is private</b
+              ><small>Encrypted medical records</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <button class="menu-btn" id="menuBtn">☰</button>
+          <div class="breadcrumbs">
+            <span>SehatVerse</span><b>/</b
+            ><strong id="panelTitle">Patient app</strong>
+          </div>
+          <div class="actions">
+            <button class="language" id="language">پښتو · اردو</button
+            ><button class="theme" id="theme">☼</button
+            ><button class="notification">♢<i>3</i></button>
+            <div class="user">
+              <span>IA</span>
+              <div><b>Ishaq Afridi</b><small>Patient account</small></div>
+            </div>
+          </div>
+        </header>
+
+        <section class="panel-view active" id="patientPanel">
+          <div class="patient-hero container">
+            <div>
+              <p class="eyebrow">
+                <span class="green-pulse"></span> Your health, understood
+              </p>
+              <h1>How are you<br /><span>feeling today?</span></h1>
+              <p class="hero-copy">
+                Speak in Pashto, Urdu, or English. We will help you find the
+                right care, right here in KPK.
+              </p>
+              <div class="symptom-box">
+                <span>⌕</span
+                ><input
+                  id="symptomInput"
+                  placeholder="Tell us your symptoms, e.g. Zama taba da..."
+                /><button id="voiceCheck">◉</button><kbd>⌘ K</kbd>
+              </div>
+              <div class="quick-actions">
+                <button class="primary" id="checkSymptoms">
+                  Check symptoms <span>→</span></button
+                ><button class="outline" data-panel-link="doctor">
+                  Find a doctor
+                </button>
+              </div>
+              <div class="trust">
+                <span>✓</span> Private by design · Reviewed by licensed doctors
+              </div>
+            </div>
+            <div class="hero-visual">
+              <div class="health-orbit">
+                <div class="orbit-ring ring-one"></div>
+                <div class="orbit-ring ring-two"></div>
+                <div class="heart-core">♥</div>
+                <span class="orbit-chip chip-one"
+                  ><b>98%</b><small>Care match</small></span
+                ><span class="orbit-chip chip-two"
+                  ><b>24/7</b><small>AI Hujra</small></span
+                ><span class="orbit-chip chip-three"
+                  ><b>12 min</b><small>Nearest care</small></span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="container emergency">
+            <div class="emergency-icon">!</div>
+            <div>
+              <b>Need urgent help?</b>
+              <p>
+                Connect to the nearest ambulance or emergency department now.
+              </p>
+            </div>
+            <button id="emergencyBtn">Emergency help <span>→</span></button>
+          </div>
+          <div class="container section">
+            <div class="section-head">
+              <div>
+                <small class="eyebrow">Care, your way</small>
+                <h2>What do you need today?</h2>
+              </div>
+              <button class="link-btn">View all services →</button>
+            </div>
+            <div class="care-grid">
+              <button class="care-card teal" data-panel-link="doctor">
+                <span>♙</span><b>Talk to a doctor</b
+                ><small>Video or clinic visit</small><i>→</i></button
+              ><button class="care-card blue" data-panel-link="lab">
+                <span>⌁</span><b>Book a lab test</b
+                ><small>Home sample collection</small><i>→</i></button
+              ><button class="care-card amber" data-panel-link="pharmacy">
+                <span>✚</span><b>Order medicine</b
+                ><small>Delivered to your door</small><i>→</i></button
+              ><button class="care-card lilac" data-panel-link="brain">
+                <span>✦</span><b>Ask AI Hujra</b><small>Explain my report</small
+                ><i>→</i></button
+              ><button class="care-card red" data-panel-link="lawyer">
+                <span>⚖</span><b>Legal support</b><small>Know your rights</small
+                ><i>→</i>
+              </button>
+            </div>
+          </div>
+          <div class="container section two-column">
+            <div class="panel-card appointments">
+              <div class="card-head">
+                <div>
+                  <small class="eyebrow">Coming up</small>
+                  <h2>Your appointments</h2>
+                </div>
+                <button class="link-btn" data-panel-link="doctor">
+                  See all
+                </button>
+              </div>
+              <div class="appointment">
+                <span class="doctor-avatar">DR</span>
+                <div>
+                  <b>Dr. Rahman Ullah</b
+                  ><small>General physician · Video consultation</small
+                  ><span class="date-pill">Today · 04:30 PM</span>
+                </div>
+                <button>Join call</button>
+              </div>
+              <div class="appointment">
+                <span class="doctor-avatar purple">SA</span>
+                <div>
+                  <b>Dr. Sana Ahmad</b
+                  ><small>Dermatologist · Hayatabad Medical</small
+                  ><span class="date-pill muted">Tomorrow · 11:00 AM</span>
+                </div>
+                <button class="light-btn">Details</button>
+              </div>
+            </div>
+            <div class="panel-card record-card">
+              <div class="record-art">♥</div>
+              <div>
+                <small class="eyebrow">Medical record vault</small>
+                <h2>Your health, always with you.</h2>
+                <p>12 records safely stored across 3 providers.</p>
+                <button class="link-btn" data-panel-link="records">
+                  Open vault →
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="container section two-column bottom-section">
+            <div class="ai-banner">
+              <div class="ai-symbol">✦</div>
+              <div>
+                <small class="eyebrow">AI Hujra · Local health companion</small>
+                <h2>“Zama taba da. Sa wakram?”</h2>
+                <p>
+                  Explain symptoms and reports in words your family understands.
+                </p>
+              </div>
+              <button class="dark-btn" id="openAi">Ask AI Hujra →</button>
+            </div>
+            <div class="nearby-card">
+              <div class="card-head">
+                <div>
+                  <small class="eyebrow">Live around Peshawar</small>
+                  <h2>Care near you</h2>
+                </div>
+                <span class="live-label">● Live</span>
+              </div>
+              <div class="nearby-line">
+                <span class="hospital-icon">+</span>
+                <div>
+                  <b>Hayatabad Medical Complex</b
+                  ><small>Emergency · 4.2 km</small>
+                </div>
+                <strong>18 beds</strong>
+              </div>
+              <div class="nearby-line">
+                <span class="hospital-icon red-bg">+</span>
+                <div>
+                  <b>Lady Reading Hospital</b><small>Emergency · 8.7 km</small>
+                </div>
+                <strong>6 beds</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-view" id="doctorPanel">
+          <div class="container module-header">
+            <div>
+              <small class="eyebrow">Doctor workspace</small>
+              <h1>Care that reaches further.</h1>
+              <p>
+                Manage OPD, video consultations, prescriptions, and earnings.
+              </p>
+            </div>
+            <button class="primary" data-notify="Opening availability editor">
+              ＋ Set availability
+            </button>
+          </div>
+          <div class="container stats-grid">
+            <article>
+              <span>Today's patients</span><b>24</b
+              ><small class="positive">↗ 12% vs yesterday</small>
+            </article>
+            <article>
+              <span>Appointments</span><b>36</b
+              ><small>8 video consultations</small>
+            </article>
+            <article>
+              <span>This month's earnings</span><b>₨ 284,600</b
+              ><small class="positive">15% platform fee applied</small>
+            </article>
+            <article>
+              <span>Patient rating</span><b>4.9 ★</b
+              ><small>From 418 reviews</small>
+            </article>
+          </div>
+          <div class="container module-grid">
+            <div class="panel-card table-card">
+              <div class="card-head">
+                <h2>Today's OPD queue</h2>
+                <span>24 patients</span>
+              </div>
+              <div class="queue-row">
+                <span class="patient-mini">AH</span>
+                <div>
+                  <b>Arsalan Hayat</b><small>Follow-up · 10:30 AM</small>
+                </div>
+                <em class="status waiting">Waiting</em>
+              </div>
+              <div class="queue-row">
+                <span class="patient-mini pink">FK</span>
+                <div>
+                  <b>Farah Khan</b><small>Video consult · 11:00 AM</small>
+                </div>
+                <em class="status next">Next</em>
+              </div>
+              <div class="queue-row">
+                <span class="patient-mini gold">MA</span>
+                <div>
+                  <b>Muhammad Asif</b><small>New patient · 11:30 AM</small>
+                </div>
+                <em class="status done">Ready</em>
+              </div>
+            </div>
+            <div class="panel-card earnings">
+              <div class="card-head">
+                <h2>Earnings overview</h2>
+                <span>This month ▾</span>
+              </div>
+              <div class="big-amount">₨ 284,600 <small>+18.4%</small></div>
+              <div class="bars">
+                <i style="height: 48%"></i><i style="height: 70%"></i
+                ><i style="height: 56%"></i><i style="height: 82%"></i
+                ><i style="height: 64%"></i><i style="height: 92%"></i
+                ><i style="height: 78%"></i>
+              </div>
+              <div class="bar-labels">
+                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span
+                ><span>Fri</span><span>Sat</span><span>Sun</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-view" id="labPanel">
+          <div class="container module-header">
+            <div>
+              <small class="eyebrow">Diagnostics network</small>
+              <h1>Lab results, made clear.</h1>
+              <p>
+                Order tests, collect samples at home, and explain reports with
+                AI.
+              </p>
+            </div>
+            <button
+              class="primary"
+              data-notify="New home collection booking opened"
+            >
+              ＋ Book a test
+            </button>
+          </div>
+          <div class="container lab-grid">
+            <article class="lab-hero">
+              <span class="lab-icon">⌁</span><small>AI report reader</small>
+              <h2>Upload any report.<br />Understand every line.</h2>
+              <p>
+                Simple Urdu explanations reviewed against trusted medical
+                references.
+              </p>
+              <button class="dark-btn" id="reportReader">
+                Upload report →
+              </button>
+            </article>
+            <div class="panel-card table-card">
+              <div class="card-head">
+                <h2>Recent reports</h2>
+                <span>View all →</span>
+              </div>
+              <div class="report-row">
+                <span class="report-icon green-bg">✓</span>
+                <div>
+                  <b>CBC · Muhammad Afridi</b
+                  ><small>Al-Shifa Lab · 08 Sep 2026</small>
+                </div>
+                <em class="status done">Ready</em>
+              </div>
+              <div class="report-row">
+                <span class="report-icon blue-bg">⌁</span>
+                <div>
+                  <b>Chest X-Ray · Ishaq Afridi</b
+                  ><small>Rehman Diagnostics · 06 Sep 2026</small>
+                </div>
+                <em class="status next">AI reviewed</em>
+              </div>
+              <div class="report-row">
+                <span class="report-icon amber-bg">!</span>
+                <div>
+                  <b>Blood glucose · Ishaq Afridi</b
+                  ><small>Home collection · 04 Sep 2026</small>
+                </div>
+                <em class="status waiting">Pending</em>
+              </div>
+            </div>
+          </div>
+          <div class="container section">
+            <div class="section-head">
+              <div>
+                <small class="eyebrow">Available tests</small>
+                <h2>Popular near Bara</h2>
+              </div>
+            </div>
+            <div class="test-grid">
+              <button class="test-card">
+                <b>CBC Complete Blood Count</b
+                ><small>Home sample · 6–8 hours</small><strong>₨ 850</strong
+                ><span>Book →</span></button
+              ><button class="test-card">
+                <b>Blood sugar profile</b><small>Home sample · 4–6 hours</small
+                ><strong>₨ 1,200</strong><span>Book →</span></button
+              ><button class="test-card">
+                <b>Abdominal ultrasound</b><small>At lab · Same day</small
+                ><strong>₨ 2,500</strong><span>Book →</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-view" id="pharmacyPanel">
+          <div class="container module-header">
+            <div>
+              <small class="eyebrow">Pharmacy network</small>
+              <h1>Medicine, safely delivered.</h1>
+              <p>
+                Verified pharmacies, expiry alerts, and cheaper salt
+                alternatives.
+              </p>
+            </div>
+            <button class="primary" data-notify="Prescription upload opened">
+              ▣ Upload prescription
+            </button>
+          </div>
+          <div class="container pharmacy-layout">
+            <div class="panel-card search-card">
+              <div class="medicine-search">
+                <span>⌕</span
+                ><input placeholder="Search medicine or salt name..." /><button>
+                  Search
+                </button>
+              </div>
+              <div class="alternative">
+                <span>✦</span>
+                <div>
+                  <b>Find a cheaper alternative</b
+                  ><small>Ask: “Is dawai ka sasta mutbadil konsa hai?”</small>
+                </div>
+                <button id="alternativeBtn">Ask AI →</button>
+              </div>
+              <div class="medicine-row">
+                <span class="medicine-icon">✚</span>
+                <div>
+                  <b>Panadol Extra · 20 tablets</b
+                  ><small>Paracetamol 500mg · Al-Madina Pharmacy</small>
+                </div>
+                <strong>₨ 180</strong><button class="add-medicine">+</button>
+              </div>
+              <div class="medicine-row">
+                <span class="medicine-icon blue-bg">✚</span>
+                <div>
+                  <b>Augmentin 625mg · 14 tablets</b
+                  ><small
+                    >Amoxicillin + clavulanic acid · Prescription
+                    required</small
+                  >
+                </div>
+                <strong>₨ 1,260</strong><button class="add-medicine">+</button>
+              </div>
+            </div>
+            <div class="pharmacy-map">
+              <span class="map-label">20 verified pharmacies</span>
+              <div class="map-road road-a"></div>
+              <div class="map-road road-b"></div>
+              <span class="pharmacy-pin p1">✚</span
+              ><span class="pharmacy-pin p2">✚</span
+              ><span class="pharmacy-pin p3">✚</span>
+              <div class="map-you">YOU</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-view" id="hospitalPanel">
+          <div class="container module-header">
+            <div>
+              <small class="eyebrow">Hospital operations</small>
+              <h1>Every bed, accounted for.</h1>
+              <p>
+                Live capacity, staff shifts, ICU status, and facility readiness.
+              </p>
+            </div>
+            <button class="primary" data-notify="Hospital bed board exported">
+              ⇩ Export board
+            </button>
+          </div>
+          <div class="container hospital-grid">
+            <div class="hospital-card">
+              <span class="hospital-logo">HMC</span>
+              <div>
+                <h2>Hayatabad Medical Complex</h2>
+                <small>Peshawar · 4.2 km from Bara center</small>
+              </div>
+              <strong class="green-text">● Operational</strong>
+              <div class="bed-meter">
+                <div><span>General beds</span><b>18 / 42 available</b></div>
+                <i><em style="width: 43%"></em></i>
+              </div>
+              <div class="bed-meter">
+                <div><span>ICU beds</span><b>3 / 12 available</b></div>
+                <i><em class="red-meter" style="width: 75%"></em></i>
+              </div>
+            </div>
+            <div class="hospital-card">
+              <span class="hospital-logo red-bg">LRH</span>
+              <div>
+                <h2>Lady Reading Hospital</h2>
+                <small>Peshawar · 8.7 km from Bara center</small>
+              </div>
+              <strong class="amber-text">● Busy</strong>
+              <div class="bed-meter">
+                <div><span>General beds</span><b>6 / 55 available</b></div>
+                <i><em class="red-meter" style="width: 89%"></em></i>
+              </div>
+              <div class="bed-meter">
+                <div><span>ICU beds</span><b>1 / 16 available</b></div>
+                <i><em class="red-meter" style="width: 94%"></em></i>
+              </div>
+            </div>
+          </div>
+          <div class="container section two-column">
+            <div class="panel-card table-card">
+              <div class="card-head">
+                <h2>Staff on shift</h2>
+                <span>Today · 84 staff</span>
+              </div>
+              <div class="shift-row">
+                <span class="doctor-avatar">DR</span>
+                <div>
+                  <b>Dr. Rahman Ullah</b><small>Emergency · 08:00–16:00</small>
+                </div>
+                <em class="status done">On duty</em>
+              </div>
+              <div class="shift-row">
+                <span class="doctor-avatar purple">SA</span>
+                <div><b>Dr. Sana Ahmad</b><small>OPD · 09:00–17:00</small></div>
+                <em class="status done">On duty</em>
+              </div>
+            </div>
+            <div class="panel-card ambulance">
+              <span>⌁</span>
+              <h2>Ambulances</h2>
+              <b>7 <small>available now</small></b
+              ><button class="link-btn">Track live fleet →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-view" id="riderPanel">
+          <div class="container module-header">
+            <div>
+              <small class="eyebrow">Care delivery network</small>
+              <h1>Deliver care, not just parcels.</h1>
+              <p>
+                Medicine, samples, and urgent documents moving safely across
+                KPK.
+              </p>
+            </div>
+            <button class="primary" data-notify="Rider mode toggled online">
+              Go online
+            </button>
+          </div>
+          <div class="container rider-layout">
+            <div class="rider-map">
+              <span class="rider-point r1">⌁</span
+              ><span class="rider-point r2">⌁</span
+              ><span class="rider-point r3">⌁</span>
+              <div class="rider-status">
+                <span class="green-pulse"></span><b>42 riders online</b
+                ><small>Live around Bara & Peshawar</small>
+              </div>
+            </div>
+            <div class="panel-card rider-card">
+              <h2>Your shift</h2>
+              <div class="rider-stat">
+                <span>Today's earnings</span><b>₨ 3,840</b
+                ><small class="positive">+18% vs yesterday</small>
+              </div>
+              <div class="rider-stat">
+                <span>Active deliveries</span><b>4</b
+                ><small>2 samples · 2 medicines</small>
+              </div>
+              <div class="rider-stat">
+                <span>Safety score</span><b>98%</b
+                ><small>Excellent standing</small>
+              </div>
+              <button class="primary full">View delivery queue →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-view" id="lawyerPanel">
+          <div class="container module-header">
+            <div>
+              <small class="eyebrow red-label">QanoonVerse · Legal care</small>
+              <h1>Know your rights. Act clearly.</h1>
+              <p>
+                Generate a structured notice for medical negligence, with review
+                by a licensed lawyer.
+              </p>
+            </div>
+            <button class="red-button" id="noticeBtn">
+              ＋ Generate legal notice
+            </button>
+          </div>
+          <div class="container legal-grid">
+            <div class="legal-hero">
+              <span>⚖</span>
+              <h2>Medical negligence<br />case builder</h2>
+              <p>
+                Describe what happened. QanoonVerse organizes the facts,
+                evidence, and relevant Pakistan legal pathways.
+              </p>
+              <button class="red-button" data-notify="Case intake opened">
+                Start a case →
+              </button>
+            </div>
+            <div class="panel-card legal-list">
+              <div class="card-head">
+                <h2>Your legal matters</h2>
+                <span>Privacy protected</span>
+              </div>
+              <div class="case-row">
+                <span class="case-icon">§</span>
+                <div>
+                  <b>Lab report dispute · HMC</b
+                  ><small>Notice draft · Updated today</small>
+                </div>
+                <em class="status waiting">In review</em>
+              </div>
+              <div class="case-row">
+                <span class="case-icon green-bg">✓</span>
+                <div>
+                  <b>Insurance claim support</b
+                  ><small>Sehat Insaf Card · 18 Aug 2026</small>
+                </div>
+                <em class="status done">Resolved</em>
+              </div>
+            </div>
+          </div>
+          <div class="container legal-disclaimer">
+            <span>i</span>
+            <p>
+              AI suggestions are not legal advice. Every FIR, notice, and filing
+              is reviewed by a qualified Pakistani lawyer before use.
+            </p>
+          </div>
+        </section>
+
+        <section class="panel-view" id="inspectorPanel">
+          <div class="container module-header">
+            <div>
+              <small class="eyebrow">Government health inspector</small>
+              <h1>Health standards, visible.</h1>
+              <p>
+                Monitor facilities, complaints, licensing, and response times
+                across KPK.
+              </p>
+            </div>
+            <button class="primary" data-notify="Inspector report exported">
+              ⇩ Export report
+            </button>
+          </div>
+          <div class="container stats-grid">
+            <article>
+              <span>Licensed facilities</span><b>248</b
+              ><small class="positive">97.2% compliant</small>
+            </article>
+            <article>
+              <span>Open complaints</span><b>32</b
+              ><small class="negative">8 high priority</small>
+            </article>
+            <article>
+              <span>Inspections this week</span><b>84</b
+              ><small>12 scheduled today</small>
+            </article>
+            <article>
+              <span>Avg. response time</span><b>2.4 days</b
+              ><small class="positive">↓ 18% this quarter</small>
+            </article>
+          </div>
+          <div class="container panel-card inspection-table">
+            <div class="card-head">
+              <h2>Priority facilities</h2>
+              <span>Sorted by risk</span>
+            </div>
+            <div class="inspection-row">
+              <span class="risk high">High</span>
+              <div>
+                <b>Al-Shifa Diagnostics · Bara</b
+                ><small>License renewal overdue · Complaint #QK-8841</small>
+              </div>
+              <button class="light-btn">Review</button>
+            </div>
+            <div class="inspection-row">
+              <span class="risk medium">Medium</span>
+              <div>
+                <b>Noor Pharmacy · Peshawar</b
+                ><small>Temperature log missing · Inspection due</small>
+              </div>
+              <button class="light-btn">Review</button>
+            </div>
+            <div class="inspection-row">
+              <span class="risk low">Low</span>
+              <div>
+                <b>Rahman Clinic · Hayatabad</b
+                ><small>Routine follow-up · No open complaints</small>
+              </div>
+              <button class="light-btn">Review</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-view" id="financePanel">
+          <div class="container module-header">
+            <div>
+              <small class="eyebrow">Health finance</small>
+              <h1>Care that stays affordable.</h1>
+              <p>
+                Track payments, Sehat Insaf Card coverage, and fair platform
+                splits.
+              </p>
+            </div>
+            <button class="primary" data-notify="Finance report downloaded">
+              ⇩ Download report
+            </button>
+          </div>
+          <div class="container finance-cards">
+            <article class="insaf-card">
+              <small>Sehat Insaf Card</small>
+              <h2>Coverage checker</h2>
+              <p>Check eligibility for yourself or a family member.</p>
+              <button class="dark-btn" id="insafBtn">
+                Check eligibility →
+              </button>
+            </article>
+            <article class="finance-card">
+              <span>Patient payments</span><b>₨ 1.84M</b
+              ><small class="positive">↗ 14.8% this month</small>
+            </article>
+            <article class="finance-card">
+              <span>Doctor payouts</span><b>₨ 842K</b
+              ><small>15% platform commission</small>
+            </article>
+            <article class="finance-card">
+              <span>Lab & pharmacy</span><b>₨ 426K</b
+              ><small>10% / 8% commission</small>
+            </article>
+          </div>
+          <div class="container panel-card finance-table">
+            <div class="card-head">
+              <h2>Recent transactions</h2>
+              <span>JazzCash · Easypaisa · Card</span>
+            </div>
+            <div class="transaction">
+              <span class="tx-icon green-bg">↓</span>
+              <div>
+                <b>Dr. Rahman Ullah payout</b
+                ><small>OPD consultations · Today 09:14</small>
+              </div>
+              <strong>₨ 42,600</strong>
+            </div>
+            <div class="transaction">
+              <span class="tx-icon blue-bg">✚</span>
+              <div>
+                <b>Al-Shifa Lab settlement</b
+                ><small>Home collection · Yesterday</small>
+              </div>
+              <strong>₨ 18,400</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-view" id="brainPanel">
+          <div class="container module-header">
+            <div>
+              <small class="eyebrow brain-label"
+                >The care intelligence layer</small
+              >
+              <h1>AI Brain for KPK health.</h1>
+              <p>
+                Multilingual, evidence-aware, and designed to keep humans in the
+                loop.
+              </p>
+            </div>
+            <span class="brain-status"><i></i> Brain online</span>
+          </div>
+          <div class="container brain-layout">
+            <div class="brain-console">
+              <div class="console-top">
+                <span>AI HUJRA / HEALTH + QANOON</span><span>● LIVE</span>
+              </div>
+              <div class="console-chat">
+                <div class="ai-message">
+                  <span>✦</span>
+                  <p>
+                    Salam Ishaq. I can explain symptoms, lab reports, medicine
+                    alternatives, hospital beds, and legal next steps. What
+                    would you like to understand?
+                  </p>
+                </div>
+                <div class="user-message">
+                  “Is lab report me cancer hai? Aur agar negligence ho to kya
+                  karun?”
+                </div>
+                <div class="ai-message typing">
+                  <span>✦</span>
+                  <p>
+                    First, I will separate the medical question from the legal
+                    one. Upload the report for a doctor-reviewed explanation.
+                    For a negligence concern, preserve reports, invoices,
+                    consent forms, and timelines. A licensed lawyer can then
+                    review a notice under relevant Pakistani law.
+                  </p>
+                </div>
+              </div>
+              <div class="brain-input">
+                <input
+                  placeholder="Ask in Pashto, Urdu or English..."
+                /><button>→</button>
+              </div>
+            </div>
+            <div class="brain-capabilities">
+              <h2>What the Brain can do</h2>
+              <div>
+                <span>⌁</span><b>Report reader</b
+                ><small>Plain-language Urdu explanations</small>
+              </div>
+              <div>
+                <span>✚</span><b>Medicine alternatives</b
+                ><small>Compare salt, price, and safety</small>
+              </div>
+              <div>
+                <span>⚖</span><b>Justice pathways</b
+                ><small>Draft for lawyer review</small>
+              </div>
+              <div>
+                <span>⌁</span><b>Voice in 3 languages</b
+                ><small>Pashto · Urdu · English</small>
+              </div>
+              <p class="brain-note">
+                AI output is a decision-support tool, never a diagnosis or legal
+                ruling.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-view" id="recordsPanel">
+          <div class="container module-header">
+            <div>
+              <small class="eyebrow">Lifetime medical record vault</small>
+              <h1>Your story, safely kept.</h1>
+              <p>
+                Every report, prescription, appointment, and consent form in one
+                encrypted place.
+              </p>
+            </div>
+            <button class="primary" data-notify="Secure upload opened">
+              ⇧ Upload record
+            </button>
+          </div>
+          <div class="container record-grid">
+            <article class="vault-summary">
+              <span class="vault-icon">▤</span><b>12</b
+              ><small>records stored</small>
+              <div class="vault-progress"><i></i></div>
+              <p>Last backup · Today, 03:10 AM</p>
+            </article>
+            <div class="panel-card record-list">
+              <div class="card-head">
+                <h2>Recent records</h2>
+                <span>Filter ▾</span>
+              </div>
+              <div class="record-line">
+                <span class="file-icon blue-bg">PDF</span>
+                <div>
+                  <b>CBC blood report</b
+                  ><small>Al-Shifa Lab · 08 Sep 2026</small>
+                </div>
+                <button>Open →</button>
+              </div>
+              <div class="record-line">
+                <span class="file-icon green-bg">RX</span>
+                <div>
+                  <b>Prescription · Dr. Rahman</b
+                  ><small>General medicine · 07 Sep 2026</small>
+                </div>
+                <button>Open →</button>
+              </div>
+              <div class="record-line">
+                <span class="file-icon amber-bg">IMG</span>
+                <div>
+                  <b>Chest X-Ray</b
+                  ><small>Rehman Diagnostics · 06 Sep 2026</small>
+                </div>
+                <button>Open →</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast">
+      <span>✓</span>
+      <div><b>Done</b><small>Action completed</small></div>
+    </div>
+    <div class="ai-modal" id="aiModal">
+      <div class="ai-modal-box">
+        <button id="closeAi">×</button>
+        <div class="ai-logo">✦</div>
+        <small class="eyebrow">AI Hujra · Health assistant</small>
+        <h2>Sa wakram? How can I help?</h2>
+        <p>Ask about symptoms, reports, medicines, or care near Bara.</p>
+        <div class="ai-input">
+          <input id="aiQuestion" placeholder="Zama taba da..." /><button
+            id="sendAi"
+          >
+            →
+          </button>
+        </div>
+        <div id="aiAnswer"></div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

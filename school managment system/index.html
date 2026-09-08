@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="EduCore - Complete School ERP for private schools in Pakistan"
+    />
+    <title>EduCore | Complete School ERP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="brand-mark">E</div>
+          <div><strong>EduCore</strong><span>COMPLETE SCHOOL ERP</span></div>
+        </div>
+        <div class="branch-picker">
+          <span class="live-dot"></span>
+          <div>
+            <small>Active branch</small><strong>EduCore Main Campus</strong>
+          </div>
+          <button aria-label="Switch branch">⌄</button>
+        </div>
+        <nav class="nav-menu" aria-label="Main navigation">
+          <small class="nav-label">Workspace</small>
+          <button class="nav-item active" data-view="overview">
+            <span class="nav-icon">⌂</span
+            ><span data-en="Overview" data-ur="جائزہ">Overview</span>
+          </button>
+          <button class="nav-item" data-view="students">
+            <span class="nav-icon">♙</span
+            ><span data-en="Students" data-ur="طلباء">Students</span
+            ><em>1,248</em>
+          </button>
+          <button class="nav-item" data-view="admissions">
+            <span class="nav-icon">＋</span
+            ><span data-en="Admissions" data-ur="داخلے">Admissions</span
+            ><em class="alert-count">18</em>
+          </button>
+          <button class="nav-item" data-view="attendance">
+            <span class="nav-icon">✓</span
+            ><span data-en="Attendance" data-ur="حاضری">Attendance</span>
+          </button>
+          <button class="nav-item" data-view="fees">
+            <span class="nav-icon">₨</span
+            ><span data-en="Fees & Finance" data-ur="فیس اور مالیات"
+              >Fees & Finance</span
+            >
+          </button>
+          <button class="nav-item" data-view="academics">
+            <span class="nav-icon">▦</span
+            ><span data-en="Academics" data-ur="تعلیمی امور">Academics</span>
+          </button>
+          <small class="nav-label">Operations</small>
+          <button class="nav-item" data-view="staff">
+            <span class="nav-icon">♧</span
+            ><span data-en="Teachers & Staff" data-ur="اساتذہ اور عملہ"
+              >Teachers & Staff</span
+            >
+          </button>
+          <button class="nav-item" data-view="library">
+            <span class="nav-icon">▤</span
+            ><span data-en="Library" data-ur="کتب خانہ">Library</span>
+          </button>
+          <button class="nav-item" data-view="transport">
+            <span class="nav-icon">▰</span
+            ><span data-en="Transport" data-ur="ٹرانسپورٹ">Transport</span>
+          </button>
+          <button class="nav-item" data-view="reports">
+            <span class="nav-icon">◫</span
+            ><span
+              data-en="Reports & Certificates"
+              data-ur="رپورٹس اور سرٹیفکیٹ"
+              >Reports & Certificates</span
+            >
+          </button>
+        </nav>
+        <div class="sidebar-bottom">
+          <button class="nav-item" data-view="settings">
+            <span class="nav-icon">⚙</span
+            ><span data-en="Settings" data-ur="ترتیبات">Settings</span>
+          </button>
+          <div class="security-note">
+            <span>●</span>
+            <div>
+              <strong>System secure</strong
+              ><small>Last backup today, 04:15 AM</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <button class="mobile-menu" id="menuButton" aria-label="Open menu">
+            ☰
+          </button>
+          <div class="breadcrumbs">
+            <span id="pageKicker">Workspace</span><b>/</b
+            ><strong id="pageTitle">Overview</strong>
+          </div>
+          <div class="top-actions">
+            <div class="search-box">
+              <span>⌕</span
+              ><input
+                id="globalSearch"
+                type="search"
+                placeholder="Search students, invoices..."
+              />
+            </div>
+            <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+              ☼</button
+            ><button class="icon-btn language-btn" id="languageToggle">
+              اردو</button
+            ><button class="notification-btn" aria-label="Notifications">
+              <span>♢</span><i>3</i>
+            </button>
+            <div class="profile">
+              <div class="avatar">IA</div>
+              <div>
+                <strong>Ishaq Afridi</strong
+                ><select id="roleSelector" aria-label="Switch demo role">
+                  <option>Super Admin</option>
+                  <option>School Principal</option>
+                  <option>Teacher</option>
+                  <option>Student</option>
+                  <option>Parent</option>
+                  <option>Accountant</option>
+                  <option>Librarian / Staff</option>
+                </select>
+              </div>
+              <span>⌄</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="content" id="appContent">
+          <section class="view active-view" id="overviewView">
+            <div class="page-intro">
+              <div>
+                <p class="eyebrow">
+                  Monday, September 08, 2026
+                  <span class="status-pill">● Academic year 2026–27</span>
+                </p>
+                <h1>Good morning, Ishaq <span>✦</span></h1>
+                <p class="subtext">
+                  Here is what is happening across your school today.
+                </p>
+              </div>
+              <div class="intro-actions">
+                <button class="btn secondary" id="exportButton">
+                  ⇩ Export report</button
+                ><button class="btn primary" id="quickAdd">＋ Quick add</button>
+              </div>
+            </div>
+            <div class="metric-grid">
+              <article class="metric-card">
+                <div class="metric-icon blue">♙</div>
+                <div>
+                  <span>Total students</span><strong>1,248</strong
+                  ><small class="positive">↗ 8.2% <i>vs last term</i></small>
+                </div>
+                <div class="sparkline blue-line"></div>
+              </article>
+              <article class="metric-card">
+                <div class="metric-icon violet">♧</div>
+                <div>
+                  <span>Teaching staff</span><strong>86</strong
+                  ><small class="positive">↗ 4 new <i>this month</i></small>
+                </div>
+                <div class="sparkline violet-line"></div>
+              </article>
+              <article class="metric-card">
+                <div class="metric-icon gold">₨</div>
+                <div>
+                  <span>Fees collected</span><strong>₨ 4.82M</strong
+                  ><small class="positive">↗ 12.6% <i>vs last month</i></small>
+                </div>
+                <div class="sparkline gold-line"></div>
+              </article>
+              <article class="metric-card">
+                <div class="metric-icon green">✓</div>
+                <div>
+                  <span>Today's attendance</span><strong>94.8%</strong
+                  ><small class="positive">↗ 1.4% <i>vs yesterday</i></small>
+                </div>
+                <div class="sparkline green-line"></div>
+              </article>
+            </div>
+            <div class="dashboard-grid">
+              <article class="panel chart-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Fees collection</h2>
+                    <p>Monthly collection overview</p>
+                  </div>
+                  <div class="chart-controls">
+                    <button class="active">This year</button
+                    ><button>Last year</button
+                    ><button class="more-btn">•••</button>
+                  </div>
+                </div>
+                <div class="chart-wrap">
+                  <div class="y-axis">
+                    <span>₨ 1.2M</span><span>₨ 900K</span><span>₨ 600K</span
+                    ><span>₨ 300K</span><span>₨ 0</span>
+                  </div>
+                  <div class="chart">
+                    <div class="grid-line" style="top: 0"></div>
+                    <div class="grid-line" style="top: 25%"></div>
+                    <div class="grid-line" style="top: 50%"></div>
+                    <div class="grid-line" style="top: 75%"></div>
+                    <svg
+                      viewBox="0 0 800 220"
+                      preserveAspectRatio="none"
+                      aria-label="Fees collection chart"
+                    >
+                      <defs>
+                        <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
+                          <stop
+                            offset="0"
+                            stop-color="#3b82f6"
+                            stop-opacity=".24"
+                          />
+                          <stop
+                            offset="1"
+                            stop-color="#3b82f6"
+                            stop-opacity="0"
+                          />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        class="area"
+                        d="M0,167 C54,155 86,145 130,151 S205,112 260,130 S340,75 390,102 S460,110 520,80 S580,58 650,73 S730,30 800,45 L800,220 L0,220Z"
+                      />
+                      <path
+                        class="line"
+                        d="M0,167 C54,155 86,145 130,151 S205,112 260,130 S340,75 390,102 S460,110 520,80 S580,58 650,73 S730,30 800,45"
+                      />
+                      <circle cx="650" cy="73" r="5" />
+                    </svg>
+                    <div class="x-axis">
+                      <span>Jan</span><span>Feb</span><span>Mar</span
+                      ><span>Apr</span><span>May</span><span>Jun</span
+                      ><span>Jul</span><span>Aug</span><span>Sep</span
+                      ><span>Oct</span><span>Nov</span><span>Dec</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article class="panel attendance-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Attendance today</h2>
+                    <p>All classes · 08 Sep 2026</p>
+                  </div>
+                  <button class="more-btn">•••</button>
+                </div>
+                <div class="donut-wrap">
+                  <div class="donut">
+                    <div><strong>94.8%</strong><span>Present</span></div>
+                  </div>
+                  <div class="legend">
+                    <span><i class="dot present"></i>Present <b>1,183</b></span
+                    ><span><i class="dot absent"></i>Absent <b>42</b></span
+                    ><span><i class="dot late"></i>Late <b>23</b></span>
+                  </div>
+                </div>
+                <button class="text-link" data-view-link="attendance">
+                  View attendance report →
+                </button>
+              </article>
+            </div>
+            <div class="lower-grid">
+              <article class="panel table-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Recent fee payments</h2>
+                    <p>Latest transactions from all branches</p>
+                  </div>
+                  <button class="text-link" data-view-link="fees">
+                    View all →
+                  </button>
+                </div>
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Student</th>
+                        <th>Class</th>
+                        <th>Invoice</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="student-cell">
+                            <span class="table-avatar coral">AH</span
+                            ><strong>Ahmed Hassan</strong>
+                          </div>
+                        </td>
+                        <td>Class 8 · A</td>
+                        <td>#INV-24891</td>
+                        <td><strong>₨ 18,500</strong></td>
+                        <td><span class="badge paid">Paid</span></td>
+                        <td>Today, 10:42</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="student-cell">
+                            <span class="table-avatar purple">MA</span
+                            ><strong>Maryam Ali</strong>
+                          </div>
+                        </td>
+                        <td>Class 5 · B</td>
+                        <td>#INV-24890</td>
+                        <td><strong>₨ 14,200</strong></td>
+                        <td><span class="badge paid">Paid</span></td>
+                        <td>Today, 09:16</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="student-cell">
+                            <span class="table-avatar teal">ZA</span
+                            ><strong>Zainab Ahmad</strong>
+                          </div>
+                        </td>
+                        <td>Class 10 · A</td>
+                        <td>#INV-24889</td>
+                        <td><strong>₨ 22,000</strong></td>
+                        <td><span class="badge pending">Pending</span></td>
+                        <td>Yesterday</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+              <article class="panel agenda-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Upcoming</h2>
+                    <p>Your schedule for today</p>
+                  </div>
+                  <button class="more-btn">•••</button>
+                </div>
+                <div class="agenda">
+                  <div>
+                    <time>09:30</time><span class="agenda-line blue-bg"></span>
+                    <section>
+                      <strong>Staff coordination meeting</strong
+                      ><small>Principal's office · 45 min</small>
+                    </section>
+                  </div>
+                  <div>
+                    <time>11:00</time><span class="agenda-line gold-bg"></span>
+                    <section>
+                      <strong>Class 9 annual exam</strong
+                      ><small>Block A · Room 204</small>
+                    </section>
+                  </div>
+                  <div>
+                    <time>13:30</time><span class="agenda-line green-bg"></span>
+                    <section>
+                      <strong>Parent teacher meeting</strong
+                      ><small>Auditorium · 2 hours</small>
+                    </section>
+                  </div>
+                </div>
+                <button class="add-event">＋ Add event</button>
+              </article>
+            </div>
+          </section>
+          <section class="view" id="studentsView">
+            <div class="page-intro">
+              <div>
+                <p class="eyebrow">Workspace / Student management</p>
+                <h1>
+                  Students <span class="status-pill">1,248 enrolled</span>
+                </h1>
+                <p class="subtext">
+                  Manage profiles, admissions, promotion and student records.
+                </p>
+              </div>
+              <div class="intro-actions">
+                <button class="btn secondary" id="importButton">
+                  ⇧ Import Excel</button
+                ><button class="btn primary">＋ Add student</button>
+              </div>
+            </div>
+            <div class="panel table-panel full-panel">
+              <div class="toolbar">
+                <div class="search-box table-search">
+                  <span>⌕</span
+                  ><input placeholder="Search by name, admission no..." />
+                </div>
+                <select>
+                  <option>All classes</option>
+                  <option>Class 10</option>
+                  <option>Class 9</option></select
+                ><select>
+                  <option>All sections</option>
+                  <option>Section A</option>
+                  <option>Section B</option></select
+                ><button class="btn secondary">⇩ Export</button>
+              </div>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th><input type="checkbox" /></th>
+                      <th>Student</th>
+                      <th>Admission no.</th>
+                      <th>Class & section</th>
+                      <th>Father name</th>
+                      <th>Attendance</th>
+                      <th>Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div class="student-cell">
+                          <span class="table-avatar coral">AH</span
+                          ><strong>Ahmed Hassan</strong>
+                        </div>
+                      </td>
+                      <td>EC-2026-00421</td>
+                      <td>Class 8 · A</td>
+                      <td>Muhammad Hassan</td>
+                      <td><b class="green-text">96%</b></td>
+                      <td><span class="badge paid">Active</span></td>
+                      <td>•••</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div class="student-cell">
+                          <span class="table-avatar purple">MA</span
+                          ><strong>Maryam Ali</strong>
+                        </div>
+                      </td>
+                      <td>EC-2026-00420</td>
+                      <td>Class 5 · B</td>
+                      <td>Asif Ali</td>
+                      <td><b class="green-text">98%</b></td>
+                      <td><span class="badge paid">Active</span></td>
+                      <td>•••</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div class="student-cell">
+                          <span class="table-avatar teal">ZA</span
+                          ><strong>Zainab Ahmad</strong>
+                        </div>
+                      </td>
+                      <td>EC-2026-00419</td>
+                      <td>Class 10 · A</td>
+                      <td>Imran Ahmad</td>
+                      <td><b class="gold-text">87%</b></td>
+                      <td><span class="badge pending">Fee due</span></td>
+                      <td>•••</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div class="student-cell">
+                          <span class="table-avatar orange">HK</span
+                          ><strong>Hassan Khan</strong>
+                        </div>
+                      </td>
+                      <td>EC-2026-00418</td>
+                      <td>Class 7 · C</td>
+                      <td>Faisal Khan</td>
+                      <td><b class="green-text">92%</b></td>
+                      <td><span class="badge paid">Active</span></td>
+                      <td>•••</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="pagination">
+                <span>Showing 1–4 of 1,248 students</span>
+                <div>
+                  <button>←</button><button class="current">1</button
+                  ><button>2</button><button>3</button><button>→</button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="view" id="feesView">
+            <div class="page-intro">
+              <div>
+                <p class="eyebrow">Workspace / Finance</p>
+                <h1>
+                  Fees & finance
+                  <span class="status-pill warning-pill">₨ 342K pending</span>
+                </h1>
+                <p class="subtext">
+                  Track collections, invoices, concessions, and defaulters in
+                  PKR.
+                </p>
+              </div>
+              <div class="intro-actions">
+                <button class="btn secondary">⇩ Fee report</button
+                ><button class="btn primary">＋ Create invoice</button>
+              </div>
+            </div>
+            <div class="metric-grid three">
+              <article class="metric-card">
+                <div class="metric-icon gold">₨</div>
+                <div>
+                  <span>Collected this month</span><strong>₨ 4.82M</strong
+                  ><small class="positive">92.4% collection rate</small>
+                </div>
+              </article>
+              <article class="metric-card">
+                <div class="metric-icon blue">◷</div>
+                <div>
+                  <span>Outstanding fees</span><strong>₨ 342K</strong
+                  ><small class="negative">142 invoices overdue</small>
+                </div>
+              </article>
+              <article class="metric-card">
+                <div class="metric-icon green">↗</div>
+                <div>
+                  <span>Online payments</span><strong>₨ 1.68M</strong
+                  ><small class="positive">JazzCash · Easypaisa · Bank</small>
+                </div>
+              </article>
+            </div>
+            <div class="panel table-panel full-panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>Fee defaulters</h2>
+                  <p>Students requiring follow-up</p>
+                </div>
+                <button class="btn secondary">Send reminders</button>
+              </div>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Class</th>
+                      <th>Parent contact</th>
+                      <th>Due amount</th>
+                      <th>Due since</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="student-cell">
+                          <span class="table-avatar teal">ZA</span
+                          ><strong>Zainab Ahmad</strong>
+                        </div>
+                      </td>
+                      <td>Class 10 · A</td>
+                      <td>+92 300 1234567</td>
+                      <td><strong class="negative">₨ 22,000</strong></td>
+                      <td>01 Sep 2026</td>
+                      <td><button class="small-action">WhatsApp</button></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="student-cell">
+                          <span class="table-avatar orange">US</span
+                          ><strong>Usman Shah</strong>
+                        </div>
+                      </td>
+                      <td>Class 6 · A</td>
+                      <td>+92 333 9876543</td>
+                      <td><strong class="negative">₨ 16,500</strong></td>
+                      <td>01 Sep 2026</td>
+                      <td><button class="small-action">WhatsApp</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <div class="toast" id="toast">
+      <span>✓</span>
+      <div>
+        <strong>Action completed</strong
+        ><small>Your request was processed successfully.</small>
+      </div>
+    </div>
+    <div class="modal-backdrop" id="quickModal">
+      <div class="modal">
+        <button class="modal-close" id="closeModal">×</button>
+        <p class="eyebrow">Quick action</p>
+        <h2>Add to EduCore</h2>
+        <div class="quick-options">
+          <button data-toast="Student form opened">
+            <b>♙</b
+            ><span
+              ><strong>New student</strong
+              ><small>Create a student profile</small></span
+            >→</button
+          ><button data-toast="Admission form opened">
+            <b>＋</b
+            ><span
+              ><strong>New admission</strong
+              ><small>Start an admission inquiry</small></span
+            >→</button
+          ><button data-toast="Invoice form opened">
+            <b>₨</b
+            ><span
+              ><strong>New fee invoice</strong
+              ><small>Generate a PKR challan</small></span
+            >→
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "KhyberVerse - Bara & Peshawar Super App",
+  "short_name": "KhyberVerse",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#09131d",
+  "theme_color": "#f8c844",
+  "description": "Food, rides, groceries, jobs, services and more for Khyber.",
+  "icons": []
+}

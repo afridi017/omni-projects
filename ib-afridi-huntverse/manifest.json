@@ -1,0 +1,10 @@
+{
+  "name": "IB AFRIDI HUNTVERSE",
+  "short_name": "HUNTVERSE",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00ff41",
+  "description": "Pakistan's ethical bug bounty arena by IB Afridi.",
+  "icons": []
+}

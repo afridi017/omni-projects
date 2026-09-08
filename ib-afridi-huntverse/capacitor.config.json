@@ -1,0 +1,7 @@
+{
+  "appId": "pk.ibafridi.huntverse",
+  "appName": "IB AFRIDI HUNTVERSE",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "server": { "androidScheme": "https" }
+}

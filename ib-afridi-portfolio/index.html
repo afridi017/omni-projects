@@ -1,0 +1,1735 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0f19" />
+    <meta
+      name="description"
+      content="IB Afridi Cybersecurity Portfolio — Python security tools, 3D web experiences and Android apps from Peshawar."
+    />
+    <meta
+      name="keywords"
+      content="IB Afridi Cybersecurity, Python penetration testing, Web Developer Peshawar, Three.js"
+    />
+    <title>IB Afridi // Cybersecurity Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0b0f19;
+        --surface: rgba(17, 22, 36, 0.72);
+        --surface2: #111827;
+        --line: rgba(166, 180, 255, 0.14);
+        --text: #f4f7ff;
+        --muted: #9ba6bb;
+        --purple: #7b2ff7;
+        --cyan: #22d3ee;
+        --pink: #f107a3;
+        --lime: #b9f65c;
+        --shadow: 0 28px 80px rgba(0, 0, 0, 0.3);
+        --font: "DM Sans", sans-serif;
+        --display: "Space Grotesk", sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font);
+        overflow-x: hidden;
+      }
+      body:before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            circle at 12% 20%,
+            rgba(123, 47, 247, 0.13),
+            transparent 32%
+          ),
+          radial-gradient(
+            circle at 88% 12%,
+            rgba(34, 211, 238, 0.1),
+            transparent 28%
+          );
+        z-index: -2;
+      }
+      .grid-glow {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        background:
+          linear-gradient(transparent 96%, rgba(34, 211, 238, 0.05)),
+          linear-gradient(90deg, transparent 96%, rgba(123, 47, 247, 0.05));
+        background-size: 56px 56px;
+        mask-image: linear-gradient(to bottom, black, transparent 75%);
+      }
+      #scene {
+        position: fixed;
+        inset: 0;
+        z-index: -3;
+        opacity: 0.38;
+      }
+      .container {
+        width: min(1180px, calc(100% - 56px));
+        margin: auto;
+      }
+      a {
+        color: inherit;
+      }
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+        color: inherit;
+      }
+      .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: 240px;
+        border-right: 1px solid var(--line);
+        background: rgba(8, 11, 20, 0.82);
+        backdrop-filter: blur(20px);
+        padding: 25px 16px;
+        display: flex;
+        flex-direction: column;
+        z-index: 20;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        padding: 0 10px 25px;
+      }
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--purple), var(--cyan));
+        font: 700 20px var(--display);
+        box-shadow: 0 0 32px rgba(123, 47, 247, 0.35);
+      }
+      .brand b,
+      .brand strong,
+      .brand small {
+        display: block;
+      }
+      .brand b {
+        font: 700 10px var(--display);
+        color: var(--cyan);
+        letter-spacing: 0.12em;
+      }
+      .brand strong {
+        font: 700 17px var(--display);
+        letter-spacing: -0.04em;
+      }
+      .brand small {
+        font-size: 7px;
+        color: #7c879d;
+        letter-spacing: 0.14em;
+        margin-top: 3px;
+      }
+      .availability {
+        margin: 0 4px 22px;
+        padding: 10px;
+        border: 1px solid rgba(185, 246, 92, 0.22);
+        background: rgba(185, 246, 92, 0.05);
+        border-radius: 8px;
+        color: var(--lime);
+        font-size: 9px;
+      }
+      .availability i {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background: var(--lime);
+        border-radius: 50%;
+        margin-right: 6px;
+        box-shadow: 0 0 10px var(--lime);
+      }
+      .side-nav {
+        display: grid;
+        gap: 3px;
+      }
+      .side-label {
+        padding: 0 11px 8px;
+        color: #5f6c84;
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .side-label.gap {
+        margin-top: 22px;
+      }
+      .side-nav button {
+        border: 0;
+        background: transparent;
+        padding: 11px 12px;
+        border-radius: 7px;
+        text-align: left;
+        color: #8d99ae;
+        font-size: 12px;
+        transition: 0.2s;
+      }
+      .side-nav button:hover,
+      .side-nav button.active {
+        color: #fff;
+        background: linear-gradient(
+          90deg,
+          rgba(123, 47, 247, 0.2),
+          transparent
+        );
+        box-shadow: inset 2px 0 var(--cyan);
+      }
+      .side-nav button span {
+        display: inline-block;
+        width: 22px;
+        color: var(--cyan);
+      }
+      .side-foot {
+        margin-top: auto;
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+      }
+      .side-foot small,
+      .side-foot strong {
+        display: block;
+      }
+      .side-foot small {
+        color: #707d93;
+        font-size: 9px;
+      }
+      .side-foot strong {
+        font-size: 11px;
+        margin-top: 4px;
+      }
+      .side-foot a {
+        display: block;
+        color: var(--cyan);
+        font-size: 10px;
+        text-decoration: none;
+        margin-top: 16px;
+      }
+      .main {
+        margin-left: 240px;
+      }
+      .topbar {
+        height: 76px;
+        position: sticky;
+        top: 0;
+        z-index: 15;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 38px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(11, 15, 25, 0.72);
+        backdrop-filter: blur(18px);
+      }
+      .crumbs {
+        color: #748198;
+        font-size: 11px;
+        display: flex;
+        gap: 10px;
+      }
+      .crumbs b {
+        color: #404c60;
+      }
+      .crumbs strong {
+        color: var(--cyan);
+      }
+      .top-actions {
+        display: flex;
+        gap: 9px;
+        align-items: center;
+      }
+      .theme-switch,
+      .menu-button {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 6px;
+        color: #acb8c9;
+        padding: 8px 10px;
+        font-size: 10px;
+      }
+      .menu-button {
+        display: none;
+      }
+      .top-contact {
+        color: #bdc9d8;
+        font-size: 10px;
+        text-decoration: none;
+      }
+      .hero {
+        min-height: 670px;
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 45px;
+        align-items: center;
+        padding: 65px 0 48px;
+      }
+      .eyebrow {
+        color: var(--cyan);
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .hero h1 {
+        font: 700 clamp(52px, 8vw, 94px)/0.91 var(--display);
+        letter-spacing: -0.09em;
+        margin: 20px 0;
+      }
+      .gradient-text {
+        background: linear-gradient(
+          100deg,
+          #fff 15%,
+          var(--cyan) 42%,
+          var(--purple) 78%,
+          var(--pink)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .hero-sub {
+        max-width: 540px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.7;
+      }
+      .hero-sub strong {
+        color: #e8efff;
+      }
+      .hero-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 27px;
+        flex-wrap: wrap;
+      }
+      .primary,
+      .ghost {
+        border-radius: 7px;
+        padding: 13px 16px;
+        font-weight: 700;
+        font-size: 11px;
+        text-decoration: none;
+        display: inline-flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .primary {
+        background: linear-gradient(100deg, var(--purple), #a74bff);
+        box-shadow: 0 14px 35px rgba(123, 47, 247, 0.3);
+      }
+      .ghost {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        color: #d9e4f4;
+      }
+      .hero-note {
+        margin-top: 22px;
+        color: #7f8ba0;
+        font-size: 10px;
+      }
+      .hero-note span {
+        color: var(--lime);
+      }
+      .tilt-wrap {
+        perspective: 1200px;
+        display: grid;
+        place-items: center;
+      }
+      .hero-card {
+        width: min(430px, 100%);
+        min-height: 500px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 20px;
+        background: linear-gradient(
+          145deg,
+          rgba(28, 34, 55, 0.84),
+          rgba(10, 13, 23, 0.75)
+        );
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.18s ease;
+      }
+      .hero-card:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.12),
+          transparent 30%,
+          transparent 66%,
+          rgba(241, 7, 163, 0.1)
+        );
+        pointer-events: none;
+      }
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        padding: 18px 20px;
+        color: #78869c;
+        font-size: 9px;
+        letter-spacing: 0.1em;
+      }
+      .card-top span:last-child {
+        color: var(--lime);
+      }
+      .portrait {
+        height: 270px;
+        margin: 0 20px;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        background: #182438;
+      }
+      .portrait img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 20%;
+        filter: saturate(0.8) contrast(1.08);
+      }
+      .portrait:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(transparent 68%, rgba(6, 9, 16, 0.9));
+      }
+      .code-overlay {
+        position: absolute;
+        left: 14px;
+        top: 14px;
+        z-index: 1;
+        color: var(--cyan);
+        font: 10px monospace;
+        line-height: 1.7;
+        background: rgba(4, 7, 13, 0.75);
+        padding: 9px;
+        border-left: 2px solid var(--purple);
+      }
+      .code-overlay span {
+        color: var(--pink);
+      }
+      .profile-name {
+        position: absolute;
+        z-index: 2;
+        left: 18px;
+        bottom: 14px;
+        font: 700 21px var(--display);
+      }
+      .card-content {
+        padding: 20px;
+      }
+      .card-content h3 {
+        font: 600 12px var(--display);
+        color: #b6c4d5;
+        margin: 0 0 13px;
+      }
+      .module {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin: 8px 0;
+        color: #8795a8;
+        font-size: 9px;
+      }
+      .module span {
+        width: 80px;
+      }
+      .bar {
+        height: 5px;
+        flex: 1;
+        background: #253149;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+      .bar i {
+        display: block;
+        height: 100%;
+        border-radius: 6px;
+        background: linear-gradient(90deg, var(--purple), var(--cyan));
+      }
+      .motto {
+        margin-top: 15px;
+        padding: 11px;
+        border: 1px solid rgba(34, 211, 238, 0.18);
+        background: rgba(34, 211, 238, 0.05);
+        color: var(--cyan);
+        font-size: 10px;
+        line-height: 1.5;
+      }
+      .ticker {
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        overflow: hidden;
+        white-space: nowrap;
+        color: #8090a7;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        padding: 13px 0;
+      }
+      .ticker-track {
+        display: inline-block;
+        animation: marquee 28s linear infinite;
+      }
+      .ticker b {
+        color: var(--pink);
+        margin: 0 18px;
+      }
+      @keyframes marquee {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .section {
+        padding: 85px 0 0;
+      }
+      .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        margin-bottom: 25px;
+      }
+      .section-title h2 {
+        font: 700 clamp(26px, 4vw, 43px) var(--display);
+        letter-spacing: -0.06em;
+        margin: 8px 0 0;
+      }
+      .section-title p {
+        color: var(--muted);
+        max-width: 450px;
+        font-size: 12px;
+        line-height: 1.6;
+        margin: 0;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      .stat,
+      .service,
+      .timeline-card,
+      .project,
+      .contact-box {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+      }
+      .stat {
+        padding: 21px;
+      }
+      .stat strong,
+      .stat small,
+      .stat span {
+        display: block;
+      }
+      .stat strong {
+        font: 700 30px var(--display);
+        color: var(--cyan);
+        margin: 11px 0 5px;
+      }
+      .stat small {
+        color: #76849b;
+        font-size: 9px;
+        letter-spacing: 0.08em;
+      }
+      .stat span {
+        color: #8e9aad;
+        font-size: 9px;
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 15px;
+        margin-top: 15px;
+      }
+      .about-copy,
+      .service {
+        padding: 23px;
+      }
+      .about-copy p {
+        color: var(--muted);
+        line-height: 1.85;
+        font-size: 13px;
+        margin: 0;
+      }
+      .about-copy p + p {
+        margin-top: 15px;
+      }
+      .service-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .service {
+        padding: 17px;
+        min-height: 120px;
+        position: relative;
+      }
+      .service h3 {
+        font-size: 13px;
+        margin: 10px 0 6px;
+      }
+      .service p {
+        color: #8794a8;
+        font-size: 10px;
+        margin: 0;
+        line-height: 1.5;
+      }
+      .service span {
+        color: var(--pink);
+        font-size: 21px;
+      }
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+      .timeline-card {
+        padding: 22px;
+        position: relative;
+        overflow: hidden;
+      }
+      .timeline-card:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(var(--purple), var(--cyan));
+      }
+      .timeline-card small {
+        color: var(--cyan);
+        font-size: 9px;
+      }
+      .timeline-card h3 {
+        font-size: 14px;
+        margin: 10px 0 7px;
+      }
+      .timeline-card p {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.6;
+        margin: 0;
+      }
+      .filters {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+      }
+      .filter {
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.03);
+        color: #9ba7ba;
+        padding: 8px 11px;
+        font-size: 10px;
+      }
+      .filter.active {
+        background: var(--purple);
+        border-color: var(--purple);
+        color: #fff;
+      }
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+      .project {
+        padding: 20px;
+        min-height: 250px;
+        display: flex;
+        flex-direction: column;
+        transition:
+          transform 0.2s,
+          border-color 0.2s;
+      }
+      .project:hover {
+        transform: translateY(-5px);
+        border-color: rgba(34, 211, 238, 0.5);
+      }
+      .project.featured {
+        grid-column: span 2;
+        background: linear-gradient(
+          135deg,
+          rgba(123, 47, 247, 0.18),
+          rgba(17, 22, 36, 0.75)
+        );
+      }
+      .project .project-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+      }
+      .project-tag {
+        color: var(--cyan);
+        font-size: 9px;
+        letter-spacing: 0.1em;
+      }
+      .project-number {
+        color: #47556d;
+        font: 700 20px var(--display);
+      }
+      .project h3 {
+        font: 600 18px var(--display);
+        letter-spacing: -0.04em;
+        margin: 24px 0 7px;
+      }
+      .project p {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.55;
+        margin: 0;
+      }
+      .project ul {
+        list-style: none;
+        padding: 0;
+        color: #8694a6;
+        font-size: 9px;
+        line-height: 1.9;
+        margin: 13px 0;
+      }
+      .project li:before {
+        content: ">";
+        color: var(--pink);
+        margin-right: 7px;
+      }
+      .techs {
+        margin-top: auto;
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .techs span {
+        padding: 5px 7px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.05);
+        color: #9eacc1;
+        font-size: 8px;
+      }
+      .project a {
+        color: var(--cyan);
+        text-decoration: none;
+        font-size: 10px;
+        margin-top: 13px;
+      }
+      .recognition {
+        margin-top: 15px;
+        padding: 27px;
+        border: 1px solid rgba(185, 246, 92, 0.18);
+        border-radius: 12px;
+        background: linear-gradient(
+          120deg,
+          rgba(185, 246, 92, 0.08),
+          rgba(17, 22, 36, 0.65)
+        );
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .recognition-mark {
+        font-size: 33px;
+        color: var(--lime);
+      }
+      .recognition h3 {
+        font: 600 18px var(--display);
+        margin: 0 0 7px;
+      }
+      .recognition p {
+        color: var(--muted);
+        font-size: 11px;
+        margin: 0;
+      }
+      .contact-box {
+        display: grid;
+        grid-template-columns: 0.85fr 1.15fr;
+        gap: 30px;
+        padding: 25px;
+      }
+      .contact-copy h2 {
+        font: 700 37px var(--display);
+        letter-spacing: -0.07em;
+        margin: 8px 0;
+      }
+      .contact-copy p {
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 12px;
+      }
+      .contact-links {
+        display: grid;
+        gap: 8px;
+        margin-top: 20px;
+      }
+      .contact-links a {
+        color: var(--cyan);
+        font-size: 11px;
+        text-decoration: none;
+      }
+      .contact-form {
+        display: grid;
+        gap: 10px;
+      }
+      .contact-form input,
+      .contact-form textarea {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--line);
+        color: var(--text);
+        padding: 12px;
+        border-radius: 6px;
+        outline: none;
+        font-size: 11px;
+      }
+      .contact-form textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+      .contact-form input:focus,
+      .contact-form textarea:focus {
+        border-color: var(--cyan);
+      }
+      .submit {
+        justify-self: start;
+        border: 0;
+        background: linear-gradient(100deg, var(--purple), var(--pink));
+        color: #fff;
+        padding: 12px 17px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 11px;
+      }
+      footer {
+        margin: 80px 0 25px;
+        text-align: center;
+        color: #6e7c91;
+        font-size: 10px;
+        line-height: 1.9;
+      }
+      footer a {
+        color: var(--cyan);
+        text-decoration: none;
+      }
+      footer strong {
+        color: var(--text);
+      }
+      .toast {
+        position: fixed;
+        right: 25px;
+        bottom: 25px;
+        z-index: 40;
+        padding: 12px 15px;
+        background: #111a2b;
+        border: 1px solid var(--cyan);
+        color: var(--cyan);
+        font-size: 10px;
+        transform: translateY(140%);
+        transition: 0.3s;
+        box-shadow: 0 12px 35px #0007;
+      }
+      .toast.show {
+        transform: none;
+      }
+      .light {
+        --bg: #f1f4fb;
+        --surface: rgba(255, 255, 255, 0.75);
+        --surface2: #fff;
+        --line: rgba(47, 62, 99, 0.15);
+        --text: #111a2a;
+        --muted: #5f6b80;
+      }
+      .light .sidebar,
+      .light .topbar {
+        background: rgba(244, 247, 255, 0.82);
+      }
+      .light .grid-glow {
+        opacity: 0.18;
+      }
+      .light .contact-form input,
+      .light .contact-form textarea {
+        background: #fff;
+      }
+      .classic {
+        --bg: #090b10;
+        --purple: #506cff;
+        --cyan: #d7e4ff;
+        --pink: #ff648f;
+      }
+      .classic .gradient-text {
+        background: linear-gradient(90deg, #fff, #b6c9ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+      .glow {
+        animation: softpulse 3s ease-in-out infinite;
+      }
+      @keyframes softpulse {
+        50% {
+          box-shadow: 0 0 35px rgba(34, 211, 238, 0.17);
+        }
+      }
+      @media (max-width: 1050px) {
+        .sidebar {
+          width: 215px;
+        }
+        .main {
+          margin-left: 215px;
+        }
+        .hero {
+          gap: 20px;
+        }
+        .project-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .project.featured {
+          grid-column: span 2;
+        }
+        .content {
+          width: calc(100% - 40px);
+        }
+      }
+      @media (max-width: 760px) {
+        .sidebar {
+          transform: translateX(-100%);
+          transition: 0.25s;
+        }
+        .sidebar.open {
+          transform: none;
+          box-shadow: 12px 0 45px #0008;
+        }
+        .main {
+          margin-left: 0;
+        }
+        .menu-button {
+          display: block;
+        }
+        .crumbs {
+          display: none;
+        }
+        .topbar {
+          padding: 0 18px;
+        }
+        .top-contact {
+          display: none;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+          padding-top: 45px;
+        }
+        .hero-card {
+          min-height: 450px;
+        }
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .about-grid,
+        .contact-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline {
+          grid-template-columns: 1fr;
+        }
+        .section-title {
+          align-items: start;
+          gap: 15px;
+          flex-direction: column;
+        }
+        .project-grid {
+          grid-template-columns: 1fr;
+        }
+        .project.featured {
+          grid-column: auto;
+        }
+        .recognition {
+          align-items: start;
+          flex-direction: column;
+        }
+      }
+      @media (max-width: 480px) {
+        .container,
+        .content {
+          width: calc(100% - 30px);
+        }
+        .topbar {
+          height: 62px;
+        }
+        .hero h1 {
+          font-size: 54px;
+        }
+        .stats-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stat {
+          padding: 15px;
+        }
+        .stat strong {
+          font-size: 23px;
+        }
+        .service-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-buttons a {
+          width: 100%;
+          justify-content: space-between;
+        }
+        .hero-card {
+          min-height: 420px;
+        }
+        .portrait {
+          height: 230px;
+        }
+        .contact-copy h2 {
+          font-size: 31px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-glow"></div>
+    <canvas id="scene"></canvas>
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#home"
+        ><span class="brand-mark">IA</span
+        ><span
+          ><b>IB AFRIDI</b><strong>CYBERSPACE</strong
+          ><small>SECURITY · WEB · 3D</small></span
+        ></a
+      >
+      <div class="availability"><i></i> AVAILABLE FOR NEW OPPORTUNITIES</div>
+      <nav class="side-nav">
+        <small class="side-label">Navigate</small
+        ><button class="active" data-section="home"><span>⌂</span>Home</button
+        ><button data-section="about"><span>◈</span>About</button
+        ><button data-section="services"><span>✦</span>What I Do</button
+        ><button data-section="projects">
+          <span>▦</span>Projects <em>11</em></button
+        ><button data-section="experience"><span>◷</span>Experience</button
+        ><button data-section="contact"><span>↗</span>Contact</button>
+      </nav>
+      <div class="side-foot">
+        <small>PEMASHAWAR, KPK · PK</small
+        ><strong>Ethical hacking is not a crime.</strong
+        ><a href="mailto:ib.afridi.cs@gmail.com">ib.afridi.cs@gmail.com</a>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-button" id="menuButton">☰</button>
+        <div class="crumbs">
+          <span>IB AFRIDI</span><b>/</b><strong>CYBERSECURITY PORTFOLIO</strong>
+        </div>
+        <div class="top-actions">
+          <a
+            class="top-contact"
+            href="https://github.com/afridi017"
+            target="_blank"
+            rel="noreferrer"
+            >GITHUB ↗</a
+          ><button class="theme-switch" id="themeSwitch">LUXURY</button
+          ><a
+            class="top-contact"
+            href="https://linkedin.com/in/ishaqafridi017"
+            target="_blank"
+            rel="noreferrer"
+            >LINKEDIN ↗</a
+          >
+        </div>
+      </header>
+      <div class="content">
+        <section class="hero" id="home">
+          <div>
+            <p class="eyebrow">
+              CYBERSECURITY ENTHUSIAST · PYTHON TOOL DEVELOPER
+            </p>
+            <h1>IB <span class="gradient-text">Afridi.</span></h1>
+            <p class="hero-sub">
+              I build security tools through <strong>Python</strong> ·
+              <strong>21+ modules</strong> ·
+              <strong>13-module flagship framework</strong> for Kali Linux.
+            </p>
+            <div class="hero-buttons">
+              <a class="primary" href="#projects">View My Work <span>↗</span></a
+              ><a
+                class="ghost"
+                href="mailto:ib.afridi.cs@gmail.com?subject=Resume%20request"
+                >Download Resume <span>↓</span></a
+              >
+            </div>
+            <p class="hero-note">
+              <span>●</span> Peshawar, Khyber Pakhtunkhwa · building the next
+              layer of the web
+            </p>
+          </div>
+          <div class="tilt-wrap">
+            <article class="hero-card glow" id="heroCard">
+              <div class="card-top">
+                <span>IB_AFRIDI / PROFILE.EXE</span><span>ONLINE</span>
+              </div>
+              <div class="portrait">
+                <img
+                  src="https://i.ibb.co/mVkj8JHk/IMG-20260423-WA0122.jpg"
+                  alt="IB Afridi portrait"
+                />
+                <div class="code-overlay">
+                  <span>import</span> nmap<br /><span>from</span> iapf
+                  <span>import</span>
+                  recon<br /><br />modules.load(<span>13</span>)
+                </div>
+                <div class="profile-name">IB AFRIDI</div>
+              </div>
+              <div class="card-content">
+                <h3>LOADOUT / CURRENT BUILD</h3>
+                <div class="module">
+                  <span>Python</span
+                  ><i class="bar"><i style="width: 82%"></i></i>
+                </div>
+                <div class="module">
+                  <span>Cybersecurity</span
+                  ><i class="bar"><i style="width: 88%"></i></i>
+                </div>
+                <div class="module">
+                  <span>Three.js</span
+                  ><i class="bar"><i style="width: 72%"></i></i>
+                </div>
+                <div class="motto">
+                  “Ethical hacking is not a crime, it's a skill.”
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+        <div class="ticker">
+          <div class="ticker-track">
+            CYBERSECURITY <b>•</b> KALI LINUX <b>•</b> PENTESTING
+            <b>•</b> THREE.JS <b>•</b> CAPACITOR <b>•</b> PYTHON TOOLS
+            <b>•</b> OPEN SOURCE <b>•</b> CYBERSECURITY <b>•</b> KALI LINUX
+            <b>•</b> PENTESTING <b>•</b> THREE.JS <b>•</b> CAPACITOR <b>•</b>
+          </div>
+        </div>
+        <section class="section" id="about">
+          <div class="section-title">
+            <div>
+              <small class="eyebrow">01 / THE OPERATOR</small>
+              <h2>Built before the degree.</h2>
+            </div>
+            <p>
+              Self-taught security builder from Peshawar turning curiosity into
+              practical tools, products, and systems.
+            </p>
+          </div>
+          <div class="stats-grid">
+            <div class="stat">
+              <small>SECURITY MODULES</small><strong>21+</strong
+              ><span>Across two Python tools</span>
+            </div>
+            <div class="stat">
+              <small>PROJECTS SHIPPED</small><strong>11</strong
+              ><span>Web · mobile · 3D · AI</span>
+            </div>
+            <div class="stat">
+              <small>FLAGSHIP FRAMEWORK</small><strong>13</strong
+              ><span>Modules active in IAPF</span>
+            </div>
+            <div class="stat">
+              <small>OPEN SOURCE TOOLS</small><strong>02</strong
+              ><span>Built for legal lab use</span>
+            </div>
+          </div>
+          <div class="about-grid">
+            <div class="about-copy stat">
+              <p>
+                I'm a cybersecurity enthusiast, Python tool developer, and web
+                developer focused on building things that are technically
+                serious and visually memorable. My work spans penetration
+                testing automation, responsive web products, Three.js
+                experiences, and Capacitor Android apps.
+              </p>
+              <p>
+                Currently pursuing Web & App Development at SMIT and preparing
+                for BS Cyber Security at CECOS University. My north star is
+                simple: make the internet more understandable, more creative,
+                and harder to break.
+              </p>
+            </div>
+            <div class="service-grid">
+              <div class="service">
+                <span>⌁</span>
+                <h3>Security mindset</h3>
+                <p>Recon, auditing, automation, and responsible disclosure.</p>
+              </div>
+              <div class="service">
+                <span>◈</span>
+                <h3>Builder energy</h3>
+                <p>From terminal tools to complete multi-panel products.</p>
+              </div>
+              <div class="service">
+                <span>✦</span>
+                <h3>Creative code</h3>
+                <p>3D scenes, bold interfaces, and interactive systems.</p>
+              </div>
+              <div class="service">
+                <span>↗</span>
+                <h3>Always shipping</h3>
+                <p>Open source, live demos, and useful experiments.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section" id="services">
+          <div class="section-title">
+            <div>
+              <small class="eyebrow">02 / WHAT I DO</small>
+              <h2>Hard skills. Sharp output.</h2>
+            </div>
+          </div>
+          <div
+            class="service-grid"
+            style="grid-template-columns: repeat(4, 1fr)"
+          >
+            <div class="service">
+              <span>⌁</span>
+              <h3>PenTest Development</h3>
+              <p>
+                Python automation, Nmap workflows, recon modules, scan reports.
+              </p>
+            </div>
+            <div class="service">
+              <span>◈</span>
+              <h3>Recon & OSINT</h3>
+              <p>
+                DNS, Whois, Geo IP, subdomains, banner grabbing, safe lab
+                tooling.
+              </p>
+            </div>
+            <div class="service">
+              <span>▣</span>
+              <h3>3D Web Experiences</h3>
+              <p>
+                Three.js scenes, interactive visuals, games, and product
+                storytelling.
+              </p>
+            </div>
+            <div class="service">
+              <span>▤</span>
+              <h3>Android Apps</h3>
+              <p>
+                Capacitor hybrids, responsive web apps, and mobile-first
+                delivery.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section class="section" id="experience">
+          <div class="section-title">
+            <div>
+              <small class="eyebrow">03 / TIMELINE</small>
+              <h2>The path so far.</h2>
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="timeline-card">
+              <small>2025 — PRESENT</small>
+              <h3>Independent Security Tool Developer</h3>
+              <p>
+                Built two open-source Python security tools with 21+ combined
+                modules, CLI interfaces, multi-threading, reporting, and Nmap
+                integration.
+              </p>
+            </div>
+            <div class="timeline-card">
+              <small>2025 — PRESENT</small>
+              <h3>Freelance Web Developer</h3>
+              <p>
+                Creating responsive websites, 3D experiences, hybrid Android
+                applications, and digital products with a security-aware
+                foundation.
+              </p>
+            </div>
+            <div class="timeline-card">
+              <small>2026 — 2030</small>
+              <h3>BS Cyber Security · CECOS University</h3>
+              <p>
+                Admission confirmed. Preparing for deeper study in systems,
+                networks, security engineering, and practical defense.
+              </p>
+            </div>
+            <div class="timeline-card">
+              <small>2025 — PRESENT · BATCH 6</small>
+              <h3>Web & App Development · SMIT</h3>
+              <p>
+                Training across HTML, CSS, JavaScript, React, Node.js, MongoDB,
+                and production-focused web development.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section class="section" id="projects">
+          <div class="section-title">
+            <div>
+              <small class="eyebrow">04 / SELECTED WORK</small>
+              <h2>Eleven worlds, one operator.</h2>
+            </div>
+            <div class="filters">
+              <button class="filter active" data-filter="all">ALL</button
+              ><button class="filter" data-filter="security">SECURITY</button
+              ><button class="filter" data-filter="web">WEB / 3D</button
+              ><button class="filter" data-filter="apps">APPS / AI</button>
+            </div>
+          </div>
+          <div class="project-grid">
+            <article class="project featured" data-category="security">
+              <div class="project-top">
+                <span class="project-tag">FLAGSHIP · SECURITY</span
+                ><span class="project-number">01</span>
+              </div>
+              <h3>IB Afridi Pentest Framework</h3>
+              <p>
+                Professional Python penetration testing toolkit for Kali Linux
+                with a 13-module reconnaissance and audit workflow.
+              </p>
+              <ul>
+                <li>Port Scanner · DNS Recon · Whois · Geo IP</li>
+                <li>Subdomain Enum · HTTP Audit · Hash Tools</li>
+                <li>Password Auditor · Wordlist Gen · Full Auto Recon</li>
+              </ul>
+              <div class="techs">
+                <span>PYTHON</span><span>NMAP</span><span>13/13 ACTIVE</span
+                ><span>MULTI-THREADED</span>
+              </div>
+              <a
+                href="https://github.com/afridi017/IB-AFRIDI-PENTEST-FRAMEWORK"
+                target="_blank"
+                rel="noreferrer"
+                >VIEW ON GITHUB ↗</a
+              >
+            </article>
+            <article class="project" data-category="security">
+              <div class="project-top">
+                <span class="project-tag">SECURITY</span
+                ><span class="project-number">02</span>
+              </div>
+              <h3>IB Afridi Recon Suite</h3>
+              <p>
+                Eight-module reconnaissance toolkit built for legal lab
+                environments and repeatable intelligence.
+              </p>
+              <ul>
+                <li>IP / Geo Lookup · DNS Enumeration</li>
+                <li>Whois · Port Scanner · Banner Grab</li>
+              </ul>
+              <div class="techs">
+                <span>PYTHON</span><span>OSINT</span><span>AUTOMATION</span>
+              </div>
+              <a
+                href="https://github.com/afridi017/ib-afridi-recon-suite"
+                target="_blank"
+                rel="noreferrer"
+                >VIEW PROJECT ↗</a
+              >
+            </article>
+            <article class="project" data-category="security">
+              <div class="project-top">
+                <span class="project-tag">NEW · CYBER WARFARE</span
+                ><span class="project-number">03</span>
+              </div>
+              <h3>IB AFRIDI HUNTVERSE</h3>
+              <p>
+                Pakistan's ethical bug bounty arena with Matrix boot, AI triage,
+                live activity, and Pwned 142.
+              </p>
+              <div class="techs">
+                <span>TERMINAL</span><span>AI TRIAGE</span><span>REP 9999</span>
+              </div>
+              <a href="../ib-afridi-huntverse/index.html">OPEN HUNTVERSE ↗</a>
+            </article>
+            <article class="project" data-category="web">
+              <div class="project-top">
+                <span class="project-tag">NEW · SUPER APP</span
+                ><span class="project-number">04</span>
+              </div>
+              <h3>KhyberVerse</h3>
+              <p>
+                Bara's everyday super app: food, grocery, rides, marketplace,
+                and AI Hujra in Pashto/Urdu.
+              </p>
+              <div class="techs">
+                <span>CAPACITOR</span><span>PWA</span><span>AI HUJRA</span>
+              </div>
+              <a href="../khyberverse/index.html">OPEN PROJECT ↗</a>
+            </article>
+            <article class="project" data-category="security">
+              <div class="project-top">
+                <span class="project-tag">NEW · HEALTH + JUSTICE</span
+                ><span class="project-number">05</span>
+              </div>
+              <h3>SehatVerse & QanoonVerse</h3>
+              <p>
+                Patient-first health and justice OS with 11 panels, AI reports,
+                emergency care, and legal notices.
+              </p>
+              <div class="techs">
+                <span>HEALTH OS</span><span>11 PANELS</span><span>KPK</span>
+              </div>
+              <a href="../sehatverse-qanoonverse/index.html">OPEN PROJECT ↗</a>
+            </article>
+            <article class="project" data-category="web">
+              <div class="project-top">
+                <span class="project-tag">SECRET · FULL-STACK</span
+                ><span class="project-number">06</span>
+              </div>
+              <h3>Afridi.Store</h3>
+              <p>
+                Premium multi-vendor marketplace like Daraz. TypeScript 99.7%,
+                OTP bypass fix, analytics, and live deployment.
+              </p>
+              <div class="techs">
+                <span>TYPESCRIPT 99.7%</span><span>PRIVATE REPO</span
+                ><span>VENDOR OS</span>
+              </div>
+              <a
+                href="https://afridi-store-gamma.vercel.app"
+                target="_blank"
+                rel="noreferrer"
+                >VISIT STORE ↗</a
+              >
+            </article>
+            <article class="project" data-category="web">
+              <div class="project-top">
+                <span class="project-tag">ERP · SCHOOL</span
+                ><span class="project-number">07</span>
+              </div>
+              <h3>EduCore School ERP</h3>
+              <p>
+                Professional school management system with dashboards, roles,
+                fee workflows, and analytics.
+              </p>
+              <div class="techs">
+                <span>ERP</span><span>PKR FEES</span><span>ROLE BASED</span>
+              </div>
+              <a href="../school%20managment%20system/index.html"
+                >OPEN PROJECT ↗</a
+              >
+            </article>
+            <article class="project" data-category="web">
+              <div class="project-top">
+                <span class="project-tag">3D GAME</span
+                ><span class="project-number">08</span>
+              </div>
+              <h3>IB Afridi Drift King</h3>
+              <p>
+                Playable Three.js car drifting game with touch controls and
+                Capacitor Android deployment.
+              </p>
+              <div class="techs">
+                <span>THREE.JS</span><span>CAPACITOR</span><span>GAME</span>
+              </div>
+              <a
+                href="https://afridi017.github.io"
+                target="_blank"
+                rel="noreferrer"
+                >PLAY GAME ↗</a
+              >
+            </article>
+            <article class="project" data-category="web">
+              <div class="project-top">
+                <span class="project-tag">3D / R3F</span
+                ><span class="project-number">09</span>
+              </div>
+              <h3>3D Solar System</h3>
+              <p>
+                Interactive orbital mechanics experiment built with React Three
+                Fiber and creative code.
+              </p>
+              <div class="techs">
+                <span>R3F</span><span>ORBITAL PHYSICS</span>
+              </div>
+            </article>
+            <article class="project" data-category="apps">
+              <div class="project-top">
+                <span class="project-tag">ANDROID APP</span
+                ><span class="project-number">10</span>
+              </div>
+              <h3>IB Afridi Media Hub</h3>
+              <p>
+                Hybrid Android media player built with HTML, CSS, JavaScript,
+                and Capacitor.
+              </p>
+              <div class="techs">
+                <span>CAPACITOR</span><span>ANDROID</span>
+              </div>
+            </article>
+            <article class="project" data-category="apps">
+              <div class="project-top">
+                <span class="project-tag">AI · AUTOMATION</span
+                ><span class="project-number">11</span>
+              </div>
+              <h3>WhatsApp AI Bot</h3>
+              <p>
+                Node.js chatbot using Levanter and OpenRouter for dynamic
+                conversation flows.
+              </p>
+              <div class="techs">
+                <span>NODE.JS</span><span>OPENROUTER</span><span>LEVANTER</span>
+              </div>
+            </article>
+          </div>
+        </section>
+        <section class="section">
+          <div class="recognition">
+            <div class="recognition-mark">✦</div>
+            <div>
+              <h3>Built before the degree.</h3>
+              <p>
+                13-module pentest framework. 8-module recon suite. 3D Android
+                game. Multiple live products. The proof is already in
+                production.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section class="section" id="contact">
+          <div class="section-title">
+            <div>
+              <small class="eyebrow">05 / MAKE CONTACT</small>
+              <h2>
+                Let's build something<br /><span class="gradient-text"
+                  >worth securing.</span
+                >
+              </h2>
+            </div>
+          </div>
+          <div class="contact-box">
+            <div class="contact-copy">
+              <p>
+                Open to security tool development, 3D web experiences, Android
+                apps, freelance builds, and collaborations with people who care
+                about the details.
+              </p>
+              <div class="contact-links">
+                <a href="mailto:ib.afridi.cs@gmail.com"
+                  >ib.afridi.cs@gmail.com ↗</a
+                ><a href="tel:+923332149829">+92 333 2149829 ↗</a
+                ><a
+                  href="https://github.com/afridi017"
+                  target="_blank"
+                  rel="noreferrer"
+                  >github.com/afridi017 ↗</a
+                ><a
+                  href="https://linkedin.com/in/ishaqafridi017"
+                  target="_blank"
+                  rel="noreferrer"
+                  >linkedin.com/in/ishaqafridi017 ↗</a
+                >
+              </div>
+            </div>
+            <form class="contact-form" id="contactForm">
+              <input placeholder="Your name" required /><input
+                type="email"
+                placeholder="Your email"
+                required
+              /><textarea
+                placeholder="Tell me what you're building..."
+                required
+              ></textarea
+              ><button class="submit">SEND TRANSMISSION ↗</button>
+            </form>
+          </div>
+        </section>
+        <footer>
+          BUILT BY <strong>IB AFRIDI</strong> · CYBERSECURITY ENTHUSIAST ·
+          PESHAWAR, KPK ·
+          <a href="mailto:ib.afridi.cs@gmail.com">ib.afridi.cs@gmail.com</a
+          ><br /><span>“Ethical hacking is not a crime, it's a skill.”</span>
+        </footer>
+      </div>
+    </main>
+    <div class="toast" id="toast">Transmission ready.</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script>
+      const toast = document.getElementById("toast");
+      function notify(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(
+          () => toast.classList.remove("show"),
+          2600,
+        );
+      }
+      const sidebar = document.getElementById("sidebar");
+      document
+        .getElementById("menuButton")
+        .addEventListener("click", () => sidebar.classList.toggle("open"));
+      document.querySelectorAll("[data-section]").forEach((btn) =>
+        btn.addEventListener("click", () => {
+          document
+            .getElementById(btn.dataset.section)
+            ?.scrollIntoView({ behavior: "smooth" });
+          document
+            .querySelectorAll("[data-section]")
+            .forEach((x) => x.classList.remove("active"));
+          btn.classList.add("active");
+          sidebar.classList.remove("open");
+        }),
+      );
+      const themes = ["LUXURY", "CLASSIC", "LIGHT"];
+      let themeIndex = 0;
+      const themeButton = document.getElementById("themeSwitch");
+      themeButton.addEventListener("click", () => {
+        themeIndex = (themeIndex + 1) % themes.length;
+        document.body.classList.toggle(
+          "classic",
+          themes[themeIndex] === "CLASSIC",
+        );
+        document.body.classList.toggle("light", themes[themeIndex] === "LIGHT");
+        themeButton.textContent = themes[themeIndex];
+        notify(`${themes[themeIndex]} theme loaded`);
+      });
+      const card = document.getElementById("heroCard");
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect(),
+          x = (e.clientX - r.left) / r.width - 0.5,
+          y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `rotateY(${x * 11}deg) rotateX(${-y * 11}deg) translateZ(8px)`;
+      });
+      card.addEventListener("pointerleave", () => (card.style.transform = ""));
+      document.querySelectorAll(".filter").forEach((btn) =>
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter")
+            .forEach((x) => x.classList.remove("active"));
+          btn.classList.add("active");
+          document
+            .querySelectorAll(".project")
+            .forEach(
+              (card) =>
+                (card.style.display =
+                  btn.dataset.filter === "all" ||
+                  card.dataset.filter === btn.dataset.filter
+                    ? "flex"
+                    : "none"),
+            );
+        }),
+      );
+      document.getElementById("contactForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        notify("Transmission queued. I will reply at your email.");
+        e.target.reset();
+      });
+      if (window.gsap) {
+        gsap.from(".hero h1", {
+          y: 35,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out",
+        });
+        gsap.from(".hero-card", {
+          y: 35,
+          opacity: 0,
+          rotate: 4,
+          duration: 1.1,
+          delay: 0.15,
+          ease: "power3.out",
+        });
+        gsap.utils
+          .toArray(".section")
+          .forEach((section) =>
+            gsap.from(section, {
+              scrollTrigger: undefined,
+              y: 20,
+              opacity: 0,
+              duration: 0.65,
+              scrollTrigger: { trigger: section, start: "top 84%" },
+            }),
+          );
+      }
+      const scene = new THREE.Scene(),
+        camera = new THREE.PerspectiveCamera(
+          55,
+          innerWidth / innerHeight,
+          0.1,
+          100,
+        ),
+        renderer = new THREE.WebGLRenderer({
+          canvas: document.getElementById("scene"),
+          alpha: true,
+          antialias: true,
+        });
+      renderer.setSize(innerWidth, innerHeight);
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      camera.position.set(0, 0, 13);
+      const group = new THREE.Group();
+      scene.add(group);
+      const grid = new THREE.GridHelper(34, 34, 0x7b2ff7, 0x123446);
+      grid.rotation.x = Math.PI / 2.8;
+      grid.position.y = -3;
+      group.add(grid);
+      const points = new THREE.BufferGeometry(),
+        amount = 500,
+        positions = new Float32Array(amount * 3);
+      for (let i = 0; i < positions.length; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 28;
+        positions[i + 1] = (Math.random() - 0.5) * 17;
+        positions[i + 2] = (Math.random() - 0.5) * 14;
+      }
+      points.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      const stars = new THREE.Points(
+        points,
+        new THREE.PointsMaterial({
+          color: 0x22d3ee,
+          size: 0.035,
+          transparent: true,
+          opacity: 0.8,
+        }),
+      );
+      group.add(stars);
+      const mouse = { x: 0, y: 0 };
+      addEventListener("pointermove", (e) => {
+        mouse.x = (e.clientX / innerWidth - 0.5) * 2;
+        mouse.y = (e.clientY / innerHeight - 0.5) * 2;
+      });
+      function animate() {
+        requestAnimationFrame(animate);
+        stars.rotation.y += 0.00035;
+        grid.rotation.z += 0.0002;
+        group.rotation.y += (mouse.x * 0.08 - group.rotation.y) * 0.02;
+        group.rotation.x += (-mouse.y * 0.04 - group.rotation.x) * 0.02;
+        renderer.render(scene, camera);
+      }
+      animate();
+      addEventListener("resize", () => {
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+      });
+    </script>
+  </body>
+</html>
