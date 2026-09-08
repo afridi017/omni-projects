@@ -1,0 +1,1179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#000" />
+    <meta
+      name="description"
+      content="AfridiVerse OS — the Omni Command Center by IB Afridi."
+    />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <title>AfridiVerse OS // Omni Command Center</title>
+    <style>
+      :root {
+        --bg: #020204;
+        --panel: rgba(14, 16, 28, 0.72);
+        --panel2: #101321;
+        --line: rgba(255, 255, 255, 0.12);
+        --text: #eef3ff;
+        --muted: #8d99b0;
+        --purple: #7b2ff7;
+        --cyan: #22d3ee;
+        --pink: #f107a3;
+        --lime: #b9f65c;
+        --mono: "JetBrains Mono", monospace;
+        --ui: "Inter", sans-serif;
+        --serif: "Fraunces", serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #000;
+        color: var(--text);
+        font-family: var(--ui);
+        overflow: hidden;
+      }
+      body:after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 60;
+        background: radial-gradient(
+          circle at var(--mx, 50%) var(--my, 50%),
+          rgba(123, 47, 247, 0.12),
+          transparent 25%
+        );
+        mix-blend-mode: screen;
+      }
+      #space {
+        position: fixed;
+        inset: 0;
+        z-index: -4;
+      }
+      .grid {
+        position: fixed;
+        inset: 0;
+        z-index: -3;
+        background-image:
+          linear-gradient(rgba(123, 47, 247, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
+        background-size: 80px 80px;
+        mask-image: linear-gradient(to bottom, #000, transparent 80%);
+      }
+      .boot {
+        position: fixed;
+        inset: 0;
+        background: #000;
+        display: grid;
+        place-items: center;
+        z-index: 100;
+        transition:
+          opacity 0.7s,
+          visibility 0.7s;
+      }
+      .boot.hide {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .boot-inner {
+        width: min(660px, calc(100% - 36px));
+        font: 12px/1.9 var(--mono);
+        color: #a2efae;
+      }
+      .boot-mark {
+        font-size: 13px;
+        color: var(--purple);
+        letter-spacing: 0.18em;
+        margin-bottom: 20px;
+      }
+      .boot-line {
+        border-left: 2px solid var(--purple);
+        padding-left: 14px;
+      }
+      .boot-line b {
+        color: var(--cyan);
+        font-weight: 500;
+      }
+      .boot-progress {
+        height: 2px;
+        background: #17211e;
+        margin-top: 22px;
+      }
+      .boot-progress i {
+        display: block;
+        width: 0;
+        height: 100%;
+        background: var(--cyan);
+        box-shadow: 0 0 14px var(--cyan);
+        transition: width 3s linear;
+      }
+      .desktop {
+        display: none;
+        min-height: 100vh;
+        position: relative;
+      }
+      .desktop.visible {
+        display: block;
+      }
+      .topbar {
+        height: 54px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(3, 4, 8, 0.72);
+        backdrop-filter: blur(24px);
+        position: relative;
+        z-index: 15;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+      .brand-logo {
+        width: 27px;
+        height: 27px;
+        display: grid;
+        place-items: center;
+        border-radius: 7px;
+        background: linear-gradient(135deg, var(--purple), var(--cyan));
+        font: 700 12px var(--mono);
+        box-shadow: 0 0 22px #7b2ff755;
+      }
+      .brand b {
+        font: 700 11px var(--mono);
+        letter-spacing: 0.1em;
+      }
+      .top-center {
+        font: 10px var(--mono);
+        color: #a6b3c7;
+      }
+      .top-center span {
+        color: var(--cyan);
+        margin: 0 7px;
+      }
+      .system {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: #9aa8bd;
+        font: 10px var(--mono);
+      }
+      .system .online {
+        color: var(--lime);
+      }
+      .power {
+        border: 1px solid #ef5968;
+        background: #ef596814;
+        color: #ff8992;
+        border-radius: 5px;
+        padding: 6px 8px;
+        cursor: pointer;
+        font-size: 10px;
+      }
+      .workspace {
+        height: calc(100vh - 54px);
+        padding: 30px 36px 95px;
+        overflow: auto;
+      }
+      .welcome {
+        max-width: 650px;
+        margin: 4vh auto 33px;
+        text-align: center;
+      }
+      .welcome small {
+        color: var(--cyan);
+        font: 10px var(--mono);
+        letter-spacing: 0.18em;
+      }
+      .welcome h1 {
+        font: 700 clamp(36px, 6vw, 73px)/0.94 var(--serif);
+        letter-spacing: -0.06em;
+        margin: 15px 0;
+      }
+      .welcome h1 em {
+        font-style: normal;
+        background: linear-gradient(
+          100deg,
+          var(--cyan),
+          var(--purple),
+          var(--pink)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .welcome p {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.7;
+      }
+      .shortcut {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        margin-top: 14px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        padding: 8px 11px;
+        border-radius: 6px;
+        color: #8190a6;
+        font: 10px var(--mono);
+      }
+      kbd {
+        border: 1px solid var(--line);
+        background: #171b29;
+        color: #cbd5e6;
+        border-radius: 3px;
+        padding: 3px 6px;
+      }
+      .apps {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(74px, 1fr));
+        gap: 20px 14px;
+        max-width: 850px;
+        margin: auto;
+      }
+      .app-icon {
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--text);
+        padding: 10px 5px;
+        border-radius: 11px;
+        text-align: center;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+      .app-icon:hover {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: var(--line);
+        transform: translateY(-5px) scale(1.03);
+      }
+      .icon-box {
+        width: 54px;
+        height: 54px;
+        margin: auto;
+        display: grid;
+        place-items: center;
+        border-radius: 15px;
+        font: 700 18px var(--mono);
+        background: var(--icon);
+        box-shadow: 0 11px 24px var(--shadow);
+        color: #fff;
+      }
+      .app-icon label {
+        display: block;
+        margin-top: 9px;
+        font-size: 9px;
+        color: #b3bfd1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .dock {
+        position: fixed;
+        bottom: 17px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 9px;
+        padding: 10px 13px;
+        border: 1px solid var(--line);
+        border-radius: 17px;
+        background: rgba(14, 17, 29, 0.82);
+        backdrop-filter: blur(25px);
+        box-shadow: 0 18px 45px #0008;
+        z-index: 18;
+      }
+      .dock button {
+        width: 39px;
+        height: 39px;
+        border: 0;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        color: #dbe5f3;
+        font-size: 17px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .dock button:hover {
+        background: var(--purple);
+        transform: translateY(-6px);
+        box-shadow: 0 8px 18px #7b2ff755;
+      }
+      .window {
+        position: absolute;
+        width: min(650px, calc(100vw - 34px));
+        height: min(470px, calc(100vh - 120px));
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 12px;
+        background: rgba(11, 14, 25, 0.9);
+        backdrop-filter: blur(24px);
+        box-shadow:
+          0 28px 90px #000b,
+          0 0 0 1px #7b2ff71a;
+        z-index: 25;
+        overflow: hidden;
+        display: none;
+        resize: both;
+      }
+      .window.open {
+        display: block;
+      }
+      .window.minimized {
+        display: none;
+      }
+      .window-header {
+        height: 41px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 13px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.035);
+        cursor: grab;
+      }
+      .traffic {
+        display: flex;
+        gap: 6px;
+      }
+      .traffic button {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+      }
+      .close {
+        background: #ff5d68;
+      }
+      .min {
+        background: #ffc857;
+      }
+      .max {
+        background: #4fdb7a;
+      }
+      .window-header strong {
+        font: 10px var(--mono);
+        color: #adbbd0;
+      }
+      .window-header span:last-child {
+        margin-left: auto;
+        color: #607087;
+        font: 9px var(--mono);
+      }
+      .window-body {
+        height: calc(100% - 41px);
+        overflow: auto;
+        padding: 20px;
+      }
+      .window-body h2 {
+        font: 700 31px var(--serif);
+        margin: 0 0 7px;
+      }
+      .window-body h2 span {
+        color: var(--cyan);
+      }
+      .window-body p {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.7;
+      }
+      .window-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 13px;
+        margin-top: 18px;
+      }
+      .mini-panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px;
+        background: rgba(255, 255, 255, 0.035);
+      }
+      .mini-panel small,
+      .mini-panel b {
+        display: block;
+      }
+      .mini-panel small {
+        color: #73829a;
+        font: 9px var(--mono);
+      }
+      .mini-panel b {
+        color: var(--cyan);
+        font: 700 21px var(--mono);
+        margin-top: 7px;
+      }
+      .tech-pills {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 17px;
+      }
+      .tech-pills span {
+        border: 1px solid var(--line);
+        padding: 5px 7px;
+        border-radius: 4px;
+        color: #a8b8cd;
+        font: 9px var(--mono);
+      }
+      .window-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 13px;
+        border-radius: 5px;
+        background: var(--purple);
+        color: #fff;
+        text-decoration: none;
+        font: 700 10px var(--mono);
+      }
+      .terminal {
+        background: #020403;
+        color: #9cffaa;
+        font: 11px/1.9 var(--mono);
+        min-height: 100%;
+        padding: 17px;
+      }
+      .terminal .cyan {
+        color: var(--cyan);
+      }
+      .terminal .dim {
+        color: #54715e;
+      }
+      .terminal input {
+        width: 100%;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: var(--lime);
+        font: 11px var(--mono);
+        margin-top: 10px;
+      }
+      .terminal-cursor {
+        animation: blink 1s step-end infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+      .search-modal {
+        position: fixed;
+        inset: 0;
+        background: #0009;
+        backdrop-filter: blur(10px);
+        z-index: 50;
+        display: none;
+        place-items: start center;
+        padding-top: 13vh;
+      }
+      .search-modal.open {
+        display: grid;
+      }
+      .search-box {
+        width: min(620px, calc(100% - 30px));
+        border: 1px solid var(--cyan);
+        background: #0d1220;
+        border-radius: 11px;
+        box-shadow: 0 20px 75px #000;
+        overflow: hidden;
+      }
+      .search-box input {
+        width: 100%;
+        padding: 17px;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        outline: 0;
+        background: transparent;
+        color: #fff;
+        font: 13px var(--mono);
+      }
+      .results {
+        max-height: 340px;
+        overflow: auto;
+      }
+      .result {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 11px 15px;
+        cursor: pointer;
+      }
+      .result:hover,
+      .result.active {
+        background: rgba(34, 211, 238, 0.1);
+      }
+      .result .icon-box {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        font-size: 11px;
+        margin: 0;
+      }
+      .result b,
+      .result small {
+        display: block;
+      }
+      .result b {
+        font-size: 11px;
+      }
+      .result small {
+        font-size: 9px;
+        color: #8190a6;
+        margin-top: 2px;
+      }
+      .wallpaper-menu {
+        position: fixed;
+        right: 20px;
+        top: 64px;
+        z-index: 30;
+        border: 1px solid var(--line);
+        background: #0d1220;
+        border-radius: 8px;
+        padding: 7px;
+        display: none;
+      }
+      .wallpaper-menu.open {
+        display: grid;
+        gap: 3px;
+      }
+      .wallpaper-menu button {
+        border: 0;
+        background: transparent;
+        color: #a8b4c9;
+        padding: 8px;
+        text-align: left;
+        font: 10px var(--mono);
+        cursor: pointer;
+      }
+      .wallpaper-menu button:hover {
+        color: var(--cyan);
+        background: #ffffff09;
+      }
+      .pink-theme {
+        --purple: #f107a3;
+        --cyan: #ff9ac9;
+      }
+      .pink-theme .workspace {
+        background: radial-gradient(
+          circle at 80% 15%,
+          #f107a31c,
+          transparent 27%
+        );
+      }
+      .purple-theme {
+        --purple: #9c5cff;
+        --cyan: #9aa7ff;
+      }
+      .mobile-drawer {
+        display: none;
+      }
+      @media (max-width: 760px) {
+        .top-center {
+          display: none;
+        }
+        .system {
+          gap: 7px;
+          font-size: 9px;
+        }
+        .system .online {
+          display: none;
+        }
+        .workspace {
+          padding: 22px 15px 90px;
+        }
+        .apps {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 13px 5px;
+        }
+        .app-icon label {
+          font-size: 8px;
+        }
+        .welcome {
+          margin-top: 4vh;
+        }
+        .welcome h1 {
+          font-size: 46px;
+        }
+        .dock {
+          bottom: 10px;
+        }
+        .dock button {
+          width: 34px;
+          height: 34px;
+          font-size: 15px;
+        }
+        .window {
+          width: calc(100vw - 20px);
+          height: calc(100vh - 115px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="space"></canvas>
+    <div class="grid"></div>
+    <div class="boot" id="boot">
+      <div class="boot-inner">
+        <div class="boot-mark">AFRIDIVERSE OS // KERNEL 1.0</div>
+        <div class="boot-line">
+          <span id="bootOutput"></span><b class="terminal-cursor">█</b>
+        </div>
+        <div class="boot-progress"><i id="bootProgress"></i></div>
+      </div>
+    </div>
+    <div class="desktop" id="desktop">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-logo">IA</span><b>AFRIDIVERSE</b>
+        </div>
+        <div class="top-center">
+          PESHAWAR <span>◆</span> <b id="pkt">--:--</b> PKT <span>·</span>
+          <b id="eat">--:--</b> EAT
+        </div>
+        <div class="system">
+          <span class="online">● ONLINE</span><span>WiFi ▰▰▰</span
+          ><span>Battery 87%</span><button class="power" id="power">⏻</button>
+        </div>
+      </header>
+      <main class="workspace">
+        <div class="welcome">
+          <small>OMNI COMMAND CENTER · IB AFRIDI</small>
+          <h1>Welcome to <em>AfridiVerse.</em></h1>
+          <p>
+            One OS to launch security tools, KPK products, 3D experiments,
+            mobile builds, and the soft corners of the empire.
+          </p>
+          <button class="shortcut" id="spotlightHint">
+            Press <kbd>⌘ K</kbd> to launch anything
+          </button>
+        </div>
+        <div class="apps" id="apps"></div>
+      </main>
+      <nav class="dock">
+        <button data-app="terminal">⌁</button
+        ><button data-app="portfolio">◈</button
+        ><button data-app="huntverse">⚔</button
+        ><button data-app="github">◉</button
+        ><button data-app="settings">⚙</button
+        ><button id="wallpaperButton">✦</button>
+      </nav>
+      <div class="wallpaper-menu" id="wallpapers">
+        <button data-wallpaper="default">Midnight Black</button
+        ><button data-wallpaper="purple">Midnight Purple</button
+        ><button data-wallpaper="pink">Noor Pink</button>
+      </div>
+    </div>
+    <div class="search-modal" id="searchModal">
+      <div class="search-box">
+        <input
+          id="searchInput"
+          placeholder="Search projects, commands, windows..."
+          autocomplete="off"
+        />
+        <div class="results" id="results"></div>
+      </div>
+    </div>
+    <div id="windows"></div>
+    <template id="windowTemplate"
+      ><section class="window">
+        <header class="window-header">
+          <div class="traffic">
+            <button class="close"></button><button class="min"></button
+            ><button class="max"></button>
+          </div>
+          <strong class="window-title">AFRIDIVERSE APP</strong
+          ><span>IB AFRIDI OS</span>
+        </header>
+        <div class="window-body"></div></section
+    ></template>
+    <script>
+      const projects = [
+        {
+          id: "iapf",
+          name: "IB Afridi Pentest Framework",
+          short: "IAPF",
+          desc: "Flagship 13-module Python penetration testing framework for authorized Kali Linux labs.",
+          tech: ["Python", "Nmap", "Kali Linux", "CLI"],
+          color: "#7b2ff7",
+          icon: "⌁",
+          github: "https://github.com/afridi017/IB-AFRIDI-PENTEST-FRAMEWORK",
+        },
+        {
+          id: "recon",
+          name: "IB Afridi Recon Suite",
+          short: "RECON",
+          desc: "Eight-module reconnaissance and OSINT toolkit for safe, repeatable lab intelligence.",
+          tech: ["Python", "OSINT", "Automation"],
+          color: "#22d3ee",
+          icon: "◌",
+          github: "https://github.com/afridi017/ib-afridi-recon-suite",
+        },
+        {
+          id: "huntverse",
+          name: "IB AFRIDI HUNTVERSE",
+          short: "HUNT",
+          desc: "Pakistan-focused ethical bug bounty arena with safe AI triage, reports, and KPK activity.",
+          tech: ["PWA", "AI Triage", "CVSS"],
+          color: "#ff315f",
+          icon: "⚔",
+          live: "../ib-afridi-huntverse/index.html",
+        },
+        {
+          id: "khyberverse",
+          name: "KhyberVerse",
+          short: "K",
+          desc: "Bara and Peshawar super-app concept for food, groceries, rides, marketplace, and AI Hujra.",
+          tech: ["PWA", "Capacitor", "AI"],
+          color: "#f8c844",
+          icon: "K",
+          live: "../khyberverse/index.html",
+        },
+        {
+          id: "sehat",
+          name: "SehatVerse & QanoonVerse",
+          short: "S+Q",
+          desc: "Health and justice OS with patient care, labs, pharmacy, hospitals, riders, and legal flows.",
+          tech: ["Health OS", "PWA", "KPK"],
+          color: "#0b7f78",
+          icon: "+",
+          live: "../sehatverse-qanoonverse/index.html",
+        },
+        {
+          id: "store",
+          name: "Afridi.Store",
+          short: "STORE",
+          desc: "Private full-stack multi-vendor marketplace with TypeScript hardening and vendor analytics.",
+          tech: ["TypeScript", "Commerce", "OTP"],
+          color: "#f107a3",
+          icon: "▣",
+          live: "https://afridi-store-gamma.vercel.app",
+        },
+        {
+          id: "school",
+          name: "EduCore School ERP",
+          short: "ERP",
+          desc: "Role-based school management system for students, fees, attendance, and operations.",
+          tech: ["ERP", "PKR Fees", "RBAC"],
+          color: "#3d8ee8",
+          icon: "▤",
+          live: "../school%20managment%20system/index.html",
+        },
+        {
+          id: "drift",
+          name: "IB Afridi Drift King 3D",
+          short: "DRIFT",
+          desc: "Playable Three.js drifting game with touch controls and Capacitor Android direction.",
+          tech: ["Three.js", "WebGL", "Capacitor"],
+          color: "#ff6b35",
+          icon: "▰",
+          live: "https://afridi017.github.io",
+        },
+        {
+          id: "solar",
+          name: "3D Solar System",
+          short: "SOLAR",
+          desc: "React Three Fiber orbital mechanics experiment exploring interactive space systems.",
+          tech: ["R3F", "React", "Physics"],
+          color: "#e5ad35",
+          icon: "◉",
+        },
+        {
+          id: "media",
+          name: "IB Afridi Media Hub",
+          short: "MEDIA",
+          desc: "Hybrid Android media player prototype made with web technologies and Capacitor.",
+          tech: ["Android", "Capacitor", "JS"],
+          color: "#9b72d4",
+          icon: "▶",
+        },
+        {
+          id: "whatsapp",
+          name: "WhatsApp AI Bot",
+          short: "BOT",
+          desc: "Node.js chatbot experiment using Levanter and OpenRouter for conversational automation.",
+          tech: ["Node.js", "Levanter", "AI"],
+          color: "#29c983",
+          icon: "◍",
+        },
+        {
+          id: "noor",
+          name: "For My Noor",
+          short: "NOOR",
+          desc: "Private moonlit diary and long-distance letter from Pakistan to Kenya.",
+          tech: ["PWA", "Story", "Private"],
+          color: "#c58aaf",
+          icon: "☾",
+          live: "../for-my-noor/index.html",
+        },
+        {
+          id: "garden",
+          name: "Noor's Blush Garden",
+          short: "GARDEN",
+          desc: "Flower-pink morning garden for Noor with local interactions and soft messages.",
+          tech: ["PWA", "Flowers", "Private"],
+          color: "#ff8fab",
+          icon: "✿",
+          live: "../noors-blush-garden/index.html",
+        },
+      ];
+      const windows = document.getElementById("windows"),
+        apps = document.getElementById("apps"),
+        template = document.getElementById("windowTemplate"),
+        boot = document.getElementById("boot"),
+        desktop = document.getElementById("desktop");
+      let z = 30;
+      const openWindows = new Map();
+      function projectIcon(p) {
+        return `<button class="app-icon" data-app="${p.id}" style="--icon:${p.color};--shadow:${p.color}55"><span class="icon-box">${p.icon}</span><label>${p.short}</label></button>`;
+      }
+      apps.innerHTML = projects.map(projectIcon).join("");
+      function openApp(id) {
+        if (id === "github") {
+          window.open("https://github.com/afridi017", "_blank");
+          return;
+        }
+        if (id === "terminal") {
+          showWindow({
+            id: "terminal",
+            name: "AfridiVerse Terminal",
+            short: "TERMINAL",
+            desc: "Command interface for launching the CODEX empire.",
+            tech: ["whoami", "launch", "CODEX"],
+            color: "#22d3ee",
+            icon: "⌁",
+          });
+          return;
+        }
+        if (id === "settings") {
+          showWindow({
+            id: "settings",
+            name: "System Settings",
+            short: "SETTINGS",
+            desc: "AfridiVerse OS preferences, workspace persistence, wallpaper controls, and privacy.",
+            tech: ["LocalStorage", "PWA", "Secure"],
+            color: "#7b2ff7",
+            icon: "⚙",
+          });
+          return;
+        }
+        const p = projects.find((x) => x.id === id);
+        if (p) showWindow(p);
+      }
+      function showWindow(p) {
+        if (openWindows.has(p.id)) {
+          const w = openWindows.get(p.id);
+          w.classList.remove("minimized");
+          w.style.zIndex = ++z;
+          return;
+        }
+        const w = template.content.firstElementChild.cloneNode(true);
+        w.classList.add("open");
+        w.dataset.id = p.id;
+        w.style.zIndex = ++z;
+        w.querySelector(".window-title").textContent = p.name.toUpperCase();
+        w.querySelector(".window-body").innerHTML = bodyFor(p);
+        windows.appendChild(w);
+        openWindows.set(p.id, w);
+        makeDraggable(w);
+        w.querySelector(".close").onclick = () => {
+          w.remove();
+          openWindows.delete(p.id);
+        };
+        w.querySelector(".min").onclick = () => w.classList.add("minimized");
+        w.querySelector(".max").onclick = () => w.classList.toggle("maximized");
+        w.addEventListener("mousedown", () => (w.style.zIndex = ++z));
+        gsap.fromTo(
+          w,
+          { opacity: 0, scale: 0.94, y: 15 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "power3.out" },
+        );
+      }
+      function bodyFor(p) {
+        if (p.id === "terminal")
+          return `<div class="terminal" id="terminalBody"><div><span class="cyan">┌──(ib.afridi㉿kali)-[~/CODEX]</span></div><div>└─$ <span id="termOutput">Type <b>help</b> to see commands.</span></div><input id="termInput" placeholder="command_" autofocus></div>`;
+        if (p.id === "huntverse")
+          return `<h2>HuntVerse <span>// ACTIVE</span></h2><p>${p.desc}</p><div class="window-grid"><div class="mini-panel"><small>HUNTER REPUTATION</small><b data-count="9999">9,999</b></div><div class="mini-panel"><small>SYSTEMS PWNED</small><b data-count="142">142</b></div><div class="mini-panel"><small>BOUNTIES EARNED</small><b>₨284,500</b></div><div class="mini-panel"><small>AI TRIAGE</small><b>ONLINE</b></div></div><div class="tech-pills">${p.tech.map((t) => `<span>${t}</span>`).join("")}</div><a class="window-link" href="${p.live}" target="_blank">OPEN PREVIEW ↗</a>`;
+        return `<h2>${p.name}</h2><p>${p.desc}</p><div class="window-grid"><div class="mini-panel"><small>STATUS</small><b>READY</b></div><div class="mini-panel"><small>DOMAIN</small><b>${p.short}</b></div></div><div class="tech-pills">${p.tech.map((t) => `<span>${t}</span>`).join("")}</div>${p.github ? `<a class="window-link" href="${p.github}" target="_blank">GITHUB REPOSITORY ↗</a>` : ""}${p.live ? `<a class="window-link" href="${p.live}" target="_blank" style="background:var(--cyan);color:#001015;margin-left:7px">LAUNCH PREVIEW ↗</a>` : ""}`;
+      }
+      function makeDraggable(w) {
+        const head = w.querySelector(".window-header");
+        let active = false,
+          ox = 0,
+          oy = 0;
+        head.addEventListener("pointerdown", (e) => {
+          active = true;
+          w.style.zIndex = ++z;
+          ox = e.clientX - w.offsetLeft;
+          oy = e.clientY - w.offsetTop;
+          head.setPointerCapture(e.pointerId);
+        });
+        head.addEventListener("pointermove", (e) => {
+          if (!active) return;
+          w.style.left = `${e.clientX - ox}px`;
+          w.style.top = `${e.clientY - oy}px`;
+          w.style.transform = "none";
+        });
+        head.addEventListener("pointerup", () => (active = false));
+      }
+      projects.forEach((p) =>
+        document.addEventListener("click", (e) => {
+          const icon = e.target.closest(`[data-app="${p.id}"]`);
+          if (icon) openApp(p.id);
+        }),
+      );
+      document.addEventListener(
+        "click",
+        (e) => {
+          const close = e.target.closest(".window .close");
+          if (!close) return;
+          const windowElement = close.closest(".window");
+          const id = windowElement?.dataset.id;
+          windowElement?.remove();
+          if (id) openWindows.delete(id);
+        },
+        true,
+      );
+      document
+        .querySelectorAll(".dock [data-app]")
+        .forEach((b) => (b.onclick = () => openApp(b.dataset.app)));
+      document.getElementById("wallpaperButton").onclick = () =>
+        document.getElementById("wallpapers").classList.toggle("open");
+      document.querySelectorAll("[data-wallpaper]").forEach(
+        (b) =>
+          (b.onclick = () => {
+            document.body.classList.remove("purple-theme", "pink-theme");
+            if (b.dataset.wallpaper === "purple")
+              document.body.classList.add("purple-theme");
+            if (b.dataset.wallpaper === "pink")
+              document.body.classList.add("pink-theme");
+            document.getElementById("wallpapers").classList.remove("open");
+            localStorage.setItem("wallpaper", b.dataset.wallpaper);
+          }),
+      );
+      if (localStorage.getItem("wallpaper") === "purple")
+        document.body.classList.add("purple-theme");
+      if (localStorage.getItem("wallpaper") === "pink")
+        document.body.classList.add("pink-theme");
+      const searchModal = document.getElementById("searchModal"),
+        searchInput = document.getElementById("searchInput"),
+        results = document.getElementById("results");
+      function renderResults(q = "") {
+        const all = [
+          ...projects,
+          {
+            id: "terminal",
+            name: "Terminal",
+            short: "SYSTEM",
+            desc: "Execute AfridiVerse commands",
+          },
+        ];
+        const list = all.filter((p) =>
+          (p.name + p.desc).toLowerCase().includes(q.toLowerCase()),
+        );
+        results.innerHTML = list
+          .map(
+            (p) =>
+              `<div class="result" data-result="${p.id}"><span class="icon-box" style="--icon:${p.color || "#7b2ff7"}">${p.icon || "⌁"}</span><div><b>${p.name}</b><small>${p.desc}</small></div></div>`,
+          )
+          .join("");
+        results.querySelectorAll(".result").forEach(
+          (r) =>
+            (r.onclick = () => {
+              searchModal.classList.remove("open");
+              openApp(r.dataset.result);
+            }),
+        );
+      }
+      renderResults();
+      function focusSearch() {
+        searchModal.classList.add("open");
+        searchInput.focus();
+        renderResults();
+      }
+      document.getElementById("spotlightHint").onclick = focusSearch;
+      searchInput.oninput = () => renderResults(searchInput.value);
+      searchModal.onclick = (e) => {
+        if (e.target === searchModal) searchModal.classList.remove("open");
+      };
+      document.addEventListener("keydown", (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          focusSearch();
+        }
+        if (e.key === "Escape") searchModal.classList.remove("open");
+      });
+      function termCommand(command) {
+        const body = document.getElementById("terminalBody"),
+          out = document.getElementById("termOutput");
+        if (!out) return;
+        const c = command.toLowerCase();
+        if (c === "help")
+          out.innerHTML =
+            "whoami · ls ~/empire · cat motto.txt · launch [project]";
+        else if (c === "whoami")
+          out.textContent = "IB AFRIDI // Peshawar // builder of the CODEX";
+        else if (c.includes("ls"))
+          out.textContent =
+            "IAPF  HUNTVERSE  KHYBERVERSE  SEHATVERSE  AFRIDI.STORE  +8";
+        else if (c.includes("motto"))
+          out.textContent = "Ethical hacking is not a crime, it's a skill.";
+        else if (c.includes("launch")) {
+          const id = c.replace("launch", "").trim();
+          const found = projects.find(
+            (p) =>
+              p.id === id ||
+              p.short.toLowerCase() === id ||
+              p.name.toLowerCase().includes(id),
+          );
+          out.textContent = found
+            ? `Launching ${found.name}...`
+            : "Project not found. Try: launch huntverse";
+          if (found) setTimeout(() => openApp(found.id), 200);
+        } else out.textContent = "Command not found. Type help.";
+      }
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && document.activeElement.id === "termInput") {
+          termCommand(document.activeElement.value);
+          document.activeElement.value = "";
+        }
+      });
+      function clock() {
+        const now = new Date(),
+          f = (z) =>
+            new Intl.DateTimeFormat("en-US", {
+              timeZone: z,
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            }).format(now);
+        document.getElementById("pkt").textContent = f("Asia/Karachi");
+        document.getElementById("eat").textContent = f("Africa/Nairobi");
+      }
+      clock();
+      setInterval(clock, 1000);
+      document.getElementById("power").onclick = () => {
+        desktop.classList.remove("visible");
+        boot.classList.remove("hide");
+        setTimeout(() => location.reload(), 500);
+      };
+      const scene = new THREE.Scene(),
+        camera = new THREE.PerspectiveCamera(
+          55,
+          innerWidth / innerHeight,
+          0.1,
+          100,
+        ),
+        renderer = new THREE.WebGLRenderer({
+          canvas: document.getElementById("space"),
+          alpha: true,
+          antialias: true,
+        });
+      renderer.setSize(innerWidth, innerHeight);
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      camera.position.z = 9;
+      const starGeo = new THREE.BufferGeometry(),
+        count = 650,
+        pos = new Float32Array(count * 3);
+      for (let i = 0; i < pos.length; i++) pos[i] = (Math.random() - 0.5) * 28;
+      starGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      const stars = new THREE.Points(
+        starGeo,
+        new THREE.PointsMaterial({
+          color: 0x22d3ee,
+          size: 0.025,
+          transparent: true,
+          opacity: 0.75,
+        }),
+      );
+      scene.add(stars);
+      const globe = new THREE.Mesh(
+        new THREE.SphereGeometry(2.5, 24, 24),
+        new THREE.MeshBasicMaterial({
+          color: 0x7b2ff7,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.13,
+        }),
+      );
+      globe.position.set(4, 1, -2);
+      scene.add(globe);
+      const mouse = { x: 0, y: 0 };
+      addEventListener("pointermove", (e) => {
+        document.body.style.setProperty("--mx", e.clientX + "px");
+        document.body.style.setProperty("--my", e.clientY + "px");
+        mouse.x = (e.clientX / innerWidth - 0.5) * 2;
+        mouse.y = (e.clientY / innerHeight - 0.5) * 2;
+      });
+      function animate() {
+        requestAnimationFrame(animate);
+        stars.rotation.y += 0.0003;
+        globe.rotation.y += 0.001;
+        globe.rotation.x += 0.0004;
+        camera.position.x += (mouse.x * 0.2 - camera.position.x) * 0.01;
+        camera.position.y += (-mouse.y * 0.15 - camera.position.y) * 0.01;
+        renderer.render(scene, camera);
+      }
+      animate();
+      addEventListener("resize", () => {
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+      });
+      let bootText = "";
+      const lines = [
+        "┌──(ib.afridi㉿kali)-[~]",
+        "└─$ ./boot_omni.sh",
+        "[+] Loading CODEX kernel...",
+        "[+] Mounting AfridiVerse projects...",
+        "[✓] Omni Command Center ready.",
+      ];
+      let li = 0,
+        ci = 0;
+      function bootType() {
+        if (li >= lines.length) {
+          document.getElementById("bootProgress").style.width = "100%";
+          setTimeout(() => {
+            boot.classList.add("hide");
+            desktop.classList.add("visible");
+          }, 450);
+          return;
+        }
+        if (ci < lines[li].length) {
+          bootText += lines[li][ci++];
+          document.getElementById("bootOutput").textContent = bootText;
+          setTimeout(bootType, 25);
+        } else {
+          bootText += "\n";
+          document.getElementById("bootOutput").textContent = bootText;
+          li++;
+          ci = 0;
+          setTimeout(bootType, 260);
+        }
+      }
+      document.getElementById("bootProgress").style.width = "3%";
+      setTimeout(bootType, 350);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "AfridiVerse OS - Omni Command Center",
+  "short_name": "AfridiVerse OS",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#7b2ff7",
+  "description": "IB Afridi's command center for security tools, products, 3D experiments, and CODEX projects.",
+  "icons": []
+}
