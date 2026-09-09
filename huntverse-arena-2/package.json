@@ -1,0 +1,7 @@
+{
+  "name": "huntverse-arena-2",
+  "private": true,
+  "workspaces": ["client", "server", "socket"],
+  "scripts": {"dev":"concurrently \"npm:dev:client\" \"npm:dev:server\" \"npm:dev:socket\"","dev:client":"npm --workspace client run dev","dev:server":"npm --workspace server run dev","dev:socket":"npm --workspace socket run dev","db:generate":"npm --workspace server run prisma:generate","db:migrate":"npm --workspace server run prisma:migrate","docker:up":"docker compose up --build"},
+  "devDependencies":{"concurrently":"^9.0.1"}
+}

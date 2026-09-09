@@ -1,0 +1,55 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: huntverse
+      POSTGRES_PASSWORD: huntverse_dev_only
+      POSTGRES_DB: huntverse
+    ports: ["5432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U huntverse -d huntverse"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  server:
+    build: ./server
+    environment:
+      DATABASE_URL: postgresql://huntverse:huntverse_dev_only@postgres:5432/huntverse
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: change-me-in-production-super-strong-32chars
+      PORT: 4000
+      NODE_ENV: development
+    ports: ["4000:4000"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  socket:
+    build: ./socket
+    environment:
+      REDIS_URL: redis://redis:6379
+      PORT: 4001
+    ports: ["4001:4001"]
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:

@@ -1,0 +1,78 @@
+generator client {
+	provider = "prisma-client-js"
+}
+
+datasource db {
+	provider = "postgresql"
+	url      = env("DATABASE_URL")
+}
+
+model User {
+	id           String       @id @default(cuid())
+	username     String       @unique
+	email        String       @unique
+	passwordHash String
+	reputation   Int          @default(0)
+	firstBloods  Int          @default(0)
+	createdAt    DateTime     @default(now())
+	submissions  Submission[]
+	memberships  RoomMember[]
+}
+
+model Room {
+	id          String       @id @default(cuid())
+	code        String       @unique
+	status      RoomStatus   @default(WAITING)
+	flagSeed    String
+	createdAt   DateTime     @default(now())
+	members     RoomMember[]
+	submissions Submission[]
+}
+
+model RoomMember {
+	id       String   @id @default(cuid())
+	roomId   String
+	userId   String
+	score    Int      @default(0)
+	joinedAt DateTime @default(now())
+	room     Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+	user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+	@@unique([roomId, userId])
+}
+
+model Challenge {
+	id             String       @id @default(cuid())
+	slug           String       @unique
+	name           String
+	category       String
+	points         Int
+	containerImage String
+	submissions    Submission[]
+}
+
+model Submission {
+	id          String           @id @default(cuid())
+	roomId      String
+	userId      String
+	challengeId String
+	flagHash    String
+	status      SubmissionStatus @default(PENDING)
+	points      Int              @default(0)
+	createdAt   DateTime         @default(now())
+	room        Room             @relation(fields: [roomId], references: [id])
+	user        User             @relation(fields: [userId], references: [id])
+	challenge   Challenge        @relation(fields: [challengeId], references: [id])
+}
+
+enum RoomStatus {
+	WAITING
+	ACTIVE
+	FINISHED
+}
+
+enum SubmissionStatus {
+	PENDING
+	ACCEPTED
+	REJECTED
+}
