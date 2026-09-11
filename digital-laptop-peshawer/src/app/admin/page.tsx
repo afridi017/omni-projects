@@ -23,7 +23,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ProductsTable } from "@/components/admin/products-table";
-import { ProductForm, emptyProductDraft, type ProductDraft } from "@/components/admin/product-form";
+import {
+  ProductForm,
+  emptyProductDraft,
+  type ProductDraft,
+} from "@/components/admin/product-form";
 import { OrdersTable } from "@/components/admin/orders-table";
 
 type Tab = "dashboard" | "products" | "add" | "orders";
@@ -113,8 +117,10 @@ export default function AdminPage() {
         setLoginError("Incorrect password. Try again.");
         return;
       }
-      window.sessionStorage.setItem(SESSION_KEY, password);
-      setKey(password);
+      const data = await res.json();
+      // Store the signed session token (NOT the raw password).
+      window.sessionStorage.setItem(SESSION_KEY, data.token);
+      setKey(data.token);
     } finally {
       setLoggingIn(false);
     }
@@ -155,12 +161,24 @@ export default function AdminPage() {
               autoFocus
             />
             {loginError && <p className="text-xs text-red-300">{loginError}</p>}
-            <Button variant="accent" size="lg" className="w-full" disabled={loggingIn || !password}>
-              {loggingIn ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4" />}
+            <Button
+              variant="accent"
+              size="lg"
+              className="w-full"
+              disabled={loggingIn || !password}
+            >
+              {loggingIn ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Zap className="h-4 w-4" />
+              )}
               Unlock Dashboard
             </Button>
           </form>
-          <Link href="/" className="mt-5 block text-center text-xs text-zinc-600 transition-colors hover:text-zinc-400">
+          <Link
+            href="/"
+            className="mt-5 block text-center text-xs text-zinc-600 transition-colors hover:text-zinc-400"
+          >
             ← Back to store
           </Link>
         </Card>
@@ -172,7 +190,9 @@ export default function AdminPage() {
     ? {
         ...editing,
         price: String(editing.price),
-        originalPrice: editing.originalPrice ? String(editing.originalPrice) : "",
+        originalPrice: editing.originalPrice
+          ? String(editing.originalPrice)
+          : "",
         stock: String(editing.stock),
         battery: editing.battery ?? "",
       }
@@ -197,8 +217,16 @@ export default function AdminPage() {
                 <ExternalLink className="h-3.5 w-3.5" /> View Store
               </Button>
             </Link>
-            <Button variant="outline" size="sm" onClick={loadAll} disabled={loading}>
-              <RefreshCw className={cn("h-3.5 w-3.5", loading && "animate-spin")} /> Refresh
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={loadAll}
+              disabled={loading}
+            >
+              <RefreshCw
+                className={cn("h-3.5 w-3.5", loading && "animate-spin")}
+              />{" "}
+              Refresh
             </Button>
             <Button variant="destructive" size="sm" onClick={logout}>
               <LogOut className="h-3.5 w-3.5" /> Logout
@@ -231,20 +259,49 @@ export default function AdminPage() {
           <div className="space-y-8">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                { icon: Package, label: "Total Products", value: stats?.totalProducts ?? "—", tint: "from-indigo-500/25 to-indigo-500/5", iconColor: "text-indigo-300" },
-                { icon: ClipboardList, label: "Total Orders", value: stats?.totalOrders ?? "—", tint: "from-cyan-500/25 to-cyan-500/5", iconColor: "text-cyan-300" },
-                { icon: Banknote, label: "Revenue", value: stats ? formatPKR(stats.revenue) : "—", tint: "from-emerald-500/25 to-emerald-500/5", iconColor: "text-emerald-300" },
-                { icon: AlertTriangle, label: "Low Stock Items", value: stats?.lowStock.length ?? "—", tint: "from-amber-500/25 to-amber-500/5", iconColor: "text-amber-300" },
+                {
+                  icon: Package,
+                  label: "Total Products",
+                  value: stats?.totalProducts ?? "—",
+                  tint: "from-indigo-500/25 to-indigo-500/5",
+                  iconColor: "text-indigo-300",
+                },
+                {
+                  icon: ClipboardList,
+                  label: "Total Orders",
+                  value: stats?.totalOrders ?? "—",
+                  tint: "from-cyan-500/25 to-cyan-500/5",
+                  iconColor: "text-cyan-300",
+                },
+                {
+                  icon: Banknote,
+                  label: "Revenue",
+                  value: stats ? formatPKR(stats.revenue) : "—",
+                  tint: "from-emerald-500/25 to-emerald-500/5",
+                  iconColor: "text-emerald-300",
+                },
+                {
+                  icon: AlertTriangle,
+                  label: "Low Stock Items",
+                  value: stats?.lowStock.length ?? "—",
+                  tint: "from-amber-500/25 to-amber-500/5",
+                  iconColor: "text-amber-300",
+                },
               ].map((s) => (
                 <div
                   key={s.label}
-                  className={cn("rounded-3xl border border-white/10 bg-gradient-to-br p-6 backdrop-blur-xl", s.tint)}
+                  className={cn(
+                    "rounded-3xl border border-white/10 bg-gradient-to-br p-6 backdrop-blur-xl",
+                    s.tint,
+                  )}
                 >
                   <s.icon className={cn("h-5 w-5", s.iconColor)} />
                   <p className="mt-4 font-display text-3xl font-bold tracking-tight text-white">
                     {s.value}
                   </p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-zinc-500">{s.label}</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-zinc-500">
+                    {s.label}
+                  </p>
                 </div>
               ))}
             </div>
@@ -252,40 +309,62 @@ export default function AdminPage() {
             <div className="grid gap-6 lg:grid-cols-2">
               <Card className="p-6">
                 <h3 className="flex items-center gap-2 font-display text-base font-semibold text-white">
-                  <AlertTriangle className="h-4.5 w-4.5 text-amber-300" /> Low Stock Alerts
+                  <AlertTriangle className="h-4.5 w-4.5 text-amber-300" /> Low
+                  Stock Alerts
                 </h3>
                 <div className="mt-5 space-y-3">
                   {stats?.lowStock.length ? (
                     stats.lowStock.map((p) => (
-                      <div key={p.id} className="flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/[0.02] px-4 py-3">
-                        <span className="line-clamp-1 text-sm text-zinc-300">{p.name}</span>
-                        <span className={cn(
-                          "shrink-0 rounded-full px-2.5 py-1 text-xs font-bold",
-                          p.stock === 0 ? "bg-red-500/15 text-red-300" : "bg-amber-500/15 text-amber-300",
-                        )}>
+                      <div
+                        key={p.id}
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/[0.02] px-4 py-3"
+                      >
+                        <span className="line-clamp-1 text-sm text-zinc-300">
+                          {p.name}
+                        </span>
+                        <span
+                          className={cn(
+                            "shrink-0 rounded-full px-2.5 py-1 text-xs font-bold",
+                            p.stock === 0
+                              ? "bg-red-500/15 text-red-300"
+                              : "bg-amber-500/15 text-amber-300",
+                          )}
+                        >
                           {p.stock === 0 ? "Out of stock" : `${p.stock} left`}
                         </span>
                       </div>
                     ))
                   ) : (
-                    <p className="text-sm text-zinc-500">All products are well stocked. ✓</p>
+                    <p className="text-sm text-zinc-500">
+                      All products are well stocked. ✓
+                    </p>
                   )}
                 </div>
               </Card>
 
               <Card className="p-6">
                 <h3 className="flex items-center gap-2 font-display text-base font-semibold text-white">
-                  <ClipboardList className="h-4.5 w-4.5 text-cyan-300" /> Recent Orders
+                  <ClipboardList className="h-4.5 w-4.5 text-cyan-300" /> Recent
+                  Orders
                 </h3>
                 <div className="mt-5 space-y-3">
                   {orders.length ? (
                     orders.slice(0, 6).map(({ order, customer }) => (
-                      <div key={order.id} className="flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/[0.02] px-4 py-3">
+                      <div
+                        key={order.id}
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/[0.02] px-4 py-3"
+                      >
                         <div className="min-w-0">
-                          <span className="text-sm font-semibold text-white">{orderNumber(order.id)}</span>
-                          <span className="ml-2 text-xs text-zinc-500">{customer.fullName}</span>
+                          <span className="text-sm font-semibold text-white">
+                            {orderNumber(order.id)}
+                          </span>
+                          <span className="ml-2 text-xs text-zinc-500">
+                            {customer.fullName}
+                          </span>
                         </div>
-                        <span className="shrink-0 text-sm font-medium text-cyan-200">{formatPKR(order.total)}</span>
+                        <span className="shrink-0 text-sm font-medium text-cyan-200">
+                          {formatPKR(order.total)}
+                        </span>
                       </div>
                     ))
                   ) : (

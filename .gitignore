@@ -1,0 +1,39 @@
+# ─── Node / project deps (all sub-projects) ───
+node_modules/
+
+# ─── Next.js build output (all sub-projects) ───
+.next/
+out/
+build/
+dist/
+
+# ─── Environment secrets (NEVER commit) ───
+.env
+.env.local
+.env.*.local
+
+# ─── Logs ───
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# ─── IDE / OS ───
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ─── Vercel ───
+.vercel/
+
+# ─── TypeScript cache ───
+*.tsbuildinfo
+
+# ─── Misc ───
+coverage/
+*.pem

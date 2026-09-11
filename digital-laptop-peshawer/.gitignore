@@ -1,0 +1,39 @@
+# ─── Dependencies ───
+node_modules/
+
+# ─── Next.js build output ───
+.next/
+out/
+
+# ─── Environment secrets (NEVER commit) ───
+.env
+.env.local
+.env.*.local
+
+# ─── TypeScript cache ───
+*.tsbuildinfo
+
+# ─── Drizzle Kit output ───
+drizzle/meta/
+
+# ─── IDE / Editor ───
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ─── Debug / Logs ───
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─── Vercel ───
+.vercel/
+
+# ─── Misc ───
+*.pem
+coverage/

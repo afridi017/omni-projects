@@ -8,7 +8,7 @@ import { parseProductInput } from "@/lib/product-input";
 type Context = { params: Promise<{ id: string }> };
 
 export async function PATCH(request: Request, context: Context) {
-  if (!requireAdmin(request.headers)) {
+  if (!(await requireAdmin(request.headers))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { id } = await context.params;
@@ -20,13 +20,22 @@ export async function PATCH(request: Request, context: Context) {
   const raw = await request.json().catch(() => null);
 
   // Lightweight partial update (e.g. featured toggle from the table).
-  if (raw && typeof raw === "object" && "featured" in raw && Object.keys(raw).length === 1) {
+  if (
+    raw &&
+    typeof raw === "object" &&
+    "featured" in raw &&
+    Object.keys(raw).length === 1
+  ) {
     const [updated] = await db
       .update(products)
       .set({ featured: Boolean((raw as { featured: unknown }).featured) })
       .where(eq(products.id, productId))
       .returning();
-    if (!updated) return NextResponse.json({ error: "Product not found." }, { status: 404 });
+    if (!updated)
+      return NextResponse.json(
+        { error: "Product not found." },
+        { status: 404 },
+      );
     return NextResponse.json(updated);
   }
 
@@ -39,12 +48,13 @@ export async function PATCH(request: Request, context: Context) {
     .set(parsed.data)
     .where(eq(products.id, productId))
     .returning();
-  if (!updated) return NextResponse.json({ error: "Product not found." }, { status: 404 });
+  if (!updated)
+    return NextResponse.json({ error: "Product not found." }, { status: 404 });
   return NextResponse.json(updated);
 }
 
 export async function DELETE(request: Request, context: Context) {
-  if (!requireAdmin(request.headers)) {
+  if (!(await requireAdmin(request.headers))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { id } = await context.params;
@@ -56,6 +66,7 @@ export async function DELETE(request: Request, context: Context) {
     .delete(products)
     .where(eq(products.id, productId))
     .returning({ id: products.id });
-  if (!deleted) return NextResponse.json({ error: "Product not found." }, { status: 404 });
+  if (!deleted)
+    return NextResponse.json({ error: "Product not found." }, { status: 404 });
   return NextResponse.json({ ok: true });
 }

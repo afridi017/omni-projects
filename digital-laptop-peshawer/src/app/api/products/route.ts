@@ -6,12 +6,15 @@ import { requireAdmin } from "@/lib/admin";
 import { parseProductInput } from "@/lib/product-input";
 
 export async function GET() {
-  const all = await db.select().from(products).orderBy(desc(products.createdAt));
+  const all = await db
+    .select()
+    .from(products)
+    .orderBy(desc(products.createdAt));
   return NextResponse.json(all);
 }
 
 export async function POST(request: Request) {
-  if (!requireAdmin(request.headers)) {
+  if (!(await requireAdmin(request.headers))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const raw = await request.json().catch(() => null);

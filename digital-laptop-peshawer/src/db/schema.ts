@@ -87,6 +87,14 @@ export const orderItems = pgTable("order_items", {
   quantity: integer("quantity").notNull(),
 });
 
+export const settings = pgTable("settings", {
+  key: text("key").primaryKey(),
+  value: text("value").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
 export type Customer = typeof customers.$inferSelect;
