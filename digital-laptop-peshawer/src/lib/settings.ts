@@ -104,6 +104,10 @@ export const DEFAULT_SETTINGS = {
   hero_subtitle:
     "Hand-picked new & imported machines, fully tested by our service lab, with Cash on Delivery across Peshawar.",
   hero_image_url: "/images/hero-laptop.svg",
+  hero_badge_title: "Core i5 – Ultra 9",
+  hero_badge_subtitle: "Latest Gen Processors",
+  service_badge_title: "DLS Service Lab",
+  service_badge_subtitle: "Software + Hardware",
   service_image_url: "/images/service-desk.svg",
   service_title: "Software Installation & Hardware Service",
   service_description:
@@ -134,6 +138,10 @@ export const SETTING_LABELS: Record<SettingKey, string> = {
   hero_title_accent: "Hero headline (accent line)",
   hero_subtitle: "Hero paragraph",
   hero_image_url: "Hero image",
+  hero_badge_title: "Hero floating badge (title)",
+  hero_badge_subtitle: "Hero floating badge (subtitle)",
+  service_badge_title: "Hero service badge (title)",
+  service_badge_subtitle: "Hero service badge (subtitle)",
   service_image_url: "Service section image",
   service_title: "Service title",
   service_description: "Service description",
@@ -184,6 +192,10 @@ export type SiteConfig = {
   heroTitleAccent: string;
   heroSubtitle: string;
   heroImageUrl: string;
+  heroBadgeTitle: string;
+  heroBadgeSubtitle: string;
+  serviceBadgeTitle: string;
+  serviceBadgeSubtitle: string;
   serviceImageUrl: string;
   serviceTitle: string;
   serviceDescription: string;
@@ -216,6 +228,10 @@ export function buildSiteConfig(map: SettingsMap): SiteConfig {
     heroTitleAccent: pick(map, "hero_title_accent"),
     heroSubtitle: pick(map, "hero_subtitle"),
     heroImageUrl: pick(map, "hero_image_url"),
+    heroBadgeTitle: pick(map, "hero_badge_title"),
+    heroBadgeSubtitle: pick(map, "hero_badge_subtitle"),
+    serviceBadgeTitle: pick(map, "service_badge_title"),
+    serviceBadgeSubtitle: pick(map, "service_badge_subtitle"),
     serviceImageUrl: pick(map, "service_image_url"),
     serviceTitle: pick(map, "service_title"),
     serviceDescription: pick(map, "service_description"),

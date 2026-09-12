@@ -165,8 +165,10 @@ export function HomeHero({ config }: { config: SiteConfig }) {
             <div className="flex items-center gap-2.5">
               <Cpu className="h-5 w-5 text-indigo-300" />
               <div className="text-xs leading-tight">
-                <p className="font-semibold text-white">Core i5 – Ultra 9</p>
-                <p className="text-zinc-500">Latest Gen Processors</p>
+                <p className="font-semibold text-white">
+                  {config.heroBadgeTitle}
+                </p>
+                <p className="text-zinc-500">{config.heroBadgeSubtitle}</p>
               </div>
             </div>
           </motion.div>
@@ -184,8 +186,10 @@ export function HomeHero({ config }: { config: SiteConfig }) {
             <div className="flex items-center gap-2.5">
               <ShieldCheck className="h-5 w-5 text-emerald-300" />
               <div className="text-xs leading-tight">
-                <p className="font-semibold text-white">DLS Service Lab</p>
-                <p className="text-zinc-500">Software + Hardware</p>
+                <p className="font-semibold text-white">
+                  {config.serviceBadgeTitle}
+                </p>
+                <p className="text-zinc-500">{config.serviceBadgeSubtitle}</p>
               </div>
             </div>
           </motion.div>

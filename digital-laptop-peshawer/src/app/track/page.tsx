@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   CheckCircle2,
   Clock,
@@ -142,12 +143,38 @@ function StatusTimeline({ status }: { status: OrderStatus }) {
 }
 
 export default function TrackPage() {
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState<TrackedOrder | TrackedOrder[] | null>(
     null,
   );
+  const ranOnce = useRef(false);
+
+  // Auto-search when arriving with ?q= (e.g. from the order confirmation page).
+  useEffect(() => {
+    if (ranOnce.current) return;
+    const q = searchParams.get("q");
+    if (q) {
+      ranOnce.current = true;
+      setQuery(q);
+      setLoading(true);
+      setError("");
+      fetch(`/api/track?q=${encodeURIComponent(q)}`)
+        .then(async (res) => {
+          const data = await res.json();
+          if (!res.ok) {
+            setError(data.error ?? "No order found.");
+            return;
+          }
+          setResult(data.orders ?? data);
+        })
+        .catch(() => setError("Something went wrong. Please try again."))
+        .finally(() => setLoading(false));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   async function search(e: React.FormEvent) {
     e.preventDefault();

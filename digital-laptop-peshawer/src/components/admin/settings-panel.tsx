@@ -77,7 +77,31 @@ const FIELDS: {
     group: "Hero Section",
     type: "url",
   },
+  {
+    key: "heroBadgeTitle",
+    label: "Floating Badge — Title",
+    group: "Hero Section",
+    hint: "e.g. Core i5 – Ultra 9",
+  },
+  {
+    key: "heroBadgeSubtitle",
+    label: "Floating Badge — Subtitle",
+    group: "Hero Section",
+    hint: "e.g. Latest Gen Processors",
+  },
   // Service section
+  {
+    key: "serviceBadgeTitle",
+    label: "Service Badge — Title",
+    group: "Service Section",
+    hint: "e.g. DLS Service Lab",
+  },
+  {
+    key: "serviceBadgeSubtitle",
+    label: "Service Badge — Subtitle",
+    group: "Service Section",
+    hint: "e.g. Software + Hardware",
+  },
   {
     key: "serviceImageUrl",
     label: "Service Section Image URL",
@@ -127,6 +151,10 @@ const RAW_KEYS: Record<keyof SiteConfig, string> = {
   heroTitleAccent: "hero_title_accent",
   heroSubtitle: "hero_subtitle",
   heroImageUrl: "hero_image_url",
+  heroBadgeTitle: "hero_badge_title",
+  heroBadgeSubtitle: "hero_badge_subtitle",
+  serviceBadgeTitle: "service_badge_title",
+  serviceBadgeSubtitle: "service_badge_subtitle",
   serviceImageUrl: "service_image_url",
   serviceTitle: "service_title",
   serviceDescription: "service_description",
