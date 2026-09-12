@@ -12,13 +12,13 @@ import {
   ShieldCheck,
   Truck,
 } from "lucide-react";
-import { SHOP } from "@/lib/constants";
+import type { SiteConfig } from "@/lib/settings";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
-export function HomeHero() {
+export function HomeHero({ config }: { config: SiteConfig }) {
   return (
     <section className="relative overflow-hidden">
       <div className="hero-glow absolute inset-0" />
@@ -34,7 +34,7 @@ export function HomeHero() {
             className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium tracking-wide text-zinc-300 backdrop-blur-xl"
           >
             <MapPin className="h-3.5 w-3.5 text-cyan-300" />
-            Alharmian Market · Near Gull Haji Plaza · Peshawar
+            {config.heroBadge}
           </motion.div>
 
           <motion.h1
@@ -43,9 +43,9 @@ export function HomeHero() {
             transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
             className="mt-6 font-display text-5xl font-bold leading-[1.02] tracking-tight text-white sm:text-6xl lg:text-7xl"
           >
-            Premium Laptops.
+            {config.heroTitle}
             <br />
-            <span className="text-gradient">Honest Prices.</span>
+            <span className="text-gradient">{config.heroTitleAccent}</span>
           </motion.h1>
 
           <motion.p
@@ -54,9 +54,7 @@ export function HomeHero() {
             transition={{ duration: 0.8, delay: 0.16, ease: EASE }}
             className="mt-6 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg"
           >
-            {SHOP.name} — {SHOP.tagline}. Hand-picked new &amp; imported
-            machines, fully tested by our service lab, with Cash on Delivery
-            across Peshawar.
+            {config.siteName} — {config.tagline}. {config.heroSubtitle}
           </motion.p>
 
           <motion.div
@@ -65,26 +63,44 @@ export function HomeHero() {
             transition={{ duration: 0.8, delay: 0.24, ease: EASE }}
             className="mt-9 flex flex-wrap items-center gap-3.5"
           >
-            <Link href="/shop" className={cn(buttonVariants({ variant: "accent", size: "lg" }), "group")}>
+            <Link
+              href="/shop"
+              className={cn(
+                buttonVariants({ variant: "accent", size: "lg" }),
+                "group",
+              )}
+            >
               Shop Laptops
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-            <Link href={SHOP.whatsapp} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="lg" className="border-emerald-400/30 text-emerald-300 hover:border-emerald-400/60 hover:bg-emerald-400/10">
+            <Link
+              href={config.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-emerald-400/30 text-emerald-300 hover:border-emerald-400/60 hover:bg-emerald-400/10"
+              >
                 <MessageCircle className="h-4.5 w-4.5" />
                 WhatsApp Us
               </Button>
             </Link>
             <a
-              href={SHOP.phoneTel}
+              href={config.phoneTel}
               className="group flex items-center gap-2.5 rounded-full px-3 py-2 text-sm text-zinc-300 transition-colors hover:text-white"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-colors group-hover:border-cyan-400/40">
                 <Phone className="h-4 w-4 text-cyan-300" />
               </span>
               <span className="leading-tight">
-                <span className="block text-[11px] uppercase tracking-wider text-zinc-500">Call {SHOP.phoneOwner}</span>
-                <span className="font-semibold tracking-wide">{SHOP.phoneDisplay}</span>
+                <span className="block text-[11px] uppercase tracking-wider text-zinc-500">
+                  Call {config.phoneOwner}
+                </span>
+                <span className="font-semibold tracking-wide">
+                  {config.phoneDisplay}
+                </span>
               </span>
             </a>
           </motion.div>
@@ -100,9 +116,14 @@ export function HomeHero() {
               { icon: ShieldCheck, big: "Checked", small: "& Lab Tested" },
               { icon: Truck, big: "COD", small: "Cash on Delivery" },
             ].map((s) => (
-              <div key={s.big} className="flex flex-col items-center gap-1 px-3 py-4 text-center">
+              <div
+                key={s.big}
+                className="flex flex-col items-center gap-1 px-3 py-4 text-center"
+              >
                 <s.icon className="mb-1 h-4 w-4 text-cyan-300/80" />
-                <span className="font-display text-lg font-bold text-white">{s.big}</span>
+                <span className="font-display text-lg font-bold text-white">
+                  {s.big}
+                </span>
                 <span className="text-[11px] text-zinc-500">{s.small}</span>
               </div>
             ))}
@@ -124,8 +145,8 @@ export function HomeHero() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/hero-laptop.jpg"
-              alt="Premium laptop at DIGITAL LAPTOP Peshawar"
+              src={config.heroImageUrl}
+              alt={`Premium laptop at ${config.siteName} Peshawar`}
               className="aspect-[4/3.4] w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#06070b]/60 via-transparent to-transparent" />
@@ -133,7 +154,12 @@ export function HomeHero() {
 
           <motion.div
             animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+            transition={{
+              duration: 5.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.6,
+            }}
             className="glass-panel absolute -left-4 top-10 hidden rounded-2xl px-4 py-3 sm:block"
           >
             <div className="flex items-center gap-2.5">
@@ -147,7 +173,12 @@ export function HomeHero() {
 
           <motion.div
             animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+            transition={{
+              duration: 6.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1.2,
+            }}
             className="glass-panel absolute -right-3 bottom-12 hidden rounded-2xl px-4 py-3 sm:block"
           >
             <div className="flex items-center gap-2.5">

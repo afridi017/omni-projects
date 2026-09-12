@@ -103,8 +103,8 @@ export const DEFAULT_SETTINGS = {
   hero_title_accent: "Honest Prices.",
   hero_subtitle:
     "Hand-picked new & imported machines, fully tested by our service lab, with Cash on Delivery across Peshawar.",
-  hero_image_url: "/images/hero-laptop.jpg",
-  service_image_url: "/images/service-desk.jpg",
+  hero_image_url: "/images/hero-laptop.svg",
+  service_image_url: "/images/service-desk.svg",
   service_title: "Software Installation & Hardware Service",
   service_description:
     "Windows & licensed software installation, data recovery, SSD/RAM upgrades, screen & battery replacement and board-level repairs — all under one roof.",

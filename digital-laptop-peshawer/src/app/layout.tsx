@@ -5,7 +5,7 @@ import { CartProvider } from "@/components/cart-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { FooterGate } from "@/components/footer-gate";
-import { SHOP } from "@/lib/constants";
+import { getSiteConfig } from "@/lib/settings";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const spaceGrotesk = Space_Grotesk({
@@ -49,19 +49,21 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const config = await getSiteConfig();
+
   return (
     <html lang="en" className="dark">
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} min-h-screen bg-[#06070b] font-sans text-zinc-100 antialiased`}
       >
         <CartProvider>
-          <SiteHeader />
+          <SiteHeader config={config} />
           <main className="min-h-screen">{children}</main>
           <FooterGate>
-            <SiteFooter />
+            <SiteFooter config={config} />
           </FooterGate>
           <script
             type="application/ld+json"
@@ -69,8 +71,8 @@ export default function RootLayout({
               __html: JSON.stringify({
                 "@context": "https://schema.org",
                 "@type": "ComputerStore",
-                name: SHOP.name,
-                description: SHOP.tagline,
+                name: config.siteName,
+                description: config.tagline,
                 telephone: "+92-310-9516681",
                 address: {
                   "@type": "PostalAddress",

@@ -1,19 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Minus,
+  Plus,
+  ShoppingBag,
+  Trash2,
+} from "lucide-react";
 import { useCart } from "@/components/cart-provider";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn, formatPKR } from "@/lib/utils";
 
 export default function CartPage() {
-  const { items, hydrated, subtotal, setQuantity, removeItem, clear } = useCart();
+  const { items, hydrated, subtotal, setQuantity, removeItem, clear } =
+    useCart();
 
   return (
     <div className="relative">
       <div className="hero-glow absolute inset-x-0 top-0 h-[360px]" />
       <div className="relative mx-auto max-w-5xl px-4 pb-24 pt-32 sm:px-6 lg:px-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300">Your Bag</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300">
+          Your Bag
+        </p>
         <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Shopping <span className="text-gradient">Cart</span>
         </h1>
@@ -21,7 +31,10 @@ export default function CartPage() {
         {!hydrated ? (
           <div className="mt-12 space-y-4">
             {[1, 2].map((i) => (
-              <div key={i} className="h-32 animate-pulse rounded-3xl bg-white/[0.05]" />
+              <div
+                key={i}
+                className="h-32 animate-pulse rounded-3xl bg-white/[0.05]"
+              />
             ))}
           </div>
         ) : items.length === 0 ? (
@@ -29,14 +42,27 @@ export default function CartPage() {
             <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/5">
               <ShoppingBag className="h-7 w-7 text-zinc-500" />
             </span>
-            <h2 className="font-display text-xl font-semibold text-white">Your cart is empty</h2>
+            <h2 className="font-display text-xl font-semibold text-white">
+              Your cart is empty
+            </h2>
             <p className="max-w-sm text-sm text-zinc-400">
-              Browse our premium laptops and add your favourite machine — Cash on
-              Delivery available across Peshawar.
+              Browse our premium laptops and add your favourite machine — Cash
+              on Delivery available across Peshawar.
             </p>
-            <Link href="/shop" className={cn(buttonVariants({ variant: "accent" }))}>
-              Browse Laptops <ArrowRight className="h-4 w-4" />
-            </Link>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/shop"
+                className={cn(buttonVariants({ variant: "accent" }))}
+              >
+                Browse Laptops <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/track"
+                className={cn(buttonVariants({ variant: "outline" }))}
+              >
+                Track an Existing Order
+              </Link>
+            </div>
           </div>
         ) : (
           <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_360px]">
@@ -81,7 +107,9 @@ export default function CartPage() {
                     <div className="mt-auto flex items-center justify-between gap-3 pt-3">
                       <div className="flex items-center gap-1 rounded-full border border-white/10 bg-white/5 p-0.5">
                         <button
-                          onClick={() => setQuantity(item.productId, item.quantity - 1)}
+                          onClick={() =>
+                            setQuantity(item.productId, item.quantity - 1)
+                          }
                           className="flex h-7 w-7 items-center justify-center rounded-full text-zinc-400 hover:bg-white/10 hover:text-white"
                           aria-label="Decrease"
                         >
@@ -91,7 +119,9 @@ export default function CartPage() {
                           {item.quantity}
                         </span>
                         <button
-                          onClick={() => setQuantity(item.productId, item.quantity + 1)}
+                          onClick={() =>
+                            setQuantity(item.productId, item.quantity + 1)
+                          }
                           className="flex h-7 w-7 items-center justify-center rounded-full text-zinc-400 hover:bg-white/10 hover:text-white disabled:opacity-40"
                           disabled={item.quantity >= item.stock}
                           aria-label="Increase"
@@ -108,17 +138,27 @@ export default function CartPage() {
               ))}
 
               <div className="flex items-center justify-between pt-2">
-                <Link href="/shop" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white">
+                <Link
+                  href="/shop"
+                  className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white"
+                >
                   <ArrowLeft className="h-4 w-4" /> Continue shopping
                 </Link>
-                <Button variant="ghost" size="sm" onClick={clear} className="text-zinc-500 hover:text-red-300">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clear}
+                  className="text-zinc-500 hover:text-red-300"
+                >
                   <Trash2 className="h-3.5 w-3.5" /> Clear cart
                 </Button>
               </div>
             </div>
 
             <div className="h-fit rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl lg:sticky lg:top-28">
-              <h2 className="font-display text-lg font-semibold text-white">Order Summary</h2>
+              <h2 className="font-display text-lg font-semibold text-white">
+                Order Summary
+              </h2>
               <div className="mt-5 space-y-3 text-sm">
                 <div className="flex justify-between text-zinc-400">
                   <span>Subtotal</span>
@@ -131,14 +171,21 @@ export default function CartPage() {
                 <div className="border-t border-white/10 pt-3">
                   <div className="flex justify-between">
                     <span className="font-semibold text-white">Total</span>
-                    <span className="font-display text-xl font-bold text-white">{formatPKR(subtotal)}</span>
+                    <span className="font-display text-xl font-bold text-white">
+                      {formatPKR(subtotal)}
+                    </span>
                   </div>
-                  <p className="mt-1 text-xs text-zinc-500">Pay in cash when your laptop arrives.</p>
+                  <p className="mt-1 text-xs text-zinc-500">
+                    Pay in cash when your laptop arrives.
+                  </p>
                 </div>
               </div>
               <Link
                 href="/checkout"
-                className={cn(buttonVariants({ variant: "accent", size: "lg" }), "mt-6 w-full")}
+                className={cn(
+                  buttonVariants({ variant: "accent", size: "lg" }),
+                  "mt-6 w-full",
+                )}
               >
                 Proceed to Checkout <ArrowRight className="h-4 w-4" />
               </Link>

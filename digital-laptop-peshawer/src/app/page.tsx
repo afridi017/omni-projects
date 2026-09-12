@@ -18,7 +18,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { getFeaturedProducts } from "@/lib/queries";
-import { SHOP } from "@/lib/constants";
+import { getSiteConfig } from "@/lib/settings";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { HomeHero } from "@/components/home-hero";
@@ -28,7 +28,14 @@ import { Reveal } from "@/components/reveal";
 export const dynamic = "force-dynamic";
 
 const MARQUEE_BRANDS = [
-  "Apple", "Dell", "HP", "Lenovo", "ASUS", "MSI", "Acer", "Microsoft Surface",
+  "Apple",
+  "Dell",
+  "HP",
+  "Lenovo",
+  "ASUS",
+  "MSI",
+  "Acer",
+  "Microsoft Surface",
 ];
 
 const CATEGORIES = [
@@ -96,11 +103,14 @@ const WHY_US = [
 ];
 
 export default async function HomePage() {
-  const featured = await getFeaturedProducts(8).catch(() => []);
+  const [featured, config] = await Promise.all([
+    getFeaturedProducts(8).catch(() => []),
+    getSiteConfig(),
+  ]);
 
   return (
     <>
-      <HomeHero />
+      <HomeHero config={config} />
 
       {/* Brand marquee */}
       <section className="relative border-y border-white/5 bg-white/[0.02] py-5">
@@ -156,8 +166,16 @@ export default async function HomePage() {
                 Fresh stock is being uploaded. Message us on WhatsApp for the
                 latest available machines.
               </p>
-              <a href={SHOP.whatsapp} target="_blank" rel="noopener noreferrer" className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
-                <MessageCircle className="h-4 w-4 text-emerald-400" /> WhatsApp {SHOP.phoneDisplay}
+              <a
+                href={config.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "sm" }),
+                )}
+              >
+                <MessageCircle className="h-4 w-4 text-emerald-400" /> WhatsApp{" "}
+                {config.phoneDisplay}
               </a>
             </div>
           </Reveal>
@@ -182,13 +200,22 @@ export default async function HomePage() {
                   href={cat.href}
                   className="group relative flex h-full flex-col gap-4 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-white/20"
                 >
-                  <div className={cn("absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100", cat.tint)} />
+                  <div
+                    className={cn(
+                      "absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100",
+                      cat.tint,
+                    )}
+                  />
                   <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
                     <cat.icon className="h-5.5 w-5.5 text-cyan-200" />
                   </div>
                   <div className="relative">
-                    <h3 className="font-display text-lg font-semibold text-white">{cat.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-zinc-400">{cat.desc}</p>
+                    <h3 className="font-display text-lg font-semibold text-white">
+                      {cat.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+                      {cat.desc}
+                    </p>
                   </div>
                   <ArrowUpRight className="relative mt-auto h-4.5 w-4.5 text-zinc-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-cyan-300" />
                 </Link>
@@ -199,13 +226,17 @@ export default async function HomePage() {
       </section>
 
       {/* Why choose us — bento */}
-      <section id="services" className="relative mx-auto max-w-7xl scroll-mt-24 px-4 py-24 sm:px-6 lg:px-8">
+      <section
+        id="services"
+        className="relative mx-auto max-w-7xl scroll-mt-24 px-4 py-24 sm:px-6 lg:px-8"
+      >
         <Reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300">
-            {SHOP.tagline}
+            {config.tagline}
           </p>
           <h2 className="mt-3 max-w-2xl font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
-            Why Peshawar Trusts <span className="text-gradient">DIGITAL LAPTOP</span>
+            Why Peshawar Trusts{" "}
+            <span className="text-gradient">DIGITAL LAPTOP</span>
           </h2>
         </Reveal>
 
@@ -214,7 +245,7 @@ export default async function HomePage() {
             <div className="group relative flex h-full min-h-[380px] flex-col justify-end overflow-hidden rounded-3xl border border-white/10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/service-desk.jpg"
+                src={config.serviceImageUrl}
                 alt="DLS service lab — laptop hardware and software service"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -224,18 +255,17 @@ export default async function HomePage() {
                   <Wrench className="h-3 w-3" /> DLS Service Lab
                 </span>
                 <h3 className="mt-4 font-display text-2xl font-bold text-white">
-                  Software Installation &amp; Hardware Service
+                  {config.serviceTitle}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-zinc-300">
-                  Windows &amp; licensed software installation, data recovery,
-                  SSD/RAM upgrades, screen &amp; battery replacement and
-                  board-level repairs — all under one roof.
+                  {config.serviceDescription}
                 </p>
                 <a
-                  href={SHOP.phoneTel}
+                  href={config.phoneTel}
                   className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 transition-colors hover:text-cyan-200"
                 >
-                  <Phone className="h-4 w-4" /> Book a service: {SHOP.phoneDisplay}
+                  <Phone className="h-4 w-4" /> Book a service:{" "}
+                  {config.servicePhoneDisplay}
                 </a>
               </div>
             </div>
@@ -251,7 +281,9 @@ export default async function HomePage() {
                   <h3 className="mt-4 font-display text-base font-semibold text-white">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-zinc-400">{item.desc}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+                    {item.desc}
+                  </p>
                 </div>
               </Reveal>
             ))}
@@ -260,7 +292,10 @@ export default async function HomePage() {
       </section>
 
       {/* Visit us / map */}
-      <section id="visit" className="relative scroll-mt-24 border-t border-white/5 bg-white/[0.015]">
+      <section
+        id="visit"
+        className="relative scroll-mt-24 border-t border-white/5 bg-white/[0.015]"
+      >
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-24 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch lg:px-8">
           <Reveal>
             <div className="flex h-full flex-col rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl sm:p-10">
@@ -268,7 +303,8 @@ export default async function HomePage() {
                 Visit The Shop
               </p>
               <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Alharmian Market, <span className="text-gradient">Peshawar</span>
+                Alharmian Market,{" "}
+                <span className="text-gradient">Peshawar</span>
               </h2>
               <div className="mt-8 space-y-5">
                 <div className="flex items-start gap-4">
@@ -276,8 +312,12 @@ export default async function HomePage() {
                     <MapPin className="h-5 w-5 text-cyan-300" />
                   </span>
                   <div>
-                    <p className="text-sm font-semibold text-white">{SHOP.name}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-zinc-400">{SHOP.address}</p>
+                    <p className="text-sm font-semibold text-white">
+                      {config.siteName}
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-zinc-400">
+                      {config.address}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -285,22 +325,33 @@ export default async function HomePage() {
                     <Phone className="h-5 w-5 text-cyan-300" />
                   </span>
                   <div>
-                    <p className="text-sm font-semibold text-white">{SHOP.phoneOwner}</p>
-                    <a href={SHOP.phoneTel} className="mt-1 block text-sm text-zinc-400 transition-colors hover:text-white">
-                      {SHOP.phoneDisplay} — tap to call
+                    <p className="text-sm font-semibold text-white">
+                      {config.phoneOwner}
+                    </p>
+                    <a
+                      href={config.phoneTel}
+                      className="mt-1 block text-sm text-zinc-400 transition-colors hover:text-white"
+                    >
+                      {config.phoneDisplay} — tap to call
                     </a>
                   </div>
                 </div>
               </div>
               <div className="mt-auto flex flex-wrap gap-3 pt-10">
-                <a href={SHOP.phoneTel} className={cn(buttonVariants({ variant: "accent" }))}>
+                <a
+                  href={config.phoneTel}
+                  className={cn(buttonVariants({ variant: "accent" }))}
+                >
                   <Phone className="h-4 w-4" /> Call Now
                 </a>
                 <a
-                  href={SHOP.whatsapp}
+                  href={config.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn(buttonVariants({ variant: "outline" }), "border-emerald-400/30 text-emerald-300 hover:bg-emerald-400/10")}
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "border-emerald-400/30 text-emerald-300 hover:bg-emerald-400/10",
+                  )}
                 >
                   <MessageCircle className="h-4 w-4" /> WhatsApp
                 </a>
@@ -311,7 +362,7 @@ export default async function HomePage() {
             <div className="relative h-full min-h-[360px] overflow-hidden rounded-3xl border border-white/10">
               <iframe
                 title="DIGITAL LAPTOP location — Alharmian Market, Near Gull Haji Plaza, Peshawar"
-                src={SHOP.mapEmbed}
+                src={config.mapEmbed}
                 className="absolute inset-0 h-full w-full border-0 [filter:invert(0.92)_hue-rotate(190deg)_saturate(0.9)_brightness(0.9)]"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -329,7 +380,8 @@ export default async function HomePage() {
         <div className="relative mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 lg:px-8">
           <Reveal>
             <h2 className="mx-auto max-w-3xl font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">
-              Can&apos;t find your dream machine? <span className="text-gradient">We&apos;ll source it.</span>
+              Can&apos;t find your dream machine?{" "}
+              <span className="text-gradient">We&apos;ll source it.</span>
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-zinc-400">
               Tell us your budget and specs on WhatsApp — we import on order and
@@ -337,14 +389,21 @@ export default async function HomePage() {
             </p>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-3.5">
               <a
-                href={`${SHOP.whatsapp}?text=${encodeURIComponent("Assalam o Alaikum! I want a laptop. My budget is: Rs. ____ | Specs I need: ____")}`}
+                href={`${config.whatsapp}?text=${encodeURIComponent("Assalam o Alaikum! I want a laptop. My budget is: Rs. ____ | Specs I need: ____")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn(buttonVariants({ variant: "accent", size: "lg" }))}
+                className={cn(
+                  buttonVariants({ variant: "accent", size: "lg" }),
+                )}
               >
                 <MessageCircle className="h-4.5 w-4.5" /> Request a Laptop
               </a>
-              <Link href="/shop" className={cn(buttonVariants({ variant: "outline", size: "lg" }))}>
+              <Link
+                href="/shop"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                )}
+              >
                 Browse Stock <ArrowRight className="h-4 w-4" />
               </Link>
             </div>

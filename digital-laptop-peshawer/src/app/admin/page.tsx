@@ -14,6 +14,7 @@ import {
   Package,
   PlusCircle,
   RefreshCw,
+  Settings,
   Zap,
 } from "lucide-react";
 import type { Product } from "@/db/schema";
@@ -29,8 +30,9 @@ import {
   type ProductDraft,
 } from "@/components/admin/product-form";
 import { OrdersTable } from "@/components/admin/orders-table";
+import { SettingsPanel } from "@/components/admin/settings-panel";
 
-type Tab = "dashboard" | "products" | "add" | "orders";
+type Tab = "dashboard" | "products" | "add" | "orders" | "settings";
 const SESSION_KEY = "dl-admin-key";
 
 const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
@@ -38,6 +40,7 @@ const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
   { id: "products", label: "Products", icon: Package },
   { id: "add", label: "Add Laptop", icon: PlusCircle },
   { id: "orders", label: "Orders", icon: ClipboardList },
+  { id: "settings", label: "Settings", icon: Settings },
 ];
 
 export default function AdminPage() {
@@ -427,6 +430,8 @@ export default function AdminPage() {
             }}
           />
         )}
+
+        {tab === "settings" && <SettingsPanel authedFetch={authedFetch} />}
       </div>
     </div>
   );

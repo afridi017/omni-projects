@@ -1,9 +1,18 @@
 import Link from "next/link";
-import { Clock, Code2, Mail, MapPin, MessageCircle, Phone, Zap } from "lucide-react";
-import { DEVELOPER, SHOP } from "@/lib/constants";
+import {
+  Clock,
+  Code2,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Zap,
+} from "lucide-react";
+import { DEVELOPER } from "@/lib/constants";
+import type { SiteConfig } from "@/lib/settings";
 import { Separator } from "@/components/ui/separator";
 
-export function SiteFooter() {
+export function SiteFooter({ config }: { config: SiteConfig }) {
   return (
     <footer className="relative border-t border-white/10 bg-[#05060a]">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
@@ -15,13 +24,18 @@ export function SiteFooter() {
                 <Zap className="h-4.5 w-4.5 text-white" strokeWidth={2.5} />
               </span>
               <span className="text-lg font-bold tracking-[0.18em] text-white">
-                DIGITAL<span className="text-cyan-300"> LAPTOP</span>
+                {config.siteName.split(" ")[0]}
+                <span className="text-cyan-300">
+                  {" "}
+                  {config.siteName.split(" ")[1] ?? "LAPTOP"}
+                </span>
               </span>
             </Link>
-            <p className="text-sm leading-relaxed text-zinc-400">{SHOP.tagline}</p>
+            <p className="text-sm leading-relaxed text-zinc-400">
+              {config.tagline}
+            </p>
             <p className="text-sm leading-relaxed text-zinc-500">
-              Peshawar&apos;s trusted destination for premium new &amp; imported
-              laptops — checked, tested and serviced by experts.
+              {config.footerNote}
             </p>
           </div>
 
@@ -37,9 +51,13 @@ export function SiteFooter() {
                 { href: "/shop?brand=Apple", label: "MacBooks" },
                 { href: "/#services", label: "DLS Services" },
                 { href: "/#visit", label: "Find the Shop" },
+                { href: "/track", label: "Track Your Order" },
               ].map((l) => (
                 <li key={l.href + l.label}>
-                  <Link href={l.href} className="text-zinc-400 transition-colors hover:text-cyan-300">
+                  <Link
+                    href={l.href}
+                    className="text-zinc-400 transition-colors hover:text-cyan-300"
+                  >
                     {l.label}
                   </Link>
                 </li>
@@ -54,31 +72,33 @@ export function SiteFooter() {
             <ul className="space-y-3.5 text-sm">
               <li className="flex items-start gap-3 text-zinc-400">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300" />
-                <span>{SHOP.address}</span>
+                <span>{config.address}</span>
               </li>
               <li>
                 <a
-                  href={SHOP.phoneTel}
+                  href={config.phoneTel}
                   className="flex items-center gap-3 text-zinc-400 transition-colors hover:text-white"
                 >
                   <Phone className="h-4 w-4 shrink-0 text-cyan-300" />
-                  <span>{SHOP.phoneOwner}: {SHOP.phoneDisplay}</span>
+                  <span>
+                    {config.phoneOwner}: {config.phoneDisplay}
+                  </span>
                 </a>
               </li>
               <li>
                 <a
-                  href={SHOP.whatsapp}
+                  href={config.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-zinc-400 transition-colors hover:text-emerald-300"
                 >
                   <MessageCircle className="h-4 w-4 shrink-0 text-emerald-400" />
-                  <span>WhatsApp {SHOP.phoneDisplay}</span>
+                  <span>WhatsApp {config.phoneDisplay}</span>
                 </a>
               </li>
               <li className="flex items-center gap-3 text-zinc-400">
                 <Clock className="h-4 w-4 shrink-0 text-cyan-300" />
-                <span>Mon – Sat · 10:00 AM – 9:00 PM</span>
+                <span>{config.openingHours}</span>
               </li>
             </ul>
           </div>
@@ -101,7 +121,8 @@ export function SiteFooter() {
 
         <div className="flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
           <p className="text-xs text-zinc-500">
-            © {new Date().getFullYear()} {SHOP.name} — {SHOP.tagline}. All rights reserved.
+            © {new Date().getFullYear()} {config.siteName} — {config.tagline}.
+            All rights reserved.
           </p>
           <p className="text-xs text-zinc-600">
             Shop No 12A, Alharmian Market, Peshawar, Pakistan

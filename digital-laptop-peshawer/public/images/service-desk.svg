@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c1426"/>
+      <stop offset="100%" style="stop-color:#052e2b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="240" y="130" width="320" height="200" rx="16" fill="#0a1220" stroke="#1e293b" stroke-width="3"/>
+  <rect x="300" y="160" width="100" height="80" rx="6" fill="#1e293b"/>
+  <rect x="270" y="262" width="260" height="10" rx="5" fill="#1e293b"/>
+  <line x1="240" y1="360" x2="560" y2="360" stroke="#1e293b" stroke-width="3"/>
+  <rect x="300" y="380" width="40" height="90" rx="4" fill="#1e293b"/>
+  <rect x="460" y="380" width="40" height="90" rx="4" fill="#1e293b"/>
+  <text x="400" y="500" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="#e2e8f0">DLS SERVICE LAB</text>
+  <text x="400" y="532" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#64748b">Software · Hardware · Board Repair</text>
+</svg>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, Phone, ShoppingBag, X, Zap } from "lucide-react";
-import { SHOP } from "@/lib/constants";
+import type { SiteConfig } from "@/lib/settings";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/components/cart-provider";
 
@@ -13,9 +13,10 @@ const NAV = [
   { href: "/shop", label: "Shop" },
   { href: "/#services", label: "Services" },
   { href: "/#visit", label: "Visit Us" },
+  { href: "/track", label: "Track Order" },
 ];
 
-export function SiteHeader() {
+export function SiteHeader({ config }: { config: SiteConfig }) {
   const pathname = usePathname();
   const { count } = useCart();
   const [scrolled, setScrolled] = useState(false);
@@ -47,7 +48,11 @@ export function SiteHeader() {
             <Zap className="h-4.5 w-4.5 text-white" strokeWidth={2.5} />
           </span>
           <span className="text-lg font-bold tracking-[0.18em] text-white">
-            DIGITAL<span className="bg-gradient-to-r from-indigo-400 to-cyan-300 bg-clip-text text-transparent"> LAPTOP</span>
+            {config.siteName.split(" ")[0]}
+            <span className="bg-gradient-to-r from-indigo-400 to-cyan-300 bg-clip-text text-transparent">
+              {" "}
+              {config.siteName.split(" ")[1] ?? "LAPTOP"}
+            </span>
           </span>
         </Link>
 
@@ -68,11 +73,11 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2.5">
           <a
-            href={SHOP.phoneTel}
+            href={config.phoneTel}
             className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-200 backdrop-blur-xl transition-all hover:border-cyan-400/40 hover:text-white lg:flex"
           >
             <Phone className="h-3.5 w-3.5 text-cyan-300" />
-            <span className="tracking-wide">{SHOP.phoneDisplay}</span>
+            <span className="tracking-wide">{config.phoneDisplay}</span>
           </a>
           <Link
             href="/cart"
@@ -91,7 +96,11 @@ export function SiteHeader() {
             className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-zinc-200 md:hidden"
             aria-label="Menu"
           >
-            {open ? <X className="h-4.5 w-4.5" /> : <Menu className="h-4.5 w-4.5" />}
+            {open ? (
+              <X className="h-4.5 w-4.5" />
+            ) : (
+              <Menu className="h-4.5 w-4.5" />
+            )}
           </button>
         </div>
       </div>
@@ -109,10 +118,11 @@ export function SiteHeader() {
               </Link>
             ))}
             <a
-              href={SHOP.phoneTel}
+              href={config.phoneTel}
               className="mt-2 flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-zinc-200"
             >
-              <Phone className="h-4 w-4 text-cyan-300" /> Call {SHOP.phoneDisplay}
+              <Phone className="h-4 w-4 text-cyan-300" /> Call{" "}
+              {config.phoneDisplay}
             </a>
           </nav>
         </div>
