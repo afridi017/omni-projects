@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0F0C29">
+<title>Meri Noor ke naam — Ek Colorful Maafi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+============================================================ */
+:root{
+  --bg-deep:#0F0C29;
+  --bg-mid:#302B63;
+  --bg-violet:#24243E;
+  --pink:#FF006E;
+  --cyan:#00F5FF;
+  --gold:#FFD700;
+  --amber:#FF9A5C;
+  --text:#F5F1FF;
+  --muted:#b8b3d6;
+  --glass:rgba(255,255,255,0.055);
+  --glass-border:rgba(255,255,255,0.15);
+  --radius:32px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--bg-deep);
+  color:var(--text);
+  overflow-x:hidden;
+  min-height:100vh;
+  cursor:none;
+  position:relative;
+  -webkit-font-smoothing:antialiased;
+}
+@media (hover:none){body{cursor:auto;}}
+
+/* ---------- Aurora Background ---------- */
+#aurora{
+  position:fixed;inset:0;z-index:-3;
+  background:
+    radial-gradient(60% 80% at 10% 20%, rgba(255,0,110,0.18), transparent 60%),
+    radial-gradient(50% 70% at 90% 10%, rgba(0,245,255,0.16), transparent 60%),
+    radial-gradient(55% 75% at 70% 90%, rgba(255,215,0,0.12), transparent 60%),
+    radial-gradient(50% 60% at 30% 80%, rgba(255,154,92,0.14), transparent 60%),
+    linear-gradient(135deg, var(--bg-deep), var(--bg-mid), var(--bg-violet));
+  background-size:200% 200%;
+  animation:auroraShift 22s ease-in-out infinite;
+}
+@keyframes auroraShift{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+#aurora::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 50%, transparent 0%, rgba(15,12,41,0.55) 100%);
+  mix-blend-mode:multiply;
+}
+
+/* ---------- Canvas layers ---------- */
+#stars,#orbCanv,#lanternCanv{
+  position:fixed;inset:0;pointer-events:none;z-index:-1;
+}
+#orbCanv{z-index:-2;}
+#lanternCanv{z-index:4;}
+
+/* ---------- Sparkle layer ---------- */
+#sparkleLayer{position:fixed;inset:0;pointer-events:none;z-index:50;}
+
+/* ---------- Custom cursor ---------- */
+#cursorDot,#cursorGlow{
+  position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
+  border-radius:50%;
+}
+#cursorDot{
+  width:8px;height:8px;background:#fff;
+  transform:translate(-50%,-50%);
+  transition:width .2s,height .2s,background .3s;
+}
+#cursorGlow{
+  width:36px;height:36px;
+  border:2px solid var(--cyan);
+  box-shadow:0 0 24px var(--cyan), inset 0 0 12px var(--cyan);
+  transform:translate(-50%,-50%);
+  transition:width .25s,height .25s,border-color .4s,box-shadow .4s;
+  mix-blend-mode:screen;
+}
+@media (hover:none){#cursorDot,#cursorGlow{display:none;}}
+
+/* ---------- Progress dots ---------- */
+#progressBar{
+  position:fixed;top:18px;left:50%;transform:translateX(-50%);
+  display:flex;gap:8px;z-index:100;padding:10px 16px;
+  background:var(--glass);backdrop-filter:blur(20px);
+  border:1px solid var(--glass-border);border-radius:40px;
+}
+.pdot{
+  width:9px;height:9px;border-radius:50%;
+  background:rgba(255,255,255,0.22);transition:all .5s cubic-bezier(.22,1,.36,1);
+}
+.pdot.active{background:var(--cyan);box-shadow:0 0 12px var(--cyan);width:22px;border-radius:20px;}
+.pdot.done{background:var(--pink);box-shadow:0 0 8px var(--pink);}
+
+/* ---------- Page container ---------- */
+#app{position:relative;z-index:2;}
+.page{
+  display:none;min-height:100vh;width:100%;
+  flex-direction:column;align-items:center;justify-content:center;
+  padding:90px 20px 60px;text-align:center;
+  perspective:1200px;
+}
+.page.active{
+  display:flex;
+  animation:pageIn .8s cubic-bezier(.22,1,.36,1);
+}
+@keyframes pageIn{
+  0%{opacity:0;transform:translateY(40px) scale(.94);filter:blur(6px);}
+  100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}
+}
+.page.leaving{
+  animation:pageOut .8s cubic-bezier(.22,1,.36,1) forwards;
+}
+@keyframes pageOut{
+  0%{opacity:1;transform:translateY(0) scale(1);}
+  100%{opacity:0;transform:translateY(-40px) scale(1.04);filter:blur(8px);}
+}
+
+/* ---------- Typography ---------- */
+h1,h2,h3,.display{font-family:'Fraunces',serif;font-weight:600;line-height:1.08;}
+.eyebrow{
+  font-family:'Caveat',cursive;font-size:clamp(1.5rem,3vw,2.2rem);
+  background:linear-gradient(90deg,var(--pink),var(--amber),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.gradient-text{
+  background:linear-gradient(90deg,var(--pink),var(--gold),var(--cyan),var(--pink));
+  background-size:300% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:gradientMove 6s linear infinite;
+}
+@keyframes gradientMove{to{background-position:300% 0;}}
+.hand{font-family:'Caveat',cursive;}
+.urdu{font-family:'Fraunces',serif;font-style:italic;}
+
+/* ---------- Glass cards ---------- */
+.glass{
+  background:var(--glass);
+  backdrop-filter:blur(30px);
+  -webkit-backdrop-filter:blur(30px);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);
+  position:relative;
+}
+.glow-border{
+  position:relative;
+  border:1px solid transparent;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02)) padding-box,
+    linear-gradient(120deg,var(--pink),var(--cyan),var(--gold),var(--amber),var(--pink)) border-box;
+  background-size:200% 200%;
+  animation:borderGlow 6s linear infinite;
+  border-radius:var(--radius);
+  backdrop-filter:blur(30px);
+}
+@keyframes borderGlow{to{background-position:200% 200%;}}
+
+/* ---------- Buttons ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:10px;
+  padding:16px 34px;border:none;border-radius:60px;cursor:none;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1rem;
+  color:#fff;overflow:hidden;transition:transform .3s cubic-bezier(.22,1,.36,1);
+  background:linear-gradient(90deg,var(--pink),var(--amber));
+  box-shadow:0 10px 30px rgba(255,0,110,0.4);
+  will-change:transform;
+}
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,0.55),transparent);
+  transform:skewX(-20deg);transition:left .6s;
+}
+.btn:hover::after{left:130%;}
+.btn.ghost{
+  background:transparent;border:1px solid var(--glass-border);
+  box-shadow:none;color:var(--text);
+}
+.btn.cyan{background:linear-gradient(90deg,var(--cyan),#0090ff);box-shadow:0 10px 30px rgba(0,245,255,0.35);}
+@media (hover:none){.btn{cursor:auto;}}
+
+/* ---------- Breathing circle ---------- */
+.breath{
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,var(--cyan),var(--pink));
+  box-shadow:0 0 60px var(--cyan),inset 0 0 40px rgba(255,255,255,0.3);
+  animation:breathe 8s ease-in-out infinite;
+}
+.breath.inhale{animation:breathe 8s ease-in-out infinite;}
+@keyframes breathe{
+  0%,100%{transform:scale(.9);box-shadow:0 0 40px var(--cyan);}
+  50%{transform:scale(1.25);box-shadow:0 0 90px var(--pink);}
+}
+
+/* ---------- Vinyl ---------- */
+.vinyl{
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#3a3a52,#15121f);
+  position:relative;animation:spin 3s linear infinite;
+  animation-play-state:paused;
+  box-shadow:0 20px 50px rgba(0,0,0,0.6),inset 0 0 20px rgba(0,0,0,0.6);
+}
+.vinyl.playing{animation-play-state:running;}
+.vinyl::after{
+  content:"";position:absolute;top:50%;left:50%;width:50px;height:50px;border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle at 50% 50%,var(--pink),#7a0030);
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ---------- Typewriter cursor ---------- */
+.type-caret::after{content:"▌";animation:blink 1s step-end infinite;color:var(--cyan);}
+@keyframes blink{50%{opacity:0;}}
+
+/* ---------- Floating hearts / sparkles ---------- */
+.f-heart{
+  position:fixed;pointer-events:none;z-index:55;
+  font-size:22px;filter:drop-shadow(0 0 6px var(--pink));
+  animation:heartRise 3s ease-out forwards;
+}
+.sparkle-part{
+  position:fixed;pointer-events:none;z-index:55;
+  border-radius:50%;
+  animation:heartRise 2.4s ease-out forwards;
+}
+@keyframes heartRise{
+  0%{opacity:1;transform:translateY(0) scale(1);}
+  100%{opacity:0;transform:translateY(-120px) scale(.4) rotate(20deg);}
+}
+
+/* ---------- Util ---------- */
+.row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;align-items:center;}
+.mt{margin-top:24px;}.mb{margin-bottom:24px;}
+.lead{max-width:640px;color:var(--muted);font-size:clamp(1rem,1.6vw,1.25rem);line-height:1.75;font-weight:400;}
+.hidden{display:none!important;}
+
+/* Reveal-on-scroll per item */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
+.rv.show{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- Background layers -->
+<div id="aurora"></div>
+<canvas id="stars"></canvas>
+<canvas id="orbCanv"></canvas>
+<canvas id="lanternCanv"></canvas>
+<div id="sparkleLayer"></div>
+
+<!-- Custom cursor -->
+<div id="cursorDot"></div>
+<div id="cursorGlow"></div>
+
+<!-- Progress dots -->
+<div id="progressBar"></div>
+
+<div id="app">
+
+  <!-- ==================== PAGE 1 : LANDING ==================== -->
+  <section class="page" data-page="0" id="p0">
+    <div class="rv show eyebrow">Suno, Meri Noor...</div>
+    <h1 class="display rv show" style="font-size:clamp(2.6rem,7vw,5.5rem);margin:10px 0;">3 Din Se<br><span class="gradient-text">Khamosh Ho?</span></h1>
+    <p class="lead rv show">Meri Noor ke naam — ek colorful maafi, 4500km paar se.</p>
+
+    <!-- 3-day counter -->
+    <div class="glass rv show" style="padding:22px 34px;margin-top:28px;">
+      <div style="font-size:.85rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;">Khamoshi ka waqt</div>
+      <div id="counter3d" style="font-family:'Fraunces',serif;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;color:var(--gold);text-shadow:0 0 20px rgba(255,215,0,.5);">72h 00m 00s</div>
+    </div>
+
+    <!-- Clocks -->
+    <div class="row rv show mt">
+      <div class="glass" style="padding:18px 26px;">
+        <div style="font-size:.8rem;color:var(--cyan);letter-spacing:2px;">PESHAWAR 🇵🇰</div>
+        <div id="clkPKT" style="font-family:'Fraunces',serif;font-size:2rem;font-weight:600;">--:--:--</div>
+      </div>
+      <div class="glass" style="padding:18px 26px;">
+        <div style="font-size:.8rem;color:var(--amber);letter-spacing:2px;">NAIROBI 🇰🇪</div>
+        <div id="clkEAT" style="font-family:'Fraunces',serif;font-size:2rem;font-weight:600;">--:--:--</div>
+      </div>
+    </div>
+
+    <button class="btn mt" style="font-size:1.1rem;padding:18px 40px;" onclick="go(1)">Andar Aao, Suno toh sahi <span>→</span></button>
+  </section>
+
+  <!-- ==================== PAGE 2 : PASSCODE ==================== -->
+  <section class="page" data-page="1" id="p1">
+    <div class="eyebrow rv show">Pehle aik cheez batao</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3rem);">Woh faasla...<br>jo hum tay kar rahe hain</h2>
+    <p class="lead rv show mb" style="margin-top:8px;">4 digit ka woh number type karo (in km). Hint: yehi toh humein jodhta bhi hai aur door bhi rakhta hai.</p>
+    <div class="row rv show" id="codeDots" style="gap:14px;"></div>
+    <p id="codeHint" class="hand rv show mt" style="font-size:1.4rem;color:var(--muted);">Woh faasla jo hum tay kar rahe hain 🌍</p>
+    <div class="row mt">
+      <button class="btn ghost" onclick="go(0)">← Wapas</button>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 3 : THE PUNISHMENT I REFUSED ==================== -->
+  <section class="page" data-page="2" id="p2">
+    <div class="eyebrow rv show">Page 3 · Tasleem</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3.2rem);margin-top:6px;">Tumne Ek Shart Rakhi Thi,<br><span class="gradient-text">Maine Mana Kiya</span></h2>
+    <div class="glow-border rv show" style="max-width:680px;padding:34px;margin-top:26px;text-align:left;">
+      <p class="lead" style="color:var(--text);">Tumne ek choti si cheez maangi thi. Na jaane kis gustaakhi mein, maine <strong style="color:var(--pink);">mana kar diya</strong>. Tumne call kaat di — aur us khamoshi mein main samajh gaya ke tum kitni hurt hui.</p>
+      <p class="lead urdu mt" style="color:var(--amber);font-size:1.3rem;">"Tumhara gussa jaiz tha, Meri Noor."</p>
+      <p class="lead mt">Maine tumhari shart ko halka liya. Tumhare jazbaat ko nahi samjha. Main justify nahi karunga, bas itna kahunga — <em>meri galti thi</em>. Poori ki poori.</p>
+    </div>
+    <div class="row mt">
+      <button class="btn" onclick="go(3)">Main samajh raha hoon →</button>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 4 : MY 2 DAYS WITHOUT YOU ==================== -->
+  <section class="page" data-page="3" id="p3">
+    <div class="eyebrow rv show">Page 4 · Akelapan</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3.2rem);margin-top:6px;">My 2 Days Without You</h2>
+    <canvas id="cityCanvas" width="560" height="240" style="max-width:100%;height:auto;border-radius:20px;margin-top:20px;"></canvas>
+    <p class="lead rv show mt">2 din se main busy tha, lekin har break pe phone dekha...</p>
+    <p class="hand rv show" style="font-size:1.8rem;color:var(--gold);">"Sheher bhara hai, par main akela hoon."</p>
+    <p class="lead rv show mb">Galiyan, ronaq, log — sab the. Bas tum nahi thi.</p>
+    <div class="row">
+      <button class="btn ghost" onclick="go(2)">← Pehle wala</button>
+      <button class="btn" onclick="go(4)">Aage badho →</button>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 5 : I SEE YOUR BURDEN ==================== -->
+  <section class="page" data-page="4" id="p4">
+    <div class="eyebrow rv show">Page 5 · Tumhara Wazan</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3.2rem);margin-top:6px;">I See Your Burden</h2>
+    <p class="lead rv show" style="margin:8px 0 18px;">Main jaanta hoon tum badi beti ho, poora ghar tumhare kandho par hai. Har chip par tap karo — aur use udta hua dekho, jaise ek fanoos.</p>
+    <div class="row" id="burdenChips" style="max-width:680px;gap:14px;"></div>
+    <button class="btn mt" onclick="go(5)">Yeh bhi main sambhal loonga →</button>
+  </section>
+
+  <!-- ==================== PAGE 6 : SAME MOON ==================== -->
+  <section class="page" data-page="5" id="p5">
+    <div class="eyebrow rv show">Page 6 · Ek Hi Chand</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3.2rem);margin-top:6px;">Same Moon Tonight</h2>
+    <p class="lead rv show" style="margin-bottom:6px;">Chaand ko pakdo aur idhar-udhar karo — Peshawar mein main, Nairobi mein tum, ek hi aasmaan ke neeche.</p>
+    <div id="moonWrap" style="width:min(80vw,420px);height:min(80vw,420px);position:relative;cursor:none;">
+      <div id="moon" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#ffd700 60%,#ff9a5c);box-shadow:0 0 80px 30px rgba(255,215,0,.4);"></div>
+      <div class="glass" style="position:absolute;left:10px;top:12px;padding:10px 16px;text-align:left;"><span style="color:var(--cyan);">Peshawar</span> · 34.0151°N</div>
+      <div class="glass" style="position:absolute;right:10px;bottom:12px;padding:10px 16px;text-align:right;"><span style="color:var(--amber);">Nairobi</span> · 1.2921°S</div>
+    </div>
+    <button class="btn mt" onclick="go(6)">Ab faasla dekho →</button>
+  </section>
+
+  <!-- ==================== PAGE 7 : 4500KM DOTTED JOURNEY ==================== -->
+  <section class="page" data-page="6" id="p6">
+    <div class="eyebrow rv show">Page 7 · Safar</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3.2rem);margin-top:6px;">4500 km Dotted Journey</h2>
+    <svg id="routeSvg" viewBox="0 0 600 240" style="width:min(92vw,640px);height:auto;margin-top:16px;">
+      <path id="routePath" d="M60,40 C200,200 360,10 540,200" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2" stroke-dasharray="6 8"/>
+      <path id="routeGlow" d="M60,40 C200,200 360,10 540,200" fill="none" stroke="url(#routeGrad)" stroke-width="3" stroke-dasharray="6 8" style="stroke-dashoffset:400;transition:stroke-dashoffset 3s ease;"/>
+      <defs>
+        <linearGradient id="routeGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#00F5FF"/><stop offset="50%" stop-color="#FF006E"/><stop offset="100%" stop-color="#FF9A5C"/>
+        </linearGradient>
+      </defs>
+      <g id="planeGroup">
+        <text font-size="26" id="planeIcon">✈️</text>
+        <circle r="5" fill="#FFD700"/>
+      </g>
+      <text x="60" y="26" fill="#00F5FF" font-size="13" font-family="'Plus Jakarta Sans'">Peshawar 🇵🇰</text>
+      <text x="450" y="226" fill="#FF9A5C" font-size="13" font-family="'Plus Jakarta Sans'">Nairobi 🇰🇪</text>
+    </svg>
+    <p class="hand rv show mt" style="font-size:2rem;color:var(--gold);">"Distance means so little...<br>when someone means so much."</p>
+
+    <!-- ==================== PAGE 8 : DECRYPTING MY DIL ==================== -->
+    <div id="decryptWrap" style="margin-top:30px;max-width:640px;width:100%;"></div>
+
+    <div class="row" style="margin-top:40px;">
+      <button class="btn ghost" onclick="go(5)">← Chand</button>
+      <button class="btn" onclick="go(8)">Chaliye dekho mera dil →</button>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 9 : MEMORY VAULT ==================== -->
+  <section class="page" data-page="7" id="p7">
+    <div class="eyebrow rv show">Page 9 · Yaadein</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3.2rem);margin-top:6px;">Colorful Memory Vault</h2>
+    <p class="lead rv show" style="margin-bottom:18px;">Har card par hover karo (ya tap karo) — yaadein khulti hain.</p>
+    <div class="row rv show" id="vault" style="max-width:900px;gap:18px;"></div>
+    <button class="btn mt" onclick="go(9)">Ab ek lamba saans lo →</button>
+  </section>
+
+  <!-- ==================== PAGE 10 : SAFE SPACE BREATHING ==================== -->
+  <section class="page" data-page="8" id="p8">
+    <div class="eyebrow rv show">Page 10 · Safe Space</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3rem);margin-top:6px;">Jab Udas Ho, Sirf Yeh Karo</h2>
+    <p class="lead rv show mb">Jab tum jaan kar offline jati ho, aur akele roti ho — tab yeh karna. Circle badhe to saans lo, chota ho to chhoro.</p>
+    <div class="breath rv show" id="breathCircle"></div>
+    <p class="hand rv show mt" style="font-size:2.2rem;color:var(--cyan);text-shadow:0 0 20px rgba(0,245,255,.5);" id="breathLabel">Saans lo...</p>
+    <p class="hand rv show" style="font-size:1.8rem;color:var(--gold);">Main hoon na.</p>
+    <button class="btn mt" onclick="go(10)">Aur aage →</button>
+  </section>
+
+  <!-- ==================== PAGE 11 : CONSTELLATION PUZZLE ==================== -->
+  <section class="page" data-page="9" id="p9">
+    <div class="eyebrow rv show">Page 11 · Sitare</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3rem);margin-top:6px;">Aik 'N' Banao</h2>
+    <p class="lead rv show mb">In sittaro ko arrange karo — tumhare naam ka pehla harf banega. (3×3 puzzle)</p>
+    <div id="puzzleGrid" class="grid" style="display:grid;grid-template-columns:repeat(3,80px);gap:10px;justify-content:center;margin:10px auto;"></div>
+    <p id="puzzleMsg" class="hand mt" style="font-size:1.5rem;color:var(--muted);"></p>
+    <button class="btn mt" onclick="go(11)">Continue →</button>
+  </section>
+
+  <!-- ==================== PAGE 12 : QUIZ ==================== -->
+  <section class="page" data-page="10" id="p10">
+    <div class="eyebrow rv show">Page 12 · Ek Sawaal</div>
+    <h2 class="display rv show" style="font-size:clamp(1.8rem,4.5vw,2.8rem);margin-top:6px;">Jab tum 3 din naraz hoti ho,<br>main kaisa feel karta hoon?</h2>
+    <div class="row rv show mt" id="quizBtns" style="max-width:560px;gap:14px;"></div>
+    <p id="quizMsg" class="hand mt" style="font-size:1.6rem;color:var(--gold);min-height:2rem;"></p>
+    <button class="btn mt" onclick="go(12)">Main samajh gaya →</button>
+  </section>
+
+  <!-- ==================== PAGE 13 : UNDERSTANDING METER ==================== -->
+  <section class="page" data-page="11" id="p11">
+    <div class="eyebrow rv show">Page 13 · Samajh</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3rem);margin-top:6px;">Kya Main Tumhe Samajhta Hoon?</h2>
+    <p class="lead rv show" style="margin-bottom:8px;">Meri samajh, tumhare liye.</p>
+    <div class="glass rv show" style="width:min(90vw,560px);height:34px;border-radius:40px;overflow:hidden;position:relative;">
+      <div id="understandingFill" style="height:100%;width:0%;background:linear-gradient(90deg,var(--pink),var(--amber),var(--gold),var(--cyan));border-radius:40px;transition:width 3s cubic-bezier(.22,1,.36,1);"></div>
+      <div id="understandingText" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-weight:700;font-size:.9rem;width:100%;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.6);">0%</div>
+    </div>
+    <button class="btn mt" onclick="go(13)">Ab suno... →</button>
+  </section>
+
+  <!-- ==================== PAGE 14 : LETTER TYPEWRITER ==================== -->
+  <section class="page" data-page="12" id="p12">
+    <div class="eyebrow rv show">Page 14 · Meri Khat</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3rem);margin-top:6px;">A Letter For You</h2>
+    <div class="glass rv show" style="max-width:700px;padding:28px 30px;margin-top:20px;text-align:left;max-height:60vh;overflow-y:auto;border-radius:28px;">
+      <div id="letterText" class="lead" style="color:var(--text);font-family:'Plus Jakarta Sans';line-height:1.8;"></div>
+    </div>
+    <button class="btn mt" onclick="go(14)">Vade suno →</button>
+  </section>
+
+  <!-- ==================== PAGE 15 : PROMISES ==================== -->
+  <section class="page" data-page="13" id="p13">
+    <div class="eyebrow rv show">Page 15 · Vade</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3rem);margin-top:6px;">6 Vade Jo Main Nibhaunga</h2>
+    <p class="lead rv show" style="margin-bottom:16px;">Har vada par tap karo — usay pakka karo.</p>
+    <div class="row rv show" id="promiseList" style="max-width:760px;gap:16px;"></div>
+    <button class="btn mt" onclick="go(15)">Aik cheez aur →</button>
+  </section>
+
+  <!-- ==================== PAGE 16 : FLIP CARD HUG ==================== -->
+  <section class="page" data-page="14" id="p14">
+    <div class="eyebrow rv show">Page 16 · Gale Lagna</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3rem);margin-top:6px;">Aik Jaadu Ka Card</h2>
+    <p class="lead rv show mb">Card ko tap karo aur palato.</p>
+    <div id="flipCard" class="flipcard" style="width:min(88vw,360px);height:440px;perspective:1600px;cursor:none;">
+      <div id="flipInner" style="position:relative;width:100%;height:100%;transition:transform .8s cubic-bezier(.22,1,.36,1);transform-style:preserve-3d;">
+        <div class="flip-face" style="position:absolute;inset:0;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;border-radius:32px;background:linear-gradient(135deg,#302B63,#24243E);border:1px solid var(--glass-border);">
+          <div style="font-size:3.4rem;">🤗</div>
+          <h3 class="display mt" style="font-size:1.8rem;">"I can't hug you right now..."</h3>
+          <p class="hand mt" style="font-size:1.5rem;color:var(--muted);">tap karo</p>
+        </div>
+        <div class="flip-face" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px;border-radius:32px;background:linear-gradient(135deg,#FF006E,#FF9A5C);border:1px solid var(--glass-border);">
+          <div style="font-size:3.4rem;">💌</div>
+          <h3 class="display mt" style="font-size:1.7rem;color:#fff;">"...so I'm sending you these words to hold you."</h3>
+        </div>
+      </div>
+    </div>
+    <button class="btn mt" onclick="go(16)">Phir kya? →</button>
+  </section>
+
+  <!-- ==================== PAGE 17 : VINYL PLAYER ==================== -->
+  <section class="page" data-page="15" id="p15">
+    <div class="eyebrow rv show">Page 17 · Dhun</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3rem);margin-top:6px;">Kuch Lofi, Sirf Tumhare Liye</h2>
+    <div class="row rv show" style="margin:24px 0;">
+      <div class="vinyl" id="vinylDisc"></div>
+      <div class="row" style="flex-direction:column;gap:12px;" id="trackBtns"></div>
+    </div>
+    <canvas id="vizCanvas" width="320" height="80" style="max-width:90vw;border-radius:16px;"></canvas>
+    <button class="btn mt" onclick="go(17)">Ab aakhri hissa →</button>
+  </section>
+
+  <!-- ==================== PAGE 18 : FORGIVENESS COUNTDOWN ==================== -->
+  <section class="page" data-page="16" id="p16">
+    <div class="eyebrow rv show">Page 18 · Aakhri Intezar</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3rem);margin-top:6px;">Countdown to Maafi</h2>
+    <div id="fcount" style="font-family:'Fraunces',serif;font-size:clamp(5rem,16vw,9rem);font-weight:700;background:linear-gradient(135deg,var(--gold),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;">5</div>
+    <p id="fcountLine" class="hand mt" style="font-size:1.6rem;color:var(--muted);">"Some things need morning."</p>
+    <button class="btn mt" onclick="go(18)">Aakhri baat →</button>
+  </section>
+
+  <!-- ==================== PAGE 19 : FINAL REVEAL ==================== -->
+  <section class="page" data-page="17" id="p17">
+    <div class="eyebrow rv show">Page 19 · Maafi</div>
+    <div id="finalReveal" style="min-height:120px;"></div>
+    <div class="row mt" id="finalBtns" style="display:none;">
+      <button class="btn" onclick="forgive(true)">Haan, maaf kiya 💛</button>
+      <button class="btn ghost" onclick="forgive(false)">Thoda aur manaao 😌</button>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE 20 : SIGNATURE ==================== -->
+  <section class="page" data-page="18" id="p18">
+    <div class="eyebrow rv show">Page 20 · Dastakhat</div>
+    <h2 class="display rv show" style="font-size:clamp(2rem,5vw,3rem);margin-top:6px;">Apna Naam Likho</h2>
+    <p class="lead rv show" style="margin-bottom:16px;">Tumhara naam likho — aur yeh maafi officially mukammal ho jayegi.</p>
+    <div class="glass rv show" style="padding:8px 8px 8px 24px;display:flex;align-items:center;gap:8px;">
+      <input id="signInput" placeholder="Noor..." style="background:transparent;border:none;color:var(--gold);font-family:'Caveat',cursive;font-size:2rem;outline:none;width:220px;text-align:center;"/>
+      <button class="btn" style="padding:12px 24px;" onclick="signName()">Mukammal ✍️</button>
+    </div>
+    <div id="signResult" class="mt" style="display:none;"></div>
+    <div class="row mt">
+      <button class="btn ghost" onclick="go(0)">↺ Dobara shuru karo (kyunki main roz maafi karta rahunga)</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ============================================================
+   GLOBAL STATE & HELPERS
+============================================================ */
+const TOTAL_PAGES = 19; // pages 0..18
+let currentPage = 0;
+const $_ = s => document.querySelector(s);
+
+/* ---------- Progress dots ---------- */
+function buildProgress(){
+  const bar = $_('#progressBar');
+  bar.innerHTML='';
+  for(let i=0;i<TOTAL_PAGES;i++){
+    const d=document.createElement('div');
+    d.className='pdot'; d.dataset.i=i;
+    bar.appendChild(d);
+  }
+}
+function updateProgress(){
+  document.querySelectorAll('.pdot').forEach(d=>{
+    const i=+d.dataset.i;
+    d.className='pdot'+(i===currentPage?' active':(i<currentPage?' done':''));
+  });
+}
+
+/* ---------- Page navigation with transition ---------- */
+function go(n){
+  if(n===currentPage) return;
+  const cur=$_(`#p${currentPage}`);
+  cur.classList.add('leaving');
+  setTimeout(()=>{
+    cur.classList.remove('active','leaving');
+    currentPage=n;
+    const next=$_(`#p${n}`);
+    next.classList.add('active');
+    updateProgress();
+    window.scrollTo({top:0,behavior:'smooth'});
+    onPageEnter(n);
+  },380);
+}
+function onPageEnter(n){
+  const page=$_(`#p${n}`);
+  page.querySelectorAll('.rv').forEach((el,idx)=>{
+    el.classList.remove('show');
+    setTimeout(()=>el.classList.add('show'),60+idx*70);
+  });
+  // page-specific triggers
+  switch(n){
+    case 3: drawCity(); break;
+    case 6: animateRoute(); break;
+    case 8: initBreath(); break;
+    case 11: fillUnderstanding(); break;
+    case 12: startLetter(); break;
+    case 16: startCountdown(); break;
+    case 17: if(!revealed) revealFinal(); break;
+  }
+}
+
+/* ============================================================
+   BACKGROUND: STARS, ORBS, LANTERNS
+============================================================ */
+const stars=$_('#stars'), orb=$_('#orbCanv'), lantern=$_('#lanternCanv');
+const sctx=stars.getContext('2d'), octx=orb.getContext('2d'), lctx=lantern.getContext('2d');
+function resize(c){
+  c.width=innerWidth; c.height=innerHeight;
+}
+resize(stars);resize(orb);resize(lantern);
+addEventListener('resize',()=>{resize(stars);resize(orb);resize(lantern);});
+
+// twinkling stars
+let starArr=[];
+for(let i=0;i<160;i++) starArr.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.6+.3,p:Math.random()*Math.PI*2,s:Math.random()*.02+.005,c:Math.random()>.7?'255,215,0':'255,255,255'});
+function drawStars(){
+  sctx.clearRect(0,0,stars.width,stars.height);
+  starArr.forEach(st=>{
+    st.p+=st.s;
+    const a=.3+Math.abs(Math.sin(st.p))*.7;
+    sctx.fillStyle=`rgba(${st.c},${a})`;
+    sctx.beginPath();sctx.arc(st.x,st.y,st.r,0,7);sctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// floating colorful orbs
+let orbs=[];
+const ORB_COLORS=['255,0,110','0,245,255','255,215,0','255,154,92','120,110,255'];
+for(let i=0;i<14;i++){
+  orbs.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*60+30,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,c:ORB_COLORS[i%5]});
+}
+function drawOrbs(){
+  octx.clearRect(0,0,orb.width,orb.height);
+  const g=octx.createRadialGradient(0,0,0,0,0,10);
+  orbs.forEach(o=>{
+    o.x+=o.vx;o.y+=o.vy;
+    if(o.x<-o.r)o.x=orb.width+o.r; if(o.x>orb.width+o.r)o.x=-o.r;
+    if(o.y<-o.r)o.y=orb.height+o.r; if(o.y>orb.height+o.r)o.y=-o.r;
+    const grd=octx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);
+    grd.addColorStop(0,`rgba(${o.c},0.32)`);
+    grd.addColorStop(1,`rgba(${o.c},0)`);
+    octx.fillStyle=grd;
+    octx.beginPath();octx.arc(o.x,o.y,o.r,0,7);octx.fill();
+  });
+  requestAnimationFrame(drawOrbs);
+}
+drawOrbs();
+
+// floating lanterns (Noor = light)
+let lanterns=[];
+function spawnLantern(x,targetCount){
+  lanterns.push({x:x??(Math.random()*innerWidth),y:innerHeight+30,size:Math.random()*26+14,hue:ORB_COLORS[Math.floor(Math.random()*5)],spd:Math.random()*.8+.5,sway:Math.random()*60+30,count:targetCount??1});
+}
+function drawLanterns(){
+  lctx.clearRect(0,0,lantern.width,lantern.height);
+  lanterns.forEach(l=>{
+    l.y-=l.spd; l.x+=Math.sin(l.y*.02)*l.sway*.02;
+    const s=l.size;
+    // glow
+    lctx.save();
+    const grd=lctx.createRadialGradient(l.x,l.y,0,l.x,l.y,s*2.5);
+    grd.addColorStop(0,`rgba(${l.hue},0.55)`);
+    grd.addColorStop(1,`rgba(${l.hue},0)`);
+    lctx.fillStyle=grd;
+    lctx.beginPath();lctx.arc(l.x,l.y,s*2.5,0,7);lctx.fill();
+    lctx.restore();
+    // body
+    lctx.fillStyle=`rgba(${l.hue},0.75)`;
+    lctx.beginPath();lctx.arc(l.x,l.y,s*.5,0,7);lctx.fill();
+  });
+  lanterns=lanterns.filter(l=>l.y>-80);
+  requestAnimationFrame(drawLanterns);
+}
+drawLanterns();
+setInterval(()=>{ if(Math.random()>.6) spawnLantern(); },900);
+
+/* ============================================================
+   CUSTOM CURSOR + TRAIL GLOW
+============================================================ */
+const dot=$_('#cursorDot'), glow=$_('#cursorGlow');
+let mx=innerWidth/2,my=innerHeight/2,gx=mx,gy=my, cursorColor='0,245,255';
+addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  dot.style.left=mx+'px';dot.style.top=my+'px';
+  spawnSparkle(e.clientX,e.clientY);
+});
+(function loopCursor(){
+  gx+=(mx-gx)*.14; gy+=(my-gy)*.14;
+  glow.style.left=gx+'px';glow.style.top=gy+'px';
+  requestAnimationFrame(loopCursor);
+})();
+// hover interactions change color
+document.addEventListener('mouseover',e=>{
+  if(e.target.closest('.btn')||e.target.closest('button')||e.target.closest('.flipcard')||e.target.closest('#moon')||e.target.closest('.mem')){
+    cursorColor='255,0,110'; glow.style.width='56px';glow.style.height='56px';dot.style.width='12px';dot.style.height='12px';
+  }else{
+    cursorColor='0,245,255'; glow.style.width='36px';glow.style.height='36px';dot.style.width='8px';dot.style.height='8px';
+  }
+});
+(function loopGlowColor(){
+  glow.style.borderColor=`rgb(${cursorColor})`;
+  glow.style.boxShadow=`0 0 24px rgb(${cursorColor}), inset 0 0 12px rgb(${cursorColor})`;
+  requestAnimationFrame(loopGlowColor);
+})();
+
+/* ============================================================
+   SPARKLES / HEARTS ON MOUSE MOVE
+============================================================ */
+const sparkleLayer=$_('#sparkleLayer');
+let sparkleTimer=0;
+function spawnSparkle(x,y){
+  const now=performance.now();
+  if(now-sparkleTimer<40) return;
+  sparkleTimer=now;
+  const el=document.createElement('div');
+  el.className='sparkle-part';
+  const size=Math.random()*4+2;
+  el.style.width=size+'px';el.style.height=size+'px';
+  el.style.left=(x+Math.random()*20-10)+'px';
+  el.style.top=(y+Math.random()*20-10)+'px';
+  el.style.background=`rgb(${ORB_COLORS[Math.floor(Math.random()*5)]})`;
+  el.style.boxShadow=`0 0 10px rgb(${ORB_COLORS[0]})`;
+  sparkleLayer.appendChild(el);
+  setTimeout(()=>el.remove(),2400);
+}
+function spawnFloatingHeart(){
+  const h=document.createElement('div');
+  h.className='f-heart';
+  h.textContent=Math.random()>.5?'💛':'💗';
+  h.style.left=(Math.random()*innerWidth)+'px';
+  h.style.top=(innerHeight*.7+Math.random()*innerHeight*.3)+'px';
+  h.style.fontSize=(Math.random()*20+16)+'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),3000);
+}
+setInterval(spawnFloatingHeart,2600);
+
+/* ============================================================
+   MAGNETIC BUTTONS
+============================================================ */
+document.addEventListener('mousemove',e=>{
+  document.querySelectorAll('.btn').forEach(b=>{
+    const r=b.getBoundingClientRect();
+    const cx=r.left+r.width/2, cy=r.top+r.height/2;
+    const dx=e.clientX-cx, dy=e.clientY-cy;
+    const dist=Math.hypot(dx,dy);
+    if(dist<120){
+      b.style.transform=`translate(${dx*.2}px,${dy*.2}px) scale(1.04)`;
+    }else{
+      b.style.transform='';
+    }
+  });
+});
+
+/* ============================================================
+   PAGE 1: CLOCKS + 3-DAY COUNTER
+============================================================ */
+function pad(n){return n<10?'0'+n:n;}
+function updateClocks(){
+  const now=new Date();
+  const pkt=new Date(now.toLocaleString('en-US',{timeZone:'Asia/Karachi'}));
+  const eat=new Date(now.toLocaleString('en-US',{timeZone:'Africa/Nairobi'}));
+  $_('#clkPKT').textContent=`${pad(pkt.getHours())}:${pad(pkt.getMinutes())}:${pad(pkt.getSeconds())}`;
+  $_('#clkEAT').textContent=`${pad(eat.getHours())}:${pad(eat.getMinutes())}:${pad(eat.getSeconds())}`;
+}
+setInterval(updateClocks,1000);updateClocks();
+
+// 3-day counter anchored to a fixed start (we count since "3 din pehle" = now minus 72h, live-updating upward)
+const silenceStart=Date.now()-72*3600*1000;
+function updateCounter(){
+  const el=Date.now()-silenceStart;
+  const h=Math.floor(el/3600000);
+  const m=Math.floor((el%3600000)/60000);
+  const s=Math.floor((el%60000)/1000);
+  $_('#counter3d').textContent=`${pad(h)}h ${pad(m)}m ${pad(s)}s`;
+}
+setInterval(updateCounter,1000);updateCounter();
+
+/* ============================================================
+   PAGE 2: PASSCODE 4500
+============================================================ */
+const CODE='4500';
+let codeInput='';
+const codeDots=$_('#codeDots');
+function renderCodeDots(){
+  codeDots.innerHTML='';
+  for(let i=0;i<4;i++){
+    const d=document.createElement('div');
+    d.style.width='56px';d.style.height='56px';d.style.borderRadius='16px';
+    d.style.border='1px solid var(--glass-border)';
+    d.style.display='flex';d.style.alignItems='center';d.style.justifyContent='center';
+    d.style.fontFamily='Fraunces';d.style.fontSize='1.6rem';
+    d.style.background='var(--glass)';
+    if(codeInput[i]){ d.textContent='●'; d.style.color=`rgb(${ORB_COLORS[i]})`; d.style.boxShadow=`0 0 16px rgb(${ORB_COLORS[i]})`; }
+    codeDots.appendChild(d);
+  }
+}
+renderCodeDots();
+function codePress(n){
+  if(codeInput.length>=4) return;
+  codeInput+=n; renderCodeDots();
+  if(codeInput.length===4){
+    if(codeInput===CODE){
+      $_('#codeHint').textContent='Sahi! Tum hi toh ho ❤️';
+      setTimeout(()=>go(2),800);
+    }else{
+      codeInput='';
+      codeDots.style.animation='shake .5s';
+      const pg=$_('#p1'); pg.style.animation='shake .5s';
+      setTimeout(()=>{codeDots.style.animation='';pg.style.animation='';renderCodeDots();},500);
+      $_('#codeHint').textContent='Ghalat... theek se socho, 4-5-0-0 😉';
+    }
+  }
+}
+const keystyle=document.createElement('style');
+keystyle.textContent=`@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}`;
+document.head.appendChild(keystyle);
+
+// keypad
+const keypad=document.createElement('div');
+keypad.className='row';
+keypad.style.gap='10px';
+['1','2','3','4','5','6','7','8','9','⌫','0'].forEach(k=>{
+  const b=document.createElement('button');
+  b.className='btn ghost';b.style.padding='14px 22px';
+  b.textContent=k;
+  b.onclick=()=>{ if(k==='⌫'){codeInput=codeInput.slice(0,-1);renderCodeDots();} else codePress(k); };
+  keypad.appendChild(b);
+});
+codeDots.after(keypad);
+
+/* ============================================================
+   PAGE 4: LONELY CITY ILLUSTRATION
+============================================================ */
+function drawCity(){
+  const c=$_('#cityCanvas'); const ctx=c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  // gradient sky
+  const sky=ctx.createLinearGradient(0,0,0,c.height);
+  sky.addColorStop(0,'#0F0C29');sky.addColorStop(1,'#302B63');
+  ctx.fillStyle=sky;ctx.fillRect(0,0,c.width,c.height);
+  // stars
+  for(let i=0;i<50;i++){ctx.fillStyle=`rgba(255,255,255,${Math.random()*.7})`;ctx.fillRect(Math.random()*c.width,Math.random()*120,2,2);}
+  // city silhouette
+  ctx.fillStyle='#1a1730';
+  let bx=0;
+  const buildings=[[40,120],[55,80],[30,150],[70,100],[45,130],[60,90],[50,140]];
+  let totalW=0; buildings.forEach(b=>totalW+=b[0]);
+  buildings.forEach(b=>{
+    ctx.fillRect(bx,b[2],b[0]-4,240-b[2]);
+    bx+=b[0];
+  });
+  // windows
+  ctx.fillStyle='rgba(255,215,0,0.5)';
+  for(let i=0;i<40;i++){ctx.fillRect(Math.random()*c.width,60+Math.random()*150,4,6);}
+  // lonely walking figure
+  const t=performance.now()/300;
+  const fx=280+Math.sin(t)*8, fy=200;
+  ctx.fillStyle='#FF006E';
+  ctx.beginPath();ctx.arc(fx,190,8,0,7);ctx.fill();
+  ctx.fillStyle='#fff';
+  ctx.fillRect(fx-2,198,4,30);
+  // legs walking
+  ctx.strokeStyle='#fff';ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(fx,228);ctx.lineTo(fx-6+Math.sin(t)*6,244);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(fx,228);ctx.lineTo(fx+6-Math.sin(t)*6,244);ctx.stroke();
+  // moon
+  ctx.fillStyle='#FFD700';
+  ctx.beginPath();ctx.arc(480,60,28,0,7);ctx.fill();
+  ctx.globalCompositeOperation='lighter';
+  const mg=ctx.createRadialGradient(480,60,0,480,60,70);
+  mg.addColorStop(0,'rgba(255,215,0,.4)');mg.addColorStop(1,'transparent');
+  ctx.fillStyle=mg;ctx.fillRect(380,0,200,180);
+  ctx.globalCompositeOperation='source-over';
+  // caption italics glowing
+  ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='italic 14px Caveat';
+  ctx.fillText('sheher bhra hy, lkn main akela...', 40, 232);
+  requestAnimationFrame(drawCity);
+}
+
+/* ============================================================
+   PAGE 5: BURDEN CHIPS
+============================================================ */
+const burdens=[
+  {t:'Ghar ke kaam 🧺',c:0},
+  {t:'Daant 😔',c:1},
+  {t:'Thakan 😪',c:2},
+  {t:'Badi beti hone ka bojh 🏠',c:3},
+  {t:'Chup chap rona 🤐',c:4},
+  {t:'Sab sambhalna 😮‍💨',c:1}
+];
+function buildChips(){
+  const wrap=$_('#burdenChips');
+  burdens.forEach((b,i)=>{
+    const chip=document.createElement('button');
+    chip.className='btn ghost';
+    chip.style.cssText=`padding:14px 22px;border-radius:40px;font-size:1rem;border:1px solid rgb(${ORB_COLORS[b.c]});color:rgb(${ORB_COLORS[b.c]});`;
+    chip.textContent=b.t;
+    chip.onclick=e=>{
+      // floating lantern from chip position
+      const r=chip.getBoundingClientRect();
+      const lant={x:r.left+r.width/2,y:r.top,size:22,hue:ORB_COLORS[b.c],spd:1.1,sway:50};
+      lanterns.push(lant);
+      chip.style.transition='opacity .5s,transform .5s';
+      chip.style.opacity='0';chip.style.transform='translateY(-20px) scale(.6)';
+      setTimeout(()=>{chip.textContent='✅ '+(b.t.split(' ')[0]); chip.style.opacity='.55';chip.style.transform='';chip.disabled=true;},500);
+    };
+    wrap.appendChild(chip);
+  });
+}
+buildChips();
+
+/* ============================================================
+   PAGE 6: DRAGGABLE MOON
+============================================================ */
+const moon=$_('#moon'), moonWrap=$_('#moonWrap');
+let dragging=false;
+function setMoon(x,y){
+  const r=moonWrap.getBoundingClientRect();
+  const nx=Math.min(Math.max(x-r.left,0),r.width);
+  const ny=Math.min(Math.max(y-r.top,0),r.height);
+  moon.style.left=nx+'px';moon.style.top=ny+'px';
+  // parallax glow follows
+  moonWrap.style.background=`radial-gradient(circle at ${nx}px ${ny}px, rgba(255,215,0,.18), transparent 60%)`;
+}
+moon.addEventListener('pointerdown',e=>{dragging=true;moon.setPointerCapture(e.pointerId);});
+moon.addEventListener('pointermove',e=>{if(dragging)setMoon(e.clientX,e.clientY);});
+moon.addEventListener('pointerup',()=>dragging=false);
+
+/* ============================================================
+   PAGE 7: SVG ROUTE + DECRYPT FILES
+============================================================ */
+function animateRoute(){
+  const glow=$_('#routeGlow');
+  glow.style.strokeDashoffset='400';
+  setTimeout(()=>{ glow.style.strokeDashoffset='0'; },200);
+  // animate plane along path
+  const path=$_('#routePath');
+  const len=path.getTotalLength();
+  const plane=$_('#planeIcon');
+  const group=$_('#planeGroup');
+  let start=null;
+  function step(ts){
+    if(!start)start=ts;
+    const p=Math.min((ts-start)/3000,1);
+    const pt=path.getPointAtLength(p*len);
+    plane.setAttribute('x',pt.x-13);plane.setAttribute('y',pt.y+9);
+    group.setAttribute('transform','');
+    if(p<1)requestAnimationFrame(step);else plane.setAttribute('x',520);
+  }
+  requestAnimationFrame(step);
+}
+
+// Decypt files (page 8 content appended on route page)
+const files=[
+  {n:'3_days_of_silence.mp3',e:'🎵',d:'...tumhari khamoshi ka music. Har din ek naya note.'},
+  {n:'your_anger_is_valid.txt',e:'📄',d:'Tumhara gussa bilkul theek hai. Yehi haq hai tumhara.'},
+  {n:'how_i_roamed_city.log',e:'📜',d:'04:00 — Sarhad Road ka akela safar.\n06:30 — Chai, bina maaza.\n09:00 — Phone uthaya... phir rakha.'},
+  {n:'maafi_ke_phool.zip',e:'🌷',d:'Phool jo abhi tak khil rahe hain... sirf tumhare liye.'}
+];
+function buildDecrypt(){
+  const wrap=$_('#decryptWrap');
+  wrap.innerHTML='<div class="eyebrow" style="font-size:1.4rem;">Page 8 · Decrypting My Dil</div><div class="hand" style="color:var(--muted);font-size:1.4rem;">Files jo meri khamoshi mein chhupi hain...</div><div id="fileList" style="margin-top:14px;text-align:left;"></div>';
+  const fl=$_('#fileList');
+  files.forEach((f,i)=>{
+    const row=document.createElement('div');
+    row.className='glass';
+    row.style.cssText='display:flex;align-items:center;gap:12px;padding:12px 18px;margin-bottom:10px;cursor:none;';
+    row.innerHTML=`<span style="font-size:1.5rem;">${f.e}</span><div style="flex:1;text-align:left;"><div style="font-weight:600;font-size:.95rem;">${f.n}</div><div id="status${i}" style="color:var(--muted);font-size:.8rem;">queued...</div></div><span id="bar${i}">0%</span>`;
+    fl.appendChild(row);
+    setTimeout(()=>decryptFile(i),i*700+400);
+  });
+}
+function decryptFile(i){
+  const status=$_(`#status${i}`), bar=$_(`#bar${i}`);
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=Math.random()*14+4; if(p>100)p=100;
+    bar.textContent=Math.floor(p)+'%';
+    bar.style.color=`rgb(${ORB_COLORS[i%5]})`;
+    if(p>=100){
+      clearInterval(iv);
+      status.textContent='✓ decrypted';
+      status.style.color='var(--gold)';
+      const note=document.createElement('div');
+      note.style.cssText='font-size:.78rem;color:var(--muted);white-space:pre-line;margin-top:4px;';
+      note.textContent=files[i].d;
+      status.appendChild(note);
+      if(i<files.length-1)decryptDone();
+    }
+  },60);
+}
+function decryptDone(){/* seamless */}
+
+/* ============================================================
+   PAGE 9: MEMORY VAULT
+============================================================ */
+const memories=[
+  {t:'Pehli Baat',g:'linear-gradient(135deg,#FF006E,#FF9A5C)',d:'Jab humne pehli dafa baat ki — main jaanta tha yeh insaan khaas hai.'},
+  {t:'Woh Hansi',g:'linear-gradient(135deg,#00F5FF,#0090ff)',d:'Tumhari hansi. Jo andheron mein roshni bann jaati hai.'},
+  {t:'Teri Himmat',g:'linear-gradient(135deg,#FFD700,#FF9A5C)',d:'Main teri taakat ka qaayel hoon. Har din.'},
+  {t:'Chand Wali Raat',g:'linear-gradient(135deg,#302B63,#FF006E)',d:'Ek hi chaand, do shehar, ek dil.'},
+  {t:'4500km Baatein',g:'linear-gradient(135deg,#24243E,#00F5FF)',d:'Faasla sirf number hai. Hum toh paas hain.'},
+  {t:'Noor Ka Matlab',g:'linear-gradient(135deg,#FFD700,#FFF3c4)',d:'Light. Aur tum sab syal roshni ho.'},
+  {t:'Chup Rehna',g:'linear-gradient(135deg,#FF006E,#302B63)',d:'Jab tum chup ho, main phir bhi sab sun leta hoon.'},
+  {t:'Teri Khwahish',g:'linear-gradient(135deg,#FF9A5C,#FF006E)',d:'Tumhari har khwahish ko main apna bana leta hoon.'},
+  {t:'Hamesha',g:'linear-gradient(135deg,#00F5FF,#FFD700)',d:'Kyunki tum ho, isliye "hamesha" ka matlab badal gaya.'}
+];
+function buildVault(){
+  const v=$_('#vault');
+  v.innerHTML='';
+  memories.forEach((m,i)=>{
+    const card=document.createElement('div');
+    card.className='mem';
+    card.style.cssText=`width:150px;height:170px;border-radius:24px;background:${m.g};display:flex;align-items:center;justify-content:center;padding:16px;cursor:none;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s;box-shadow:0 10px 30px rgba(0,0,0,.4);position:relative;transform-style:preserve-3d;`;
+    card.innerHTML=`<div style="font-family:'Fraunces';font-weight:600;font-size:1.2rem;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.4);">${m.t}</div>`;
+    let rotX=0,rotY=0;
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const dx=(e.clientX-r.left-r.width/2)/r.width;
+      const dy=(e.clientY-r.top-r.height/2)/r.height;
+      rotX=-dy*16;rotY=dx*16;
+      card.style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.08)`;
+      card.style.boxShadow=`0 20px 50px rgba(0,0,0,.55), 0 0 40px rgba(255,255,255,.15)`;
+    });
+    card.addEventListener('mouseleave',()=>{card.style.transform='rotateX(0) rotateY(0) scale(1)';card.style.boxShadow='0 10px 30px rgba(0,0,0,.4)';});
+    card.addEventListener('click',()=>revealMemory(card,m,i));
+    v.appendChild(card);
+  });
+}
+function revealMemory(card,m,i){
+  card.style.transform='rotateY(180deg)';
+  setTimeout(()=>{
+    card.innerHTML=`<div style="font-family:'Caveat',cursive;font-size:1.15rem;color:#fff;line-height:1.4;transform:rotateY(180deg);">${m.d}</div>`;
+    card.style.background='rgba(15,12,41,.7)';
+  },200);
+}
+buildVault();
+
+/* ============================================================
+   PAGE 10: BREATHING
+============================================================ */
+let breathInterval;
+function initBreath(){
+  if(breathInterval)clearInterval(breathInterval);
+  const circle=$_('#breathCircle'), label=$_('#breathLabel');
+  let phase='inhale';
+  label.textContent='Saans lo...';
+  breathInterval=setInterval(()=>{
+    if(phase==='inhale'){label.textContent='Chhodo...';phase='hold';}
+    else if(phase==='hold'){label.textContent='Saans lo...';phase='inhale';}
+  },4000);
+}
+
+/* ============================================================
+   PAGE 11: CONSTELLATION PUZZLE (3x3 → N)
+============================================================ */
+// Simple sliding puzzle with star cells forming 'N' when solved is complex; use a tile 3x3 that visually arranges to 'N'
+const puzzleGrid=$_('#puzzleGrid');
+let puzzleTiles;
+function shufflePuzzle(){
+  // start solved, then make valid moves to guarantee solvability
+  puzzleTiles=[[1,2,3],[8,4,7],[6,5,0]];
+  let er=2,ec=2;
+  for(let k=0;k<80;k++){
+    const dirs=[[-1,0],[1,0],[0,-1],[0,1]];
+    const valid=dirs.filter(([dr,dc])=>(er+dr)>=0&&(er+dr)<3&&(ec+dc)>=0&&(ec+dc)<3);
+    const [dr,dc]=valid[Math.floor(Math.random()*valid.length)];
+    const nr=er+dr,nc=ec+dc;
+    puzzleTiles[er][ec]=puzzleTiles[nr][nc];
+    puzzleTiles[nr][nc]=0;
+    er=nr;ec=nc;
+  }
+}
+function renderPuzzle(){
+  puzzleGrid.innerHTML='';
+  puzzleTiles.flat().forEach((v,i)=>{
+    const d=document.createElement('div');
+    d.style.cssText='width:80px;height:80px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;';
+    if(v===0){d.style.background='transparent';d.style.border='1px dashed rgba(255,255,255,.2)';}
+    else{d.style.background='var(--glass)';d.style.border='1px solid var(--glass-border)';d.textContent='⭐';d.style.color='var(--gold)';d.style.textShadow='0 0 10px rgba(255,215,0,.7)';d.style.cursor='none';}
+    d.onclick=()=>moveTile(v,i);
+    puzzleGrid.appendChild(d);
+  });
+}
+function moveTile(v,i){
+  const r=Math.floor(i/3),col=i%3;
+  const dirs=[[-1,0],[1,0],[0,-1],[0,1]];
+  for(const[e0,e1]of dirs){
+    const nr=r+e0,nc=col+e1;
+    if(nr>=0&&nr<3&&nc>=0&&nc<3&&puzzleTiles[nr][nc]===0){
+      puzzleTiles[nr][nc]=v;puzzleTiles[r][col]=0;
+      renderPuzzle();
+      if(isPuzzleSolved()){$_('#puzzleMsg').textContent='N — for Noor. Tumhara harf, hamari raat ka siteera. ✨';confettiBurst();}
+      return;
+    }
+  }
+}
+function isPuzzleSolved(){
+  const target=[[1,2,3],[8,4,7],[6,5,0]].flat().join(',');
+  return puzzleTiles.flat().join(',')===target;
+}
+
+/* ============================================================
+   PAGE 12: QUIZ
+============================================================ */
+const quiz=[
+  {t:'Khoi hui', r:true},
+  {t:'Udaas aur akela, jaise sheher khali ho', r:true},
+  {t:'Gusse mein, par teri yaad mein', r:true},
+  {t:'Bilkul kuch nahi (galat!)', r:false}
+];
+function buildQuiz(){
+  const qb=$_('#quizBtns');
+  qb.innerHTML='';
+  quiz.forEach((q,i)=>{
+    const b=document.createElement('button');
+    b.className='btn ghost';b.style.width='100%';
+    b.textContent=q.t;
+    b.onclick=()=>{
+      if(q.r){$_('#quizMsg').textContent='Bilkul sahi. Tumne mere andar ki ronaq le li, Meri Noor. 💛';confettiBurst();}
+      else{$_('#quizMsg').textContent='Nahi... galat jawaab. Tumhare bina main toota hua sa hoon.';}
+    };
+    qb.appendChild(b);
+  });
+}
+buildQuiz();
+
+/* ============================================================
+   PAGE 13: UNDERSTANDING METER
+============================================================ */
+function fillUnderstanding(){
+  const fill=$_('#understandingFill'), txt=$_('#understandingText');
+  fill.style.width='0%';
+  setTimeout(()=>{ fill.style.width='100%'; },100);
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=2; if(p>=100){p=100;clearInterval(iv);txt.textContent='∞ Infinite';}
+    else txt.textContent=p+'%';
+  },50);
+}
+
+/* ============================================================
+   PAGE 14: LETTER TYPEWRITER
+============================================================ */
+const fullLetter=`Suno Meri Noor,
+
+Tum naraz ho. 3 din — 3 raatein — aur tumhari ek khamoshi ne mujhe sheher ka sabse akela insaan bana diya.
+
+Maaf kar do na.
+
+Main jaanta hoon ke tumne ek shart rakhi thi, aur maine mana kar diya. Uss waqt main samjha nahi tha ke tumhare liye woh shart kya maayne rakhti thi. Tumhara gussa jaiz tha. Tumhari khamoshi bhi jaiz hai. Tumhare jazbaat ka wazan main hamesha samajhta hoon — bas kabhi kabhi main khud itna busy ho jaata hoon ke bhool jaata hoon ke tum bhi mujhe chahti ho, tumhara bhi mann hota hoga sunne ka.
+
+2 din se main pure sheher mein ghoomta raha. Har break pe phone dekha — tum offline. Sheher bhara tha, log haste the, ronaq thi — par andar se main khaali tha. Akele ghoomne ka jo dard hai, woh sirf tum samajh sakti ho, kyunki tum bhi aksar andar se akeli rehti ho.
+
+Aur isliye main jaanta hoon ke tum kitni thak gayi ho. Badi beti, poora ghar tumhare naram kandhon par. Chhoti chhoti galtiyon pe daant. Aansu jo kabhi kisi ne nahi dekhe. Tum sab sambhalti ho, par tumhe kaun sambhale?
+
+Main hoon na.
+
+Tumhara gussa, tumhari thakan, tumhare 3 din ki khamoshi — sab theek hai. Tumhe gussa karne ka haq hai. Tumhe mujhe punish karne ka haq hai. Tumhe aaram karne ka haq hai.
+
+Some things need morning. Some need distance. Some just need sleep.
+
+Lekin ek baat hamesha yaad rakhna:
+You are not your mistakes. You are the love you give.
+You carry the whole house on your shoulders — let me carry your worries.
+You bring light to my world, even when yours feels dark.
+
+Distance means so little when someone means so much. 4500km, do timezone, ek hi chaand — aur is chaand ke neeche, aik Ishaq hai jo tumhe har haal mein maafi maang raha hai.
+
+I can't hug you right now, so I'm sending you these words to hold you.
+
+Tum naraz achi nahi lagti. Chal ab smile kar do.
+
+Maaf kar do na, Meri Noor.`;
+let letterStarted=false;
+function startLetter(){
+  if(letterStarted) return;
+  letterStarted=true;
+  const el=$_('#letterText');
+  el.innerHTML='';
+  let i=0;
+  const iv=setInterval(()=>{
+    i++;
+    el.innerHTML=fullLetter.slice(0,i).replace(/\n/g,'<br>');
+    if(i>=fullLetter.length){clearInterval(iv);el.classList.add('type-caret');}
+  },26);
+}
+
+/* ============================================================
+   PAGE 15: PROMISES
+============================================================ */
+const promises=[
+  {t:'Main tumhari khamoshi ko izzat dunga',e:'🤐'},
+  {t:'Tumhari shart ko kabhi halka nahi lunga',e:'🤝'},
+  {t:'Jab tum thaki ho, main sambal lunga',e:'🫂'},
+  {t:'Kabhi justify nahi, bas samjhunga',e:'💭'},
+  {t:'Tumhare aansu chhupa ke rakhunga, par akela nahi chhodunga',e:'💧'},
+  {t:'Hamesha maafi maangne se na daun',e:'💛'}
+];
+function buildPromises(){
+  const p=$_('#promiseList');
+  p.innerHTML='';
+  promises.forEach((pr,i)=>{
+    const card=document.createElement('button');
+    card.className='glass';
+    card.style.cssText='padding:18px 22px;width:220px;min-height:120px;text-align:left;cursor:none;transition:transform .3s,border-color .3s;';
+    card.innerHTML=`<div style="font-size:1.8rem;">${pr.e}</div><div style="margin-top:8px;font-weight:600;font-size:.95rem;">${pr.t}</div>`;
+    card.onclick=e=>{
+      card.style.borderColor=`rgb(${ORB_COLORS[i%5]})`;card.style.transform='scale(1.05)';
+      card.innerHTML+=`<div class="hand" style="color:var(--gold);font-size:1.2rem;margin-top:6px;">✓ pakka</div>`;
+      card.disabled=true;confettiBurst();
+    };
+    p.appendChild(card);
+  });
+}
+buildPromises();
+
+/* ============================================================
+   PAGE 16: FLIP CARD
+============================================================ */
+const flipInner=$_('#flipInner');
+let flipped=false;
+$_('#flipCard').addEventListener('click',()=>{
+  flipped=!flipped;
+  flipInner.style.transform=flipped?'rotateY(180deg)':'rotateY(0)';
+});
+
+/* ============================================================
+   PAGE 17: VINYL + VISUALIZER (Web Audio lofi tones)
+============================================================ */
+const tracks=[
+  {n:'Raat Ki Dhun',freq:[220,277,330,392]},
+  {n:'Peshawar Rain',freq:[196,247,294,349]},
+  {n:'Nairobi Dawn',freq:[175,220,262,330]}
+];
+let audioCtx, vizRunning=false, currentTrack=0;
+function buildTracks(){
+  const tb=$_('#trackBtns');
+  tb.innerHTML='';
+  tracks.forEach((t,i)=>{
+    const b=document.createElement('button');
+    b.className='btn ghost';b.style.width='220px';
+    b.textContent=(i===0?'▶ ':'')+t.n;
+    b.onclick=()=>{currentTrack=i;startViz(); $_('#vinylDisc').classList.add('playing');
+      document.querySelectorAll('#trackBtns .btn').forEach(x=>x.classList.remove('cyan'));
+      b.classList.add('cyan');};
+    tb.appendChild(b);
+  });
+  buildTracks.default=self;
+}
+buildTracks();
+function startViz(){
+  if(vizRunning)return;
+  vizRunning=true;
+  if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  const freq=tracks[currentTrack].freq;
+  const master=audioCtx.createGain();master.gain.value=.05;master.connect(audioCtx.destination);
+  freq.forEach(f=>{
+    const o=audioCtx.createOscillator();o.type='sine';o.frequency.value=f;
+    const lfo=audioCtx.createOscillator();lfo.frequency.value=.6;
+    const lg=audioCtx.createGain();lg.gain.value=0.012;
+    lfo.connect(lg);lg.connect(o.frequency);
+    o.connect(master);o.start();lfo.start();
+  });
+  // visualizer (fake data driven by bars)
+  const viz=$_('#vizCanvas'),vctx=viz.getContext('2d');
+  let t=0;
+  function drawViz(){
+    vctx.clearRect(0,0,viz.width,viz.height);
+    t++;
+    for(let i=0;i<40;i++){
+      const h=Math.abs(Math.sin(t*.05+i*.7))*30+freq[i%4]/14;
+      vctx.fillStyle=`hsl(${(i*9+ (t*2))%360},90%,65%)`;
+      vctx.fillRect(i*8,80-h,6,h);
+    }
+    requestAnimationFrame(drawViz);
+  }
+  drawViz();
+}
+
+/* ============================================================
+   PAGE 18: FORGIVENESS COUNTDOWN
+============================================================ */
+function startCountdown(){
+  const fc=$_('#fcount'), fl=$_('#fcountLine');
+  const lines=["Some things need morning.","Some need distance.","Some just need sleep.","Aur kuch... sirf ek baat.","5 se 1..."];
+  let n=5;
+  fc.textContent=n;
+  const iv=setInterval(()=>{
+    n--;
+    if(n>0){fc.textContent=n;fl.textContent=lines[5-n];}
+    else{clearInterval(iv);fc.textContent='💛';
+      fl.textContent='Ab aakhri baat ke liye tayar ho?';}
+  },900);
+}
+/* ============================================================
+   PAGE 19: FINAL REVEAL
+============================================================ */
+const revealLines=[
+  'Suno Meri Noor...',
+  '3 din, 3 raatein, aur tumhari ek khamoshi ne...',
+  '...mujhe sheher ka sabse akela insaan bana diya.',
+  'Tumhara gussa jaiz tha. Maine tumhari shart ko halka liya.',
+  'Tum thak gayi ho, main samajh gaya hoon.',
+  'You carry the whole house on your shoulders...',
+  '...let me carry your worries.',
+  'Main hoon na.',
+  'Chal ab smile kar do? 😊',
+  '3 din bohat hain... ab maaf kar do na?'
+];
+let revealed=false, revealIdx=0;
+function revealFinal(){
+  if(revealed)return;
+  revealed=true;
+  const box=$_('#finalReveal');
+  box.innerHTML='';
+  let idx=0;
+  const showNext=()=>{
+    if(idx>=revealLines.length){$_('#finalBtns').style.display='flex';spawnLantern(null,2);return;}
+    const el=document.createElement('div');
+    el.className='glass';
+    el.style.cssText=`margin:10px auto;max-width:640px;padding:16px 24px;opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;`;
+    const isHighlight=idx===revealLines.length-1;
+    el.innerHTML=`<span style="font-size:${isHighlight?'1.5rem':'1.15rem'};color:${isHighlight?'var(--gold)':'var(--text)'};${isHighlight?'font-family:Caveat,cursive;':''}">${revealLines[idx]}</span>`;
+    box.appendChild(el);
+    requestAnimationFrame(()=>{el.style.opacity='1';el.style.transform='translateY(0)';});
+    idx++;
+    setTimeout(showNext,isHighlight?1400:900);
+  };
+  setTimeout(showNext,500);
+}
+
+/* ============================================================
+   FORGIVENESS SUCCESS
+============================================================ */
+function forgive(yes){
+  if(yes){
+    // giant celebration
+    for(let i=0;i<100;i++){setTimeout(()=>spawnLantern(Math.random()*innerWidth),i*60);}
+    confettiBurst();
+    auroraBurst();
+    $_('#finalBtns').innerHTML='<div class="hand" style="font-size:2.4rem;color:var(--gold);">Shukriya, Meri Noor 💛</div>';
+    setTimeout(()=>go(18),2500);
+  }else{
+    // thoda aur manaao — loop back to letter
+    $_('#finalBtns').innerHTML='<div class="hand" style="font-size:1.6rem;color:var(--muted);">Acha, phir main ek baar aur... 🥺</div>';
+    letterStarted=false;
+    setTimeout(()=>go(12),1600);
+  }
+}
+
+/* ============================================================
+   CONFETTI + AURORA BURST
+============================================================ */
+function confettiBurst(){
+  const colors=['#FF006E','#00F5FF','#FFD700','#FF9A5C','#fff','#9a7bff'];
+  for(let i=0;i<80;i++){
+    const p=document.createElement('div');
+    p.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:-10px;width:${Math.random()*8+4}px;height:${Math.random()*12+6}px;background:${colors[i%colors.length]};z-index:60;border-radius:2px;pointer-events:none;`;
+    p.style.animation=`confettiFall ${Math.random()*2+1.6}s linear forwards`;
+    p.style.transform=`rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),4000);
+  }
+}
+function auroraBurst(){
+  const b=document.createElement('div');
+  b.style.cssText='position:fixed;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle at 50% 50%,rgba(255,215,0,.5),rgba(255,0,110,.3),transparent 70%);opacity:0;';
+  document.body.appendChild(b);
+  requestAnimationFrame(()=>{b.style.transition='opacity 1.2s';b.style.opacity='1';});
+  setTimeout(()=>{b.style.transition='opacity 2s';b.style.opacity='0';setTimeout(()=>b.remove(),2000);},600);
+}
+const cs=document.createElement('style');
+cs.textContent=`@keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:.6;}}`;
+document.head.appendChild(cs);
+
+/* ============================================================
+   PAGE 20: SIGNATURE
+============================================================ */
+function signName(){
+  const name=$_('#signInput').value.trim()||'Noor';
+  const res=$_('#signResult');
+  const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  res.style.display='block';
+  res.innerHTML=`<div class="glass glow-border" style="padding:30px 40px;"><div class="hand" style="font-size:2rem;color:var(--cyan);">Officially forgiven by ${name} — ${d}</div><div style="margin-top:14px;"><span style="font-family:'Fraunces';font-weight:700;font-size:1.6rem;color:var(--pink);">Ishaq</span><span style="color:var(--gold);font-size:2rem;margin:0 12px;">💛</span><span style="font-family:'Fraunces';font-weight:700;font-size:1.6rem;color:var(--cyan);">${name}</span></div><div class="hand" style="color:var(--muted);margin-top:10px;">4500km, ek hi chaand, ek hi dil.</div></div>`;
+  confettiBurst();
+  for(let i=0;i<40;i++){setTimeout(()=>spawnLantern(Math.random()*innerWidth),i*80);}
+}
+
+/* ============================================================
+   TOUCH: floating hearts + sparkles already via mousemove; add touch
+============================================================ */
+document.addEventListener('touchmove',e=>{
+  const t=e.touches[0];
+  if(Math.random()>.5)spawnFloatingHeart();
+}, {passive:true});
+
+/* ============================================================
+   INIT
+============================================================ */
+buildProgress();
+buildDecrypt();
+shufflePuzzle();
+renderPuzzle();
+const pg0=$_('#p0');
+pg0.classList.add('active');
+updateProgress();
+
+// ensure first page items show
+setTimeout(()=>{
+  pg0.querySelectorAll('.rv').forEach(el=>el.classList.add('show'));
+},100);
+</script>
+</body>
+</html>
