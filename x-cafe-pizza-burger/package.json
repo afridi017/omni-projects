@@ -1,0 +1,21 @@
+{
+  "name": "x-cafe-pizza-burger",
+  "version": "1.0.0",
+  "description": "X Cafe Pizza and Burger House - premium single-page site. Budget Me Best Taste - Peshawar Ring Road.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve . -l 3000",
+    "check:js": "node -e \"const h=require('fs').readFileSync('index.html','utf8'),m=[...h.matchAll(/<script>([\\s\\S]*?)<\\/script>/g)];m.forEach((s,i)=>{new Function(s[1]);console.log('script '+(i+1)+' OK')})\""
+  },
+  "keywords": [
+    "pizza",
+    "burger",
+    "peshawar",
+    "cafe",
+    "restaurant",
+    "single-page"
+  ],
+  "author": "X Cafe Pizza and Burger House",
+  "license": "ISC"
+}

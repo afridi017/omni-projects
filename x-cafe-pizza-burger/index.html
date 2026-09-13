@@ -1,0 +1,2620 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ===== SEO ===== -->
+    <title>
+      X Cafe Pizza and Burger House | Budget Me Best Taste — Pizza Burger
+      Peshawar Ring Road
+    </title>
+    <meta
+      name="description"
+      content="X Cafe Pizza and Burger House — Peshawar Ring Road par sab se sasta aur zaiqedar Pizza, Burger, Shawarma. Chicken Tikka Pizza Rs 650, Loaded Zinger Rs 450, Deals from Rs 999. Takeout & delivery, opens 11 AM daily. Call +92 337 1377555."
+    />
+    <meta
+      name="keywords"
+      content="pizza burger Peshawar Ring Road, X Cafe Peshawar, cheap pizza Peshawar, zinger burger Peshawar, shawarma Peshawar, budget food Peshawar, Achini Payan pizza"
+    />
+    <meta name="author" content="X Cafe Pizza and Burger House" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0B0B12" />
+    <link rel="canonical" href="https://xcafe.pk/" />
+
+    <!-- Geo tags -->
+    <meta name="geo.region" content="PK-KP" />
+    <meta name="geo.placename" content="Peshawar" />
+    <meta name="geo.position" content="33.9885;71.4875" />
+    <meta name="ICBM" content="33.9885, 71.4875" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="X Cafe Pizza and Burger House" />
+    <meta
+      property="og:title"
+      content="X Cafe Pizza and Burger House — Budget Me Best Taste"
+    />
+    <meta
+      property="og:description"
+      content="Peshawar Ring Road par sab se sasta aur zaiqedar Pizza &amp; Burger. Pizza Rs 650 se shuru, deals Rs 999 se. Opens 11 AM daily."
+    />
+    <meta property="og:url" content="https://xcafe.pk/" />
+    <meta property="og:locale" content="en_PK" />
+    <meta property="og:image" content="https://xcafe.pk/og-cover.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="X Cafe Pizza and Burger House — Budget Me Best Taste"
+    />
+    <meta
+      name="twitter:description"
+      content="Pizza from Rs 650, burgers from Rs 350, family deals from Rs 999. Peshawar Ring Road."
+    />
+
+    <!-- Favicon (emoji) -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍕</text></svg>"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "X Cafe Pizza and Burger House",
+        "slogan": "Budget Me Best Taste",
+        "servesCuisine": ["Pizza", "Burger", "Shawarma", "Fast Food"],
+        "priceRange": "Rs 1-1,000",
+        "image": "https://xcafe.pk/og-cover.jpg",
+        "telephone": "+92 337 1377555",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "30 Peshawar Ring Rd, Adeera Achini Payan",
+          "addressLocality": "Peshawar",
+          "addressRegion": "Khyber Pakhtunkhwa",
+          "addressCountry": "PK"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 33.9885,
+          "longitude": 71.4875
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "11:00",
+            "closes": "03:00"
+          }
+        ],
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "2.8",
+          "reviewCount": "148"
+        },
+        "url": "https://xcafe.pk/"
+      }
+    </script>
+
+    <style>
+      /* ============ BASE ============ */
+      :root {
+        --bg: #0b0b12;
+        --bg-2: #12121c;
+        --card: rgba(255, 255, 255, 0.05);
+        --stroke: rgba(255, 255, 255, 0.09);
+        --text: #f4f5f7;
+        --muted: #9ca3af;
+        --orange: #ff6b00;
+        --red: #e11d48;
+        --grad-fire: linear-gradient(135deg, #ff6b00, #e11d48);
+        --radius: 1.25rem; /* rounded-2xl */
+        --shadow-orange: 0 10px 40px -10px rgba(255, 107, 0, 0.5);
+        --shadow-red: 0 10px 40px -10px rgba(225, 29, 72, 0.5);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Ambient background glow + grid */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background:
+          radial-gradient(
+            900px 500px at 85% -10%,
+            rgba(255, 107, 0, 0.16),
+            transparent 60%
+          ),
+          radial-gradient(
+            800px 500px at -10% 30%,
+            rgba(225, 29, 72, 0.13),
+            transparent 60%
+          ),
+          radial-gradient(
+            600px 400px at 50% 115%,
+            rgba(255, 107, 0, 0.1),
+            transparent 60%
+          ),
+          var(--bg);
+      }
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px
+          );
+        background-size: 44px 44px;
+        mask-image: radial-gradient(
+          ellipse 90% 70% at 50% 0%,
+          black 35%,
+          transparent 100%
+        );
+        -webkit-mask-image: radial-gradient(
+          ellipse 90% 70% at 50% 0%,
+          black 35%,
+          transparent 100%
+        );
+        pointer-events: none;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+      }
+
+      .container {
+        width: min(1120px, 92%);
+        margin-inline: auto;
+      }
+
+      .section {
+        padding: 4.5rem 0;
+        position: relative;
+      }
+
+      .section-head {
+        text-align: center;
+        max-width: 640px;
+        margin: 0 auto 2.5rem;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--orange);
+        padding: 0.35rem 1rem;
+        border-radius: 999px;
+        background: rgba(255, 107, 0, 0.1);
+        border: 1px solid rgba(255, 107, 0, 0.25);
+        margin-bottom: 0.9rem;
+      }
+      .section-head h2 {
+        font-size: clamp(1.7rem, 4vw, 2.4rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+      }
+      .section-head p {
+        color: var(--muted);
+        margin-top: 0.7rem;
+        font-size: 0.98rem;
+      }
+
+      .grad-text {
+        background: var(--grad-fire);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        font-family: inherit;
+        font-weight: 700;
+        font-size: 0.98rem;
+        padding: 0.95rem 1.75rem;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          filter 0.2s ease;
+        white-space: nowrap;
+      }
+      .btn:active {
+        transform: scale(0.97);
+      }
+      .btn-primary {
+        background: var(--grad-fire);
+        color: #fff;
+        box-shadow: var(--shadow-orange);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.08);
+        box-shadow: var(--shadow-red);
+      }
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.07);
+        color: var(--text);
+        border: 1px solid var(--stroke);
+        backdrop-filter: blur(8px);
+      }
+      .btn-ghost:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .glass {
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-radius: var(--radius);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ============ HEADER ============ */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        transition:
+          background 0.3s ease,
+          box-shadow 0.3s ease,
+          border-color 0.3s ease;
+        border-bottom: 1px solid transparent;
+      }
+      header.scrolled {
+        background: rgba(11, 11, 18, 0.82);
+        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(16px);
+        border-bottom-color: var(--stroke);
+        box-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.6);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 72px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-weight: 800;
+        font-size: 1.15rem;
+      }
+      .brand-logo {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: var(--grad-fire);
+        font-size: 1.35rem;
+        box-shadow: var(--shadow-orange);
+      }
+      .brand span small {
+        display: block;
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: var(--orange);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 1.7rem;
+      }
+      .nav-links a {
+        font-size: 0.92rem;
+        font-weight: 500;
+        color: var(--muted);
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .nav-links a.active {
+        color: var(--orange);
+      }
+
+      .nav-cta {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+      }
+
+      .cart-btn {
+        position: relative;
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        font-size: 1.15rem;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition:
+          transform 0.2s,
+          background 0.2s;
+      }
+      .cart-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
+        transform: translateY(-2px);
+      }
+      .cart-count {
+        position: absolute;
+        top: -7px;
+        right: -7px;
+        min-width: 20px;
+        height: 20px;
+        border-radius: 999px;
+        background: var(--grad-fire);
+        color: #fff;
+        font-size: 0.68rem;
+        font-weight: 800;
+        display: grid;
+        place-items: center;
+        padding: 0 5px;
+        box-shadow: 0 4px 12px -2px rgba(225, 29, 72, 0.6);
+        transform: scale(0);
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .cart-count.show {
+        transform: scale(1);
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+      }
+      .hamburger span {
+        width: 24px;
+        height: 2.5px;
+        border-radius: 2px;
+        background: var(--text);
+        transition: 0.3s;
+      }
+      .hamburger.open span:nth-child(1) {
+        transform: translateY(7.5px) rotate(45deg);
+      }
+      .hamburger.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.open span:nth-child(3) {
+        transform: translateY(-7.5px) rotate(-45deg);
+      }
+
+      /* ============ HERO ============ */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 8.5rem 0 5rem;
+        overflow: hidden;
+        position: relative;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 3rem;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.45rem 1.1rem;
+        border-radius: 999px;
+        background: rgba(255, 107, 0, 0.12);
+        border: 1px solid rgba(255, 107, 0, 0.3);
+        color: var(--orange);
+        margin-bottom: 1.3rem;
+      }
+      .hero-badge .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+        }
+        50% {
+          box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.05);
+        }
+      }
+
+      .hero h1 {
+        font-size: clamp(2.7rem, 7vw, 4.6rem);
+        font-weight: 900;
+        line-height: 1.06;
+        letter-spacing: -0.03em;
+        margin-bottom: 1.1rem;
+      }
+      .hero h1 .block {
+        display: block;
+      }
+      .hero-sub {
+        color: var(--muted);
+        font-size: clamp(1rem, 2vw, 1.15rem);
+        max-width: 540px;
+        margin-bottom: 2rem;
+      }
+      .hero-sub strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .hero-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2.2rem;
+      }
+
+      .hero-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.6rem;
+        font-size: 0.88rem;
+        color: var(--muted);
+      }
+      .hero-features li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      /* Hero visuals */
+      .hero-visual {
+        position: relative;
+        min-height: 420px;
+        display: grid;
+        place-items: center;
+      }
+      .flame-ring {
+        position: absolute;
+        width: 340px;
+        height: 340px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 107, 0, 0.28),
+          rgba(225, 29, 72, 0.1) 55%,
+          transparent 70%
+        );
+        filter: blur(6px);
+        animation: breathe 5s ease-in-out infinite;
+      }
+      @keyframes breathe {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.9;
+        }
+        50% {
+          transform: scale(1.12);
+          opacity: 1;
+        }
+      }
+
+      .pizza-plate {
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        position: relative;
+        z-index: 2;
+        background: radial-gradient(
+          circle at 35% 30%,
+          #ffaf5f,
+          #f2700f 45%,
+          #c94a00 80%
+        );
+        box-shadow:
+          var(--shadow-orange),
+          inset 0 -14px 34px rgba(0, 0, 0, 0.35);
+        display: grid;
+        place-items: center;
+        font-size: 6.2rem;
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-18px);
+        }
+      }
+
+      .float-emoji {
+        position: absolute;
+        font-size: 2.4rem;
+        z-index: 3;
+        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.5));
+        animation: float 7s ease-in-out infinite;
+      }
+      .float-emoji.fe-1 {
+        top: 4%;
+        left: 6%;
+        font-size: 2.9rem;
+        animation-delay: 0.4s;
+      }
+      .float-emoji.fe-2 {
+        top: 12%;
+        right: 4%;
+        animation-delay: 1.1s;
+      }
+      .float-emoji.fe-3 {
+        bottom: 22%;
+        left: 0;
+        animation-delay: 1.8s;
+      }
+      .float-emoji.fe-4 {
+        bottom: 6%;
+        right: 8%;
+        font-size: 3.1rem;
+        animation-delay: 2.4s;
+      }
+
+      .glow-card {
+        position: absolute;
+        z-index: 4;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.7rem 1.15rem;
+        border-radius: 16px;
+        font-weight: 600;
+        font-size: 0.82rem;
+        background: rgba(20, 20, 30, 0.72);
+        border: 1px solid var(--stroke);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 12px 34px -12px rgba(0, 0, 0, 0.7);
+        animation: float 6s ease-in-out infinite;
+      }
+      .glow-card .gc-ico {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-size: 1rem;
+        background: var(--grad-fire);
+        box-shadow: var(--shadow-orange);
+      }
+      .glow-card small {
+        display: block;
+        color: var(--muted);
+        font-weight: 500;
+        font-size: 0.7rem;
+      }
+      .gc-1 {
+        top: 8%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .gc-2 {
+        bottom: 16%;
+        left: -4%;
+        animation-delay: 1.4s;
+      }
+      .gc-3 {
+        bottom: 30%;
+        right: -4%;
+        animation-delay: 2.1s;
+      }
+
+      .burger-badge {
+        position: absolute;
+        z-index: 5;
+        font-size: 3.4rem;
+        right: 14%;
+        top: 30%;
+        animation: spin 14s linear infinite;
+        filter: drop-shadow(0 0 22px rgba(255, 107, 0, 0.8));
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ============ STATS BAR ============ */
+      .stats-bar {
+        padding: 0 0 2.5rem;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        text-align: center;
+        padding: 1.7rem 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .stats-grid::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius);
+        background: var(--grad-fire);
+        opacity: 0.06;
+        pointer-events: none;
+      }
+      .stat-item {
+        position: relative;
+        padding: 0.5rem 0.6rem;
+      }
+      .stat-value {
+        font-size: 1.45rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+      }
+      .stat-value .star {
+        color: #ffb800;
+      }
+      .stat-label {
+        color: var(--muted);
+        font-size: 0.82rem;
+        margin-top: 0.2rem;
+      }
+      .stat-divider {
+        width: 1px;
+        background: var(--stroke);
+      }
+
+      /* ============ MENU ============ */
+      .menu-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.6rem;
+        margin-bottom: 2.5rem;
+      }
+      .menu-tab {
+        font-family: inherit;
+        font-size: 0.92rem;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 0.65rem 1.4rem;
+        border-radius: 999px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--muted);
+        transition: all 0.25s ease;
+      }
+      .menu-tab:hover {
+        color: var(--text);
+        border-color: rgba(255, 107, 0, 0.4);
+      }
+      .menu-tab.active {
+        background: var(--grad-fire);
+        color: #fff;
+        border-color: transparent;
+        box-shadow: var(--shadow-orange);
+        transform: translateY(-1px);
+      }
+
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+        gap: 1.2rem;
+      }
+
+      .menu-card {
+        display: flex;
+        gap: 1.1rem;
+        padding: 1.15rem;
+        transition:
+          transform 0.25s ease,
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
+        animation: cardIn 0.45s ease both;
+        position: relative;
+      }
+      @keyframes cardIn {
+        from {
+          opacity: 0;
+          transform: translateY(16px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .menu-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(255, 107, 0, 0.45);
+        box-shadow: 0 18px 40px -18px rgba(255, 107, 0, 0.35);
+      }
+
+      .menu-emoji {
+        width: 76px;
+        height: 76px;
+        flex-shrink: 0;
+        border-radius: 20px;
+        display: grid;
+        place-items: center;
+        font-size: 2.5rem;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 107, 0, 0.18),
+          rgba(225, 29, 72, 0.12)
+        );
+        border: 1px solid rgba(255, 107, 0, 0.25);
+      }
+      .menu-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .menu-title {
+        font-weight: 700;
+        font-size: 1.02rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .menu-desc {
+        color: var(--muted);
+        font-size: 0.82rem;
+        margin-top: 0.2rem;
+        flex: 1;
+      }
+      .menu-prices {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.55rem;
+      }
+      .price-chip {
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 0.28rem 0.65rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid var(--stroke);
+        color: var(--text);
+      }
+      .price-chip b {
+        color: var(--orange);
+        font-weight: 700;
+      }
+
+      .menu-card .add-btn {
+        position: absolute;
+        top: 0.9rem;
+        right: 0.9rem;
+        width: 34px;
+        height: 34px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 107, 0, 0.4);
+        background: rgba(255, 107, 0, 0.12);
+        color: var(--orange);
+        font-size: 1.15rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition: all 0.2s;
+      }
+      .menu-card .add-btn:hover {
+        background: var(--grad-fire);
+        color: #fff;
+        transform: scale(1.1);
+        box-shadow: var(--shadow-orange);
+      }
+      .menu-card .add-btn.added {
+        background: #22c55e;
+        color: #fff;
+        border-color: transparent;
+      }
+
+      .deal-badge {
+        position: absolute;
+        top: -12px;
+        left: 16px;
+        z-index: 2;
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #fff;
+        padding: 0.32rem 0.9rem;
+        border-radius: 999px;
+        background: var(--grad-fire);
+        box-shadow: var(--shadow-orange);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+      .best-value-card {
+        border-color: rgba(255, 180, 0, 0.55);
+        box-shadow:
+          0 0 0 1px rgba(255, 180, 0, 0.15),
+          0 20px 50px -20px rgba(255, 180, 0, 0.3);
+      }
+      .deal-price {
+        font-size: 1.4rem;
+        font-weight: 900;
+        color: var(--text);
+      }
+      .deal-old {
+        font-size: 0.95rem;
+        color: var(--muted);
+        text-decoration: line-through;
+        margin-left: 0.5rem;
+        font-weight: 500;
+      }
+      .deal-save {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #22c55e;
+        background: rgba(34, 197, 94, 0.12);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        padding: 0.25rem 0.7rem;
+        border-radius: 999px;
+      }
+
+      .menu-empty {
+        text-align: center;
+        color: var(--muted);
+        padding: 3rem 0;
+        display: none;
+      }
+      .menu-empty.show {
+        display: block;
+      }
+
+      /* ============ ABOUT ============ */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3.5rem;
+        align-items: center;
+      }
+      .about-visual {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .about-tile {
+        border-radius: var(--radius);
+        overflow: hidden;
+        position: relative;
+        height: 210px;
+      }
+      .about-tile.big {
+        grid-row: span 2;
+        height: auto;
+        min-height: 432px;
+      }
+      .about-tile .tile-bg {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(
+          150deg,
+          rgba(255, 107, 0, 0.22),
+          rgba(225, 29, 72, 0.14)
+        );
+        border: 1px solid var(--stroke);
+        border-radius: var(--radius);
+      }
+      .about-tile .tile-bg span {
+        font-size: 4.5rem;
+        filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5));
+      }
+      .about-tile.big .tile-bg span {
+        font-size: 6.5rem;
+      }
+      .about-tile .tile-label {
+        position: absolute;
+        bottom: 0.8rem;
+        left: 0.8rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        background: rgba(11, 11, 18, 0.7);
+        border: 1px solid var(--stroke);
+        padding: 0.35rem 0.85rem;
+        border-radius: 999px;
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+      }
+
+      .about-copy h2 {
+        font-size: clamp(1.7rem, 4vw, 2.3rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+        margin-bottom: 1.1rem;
+      }
+      .about-copy > p {
+        color: var(--muted);
+        margin-bottom: 1rem;
+      }
+      .about-points {
+        margin: 1.5rem 0;
+        display: grid;
+        gap: 0.9rem;
+      }
+      .about-points li {
+        display: flex;
+        gap: 0.8rem;
+        align-items: flex-start;
+      }
+      .about-points .ap-ico {
+        flex-shrink: 0;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 107, 0, 0.12);
+        border: 1px solid rgba(255, 107, 0, 0.3);
+      }
+
+      /* ============ REVIEWS ============ */
+      .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+      }
+      .review-card {
+        padding: 1.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: relative;
+      }
+      .review-card::before {
+        content: "\201C";
+        position: absolute;
+        top: 0.4rem;
+        right: 1.4rem;
+        font-size: 5rem;
+        font-family: Georgia, serif;
+        color: rgba(255, 107, 0, 0.12);
+        line-height: 1;
+      }
+      .review-stars {
+        color: #ffb800;
+        font-size: 1.05rem;
+        letter-spacing: 3px;
+      }
+      .review-text {
+        font-size: 0.95rem;
+        color: #d1d5db;
+        flex: 1;
+      }
+      .review-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--orange);
+      }
+      .review-link:hover {
+        text-decoration: underline;
+      }
+      .review-author {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .review-avatar {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 1rem;
+        color: #fff;
+        background: var(--grad-fire);
+      }
+      .review-author small {
+        display: block;
+        color: var(--muted);
+        font-size: 0.75rem;
+      }
+
+      /* ============ LOCATION ============ */
+      .location-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 2.5rem;
+        align-items: stretch;
+      }
+      .map-frame {
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--stroke);
+        min-height: 400px;
+        position: relative;
+      }
+      .map-frame iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        filter: grayscale(0.25) contrast(1.05);
+      }
+      .loc-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+      }
+      .loc-card {
+        display: flex;
+        gap: 1rem;
+        padding: 1.2rem 1.35rem;
+        align-items: flex-start;
+        transition:
+          border-color 0.25s,
+          transform 0.25s;
+      }
+      .loc-card:hover {
+        border-color: rgba(255, 107, 0, 0.45);
+        transform: translateX(4px);
+      }
+      .loc-ico {
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
+        display: grid;
+        place-items: center;
+        background: var(--grad-fire);
+        font-size: 1.15rem;
+        box-shadow: var(--shadow-orange);
+      }
+      .loc-card h4 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 0.15rem;
+      }
+      .loc-card p,
+      .loc-card a {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      .loc-card a:hover {
+        color: var(--orange);
+      }
+
+      .contact-banner {
+        margin-top: 1.8rem;
+        padding: 2rem;
+        text-align: center;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 107, 0, 0.14),
+          rgba(225, 29, 72, 0.1)
+        );
+        border: 1px solid rgba(255, 107, 0, 0.3);
+        border-radius: var(--radius);
+      }
+      .contact-banner h3 {
+        font-size: 1.45rem;
+        font-weight: 800;
+        margin-bottom: 0.4rem;
+      }
+      .contact-banner p {
+        color: var(--muted);
+        margin-bottom: 1.3rem;
+        font-size: 0.93rem;
+      }
+      .contact-banner .hero-cta {
+        justify-content: center;
+        margin-bottom: 0;
+      }
+
+      /* ============ FOOTER ============ */
+      footer {
+        border-top: 1px solid var(--stroke);
+        padding: 3.5rem 0 2.5rem;
+        margin-top: 2rem;
+        background: rgba(255, 255, 255, 0.015);
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr;
+        gap: 2.5rem;
+      }
+      .footer-brand p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 1rem 0;
+        max-width: 320px;
+      }
+      .socials {
+        display: flex;
+        gap: 0.7rem;
+      }
+      .social-ico {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-size: 1.05rem;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--stroke);
+        transition: all 0.25s;
+      }
+      .social-ico:hover {
+        background: var(--grad-fire);
+        border-color: transparent;
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-orange);
+      }
+      .footer-col h5 {
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--orange);
+        margin-bottom: 1.1rem;
+      }
+      .footer-col ul {
+        display: grid;
+        gap: 0.6rem;
+      }
+      .footer-col a {
+        color: var(--muted);
+        font-size: 0.9rem;
+        transition: color 0.2s;
+      }
+      .footer-col a:hover {
+        color: var(--orange);
+      }
+      .hours-row {
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 0.9rem;
+        padding: 0.35rem 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+      }
+      .footer-bottom {
+        border-top: 1px solid var(--stroke);
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      /* ============ CART DRAWER ============ */
+      .cart-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: rgba(0, 0, 0, 0.6);
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .cart-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .cart-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 210;
+        width: min(420px, 100%);
+        background: #10101a;
+        border-left: 1px solid var(--stroke);
+        transform: translateX(105%);
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        display: flex;
+        flex-direction: column;
+      }
+      .cart-drawer.open {
+        transform: translateX(0);
+      }
+      .cart-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.4rem 1.5rem;
+        border-bottom: 1px solid var(--stroke);
+      }
+      .cart-head h3 {
+        font-size: 1.15rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .cart-close {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+      .cart-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1.2rem 1.5rem;
+      }
+      .cart-empty {
+        text-align: center;
+        color: var(--muted);
+        padding: 3rem 0;
+        font-size: 0.95rem;
+      }
+      .cart-empty .ce-emoji {
+        font-size: 3rem;
+        display: block;
+        margin-bottom: 0.8rem;
+        filter: grayscale(0.3);
+      }
+      .cart-item {
+        display: flex;
+        gap: 0.9rem;
+        padding: 0.9rem 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.09);
+      }
+      .cart-item .ci-emoji {
+        font-size: 1.8rem;
+      }
+      .cart-item .ci-info {
+        flex: 1;
+      }
+      .cart-item .ci-name {
+        font-weight: 600;
+        font-size: 0.92rem;
+      }
+      .cart-item .ci-sub {
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+      .cart-item .ci-price {
+        color: var(--orange);
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-top: 0.15rem;
+      }
+      .qty-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+      }
+      .qty-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 9px;
+        border: 1px solid var(--stroke);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 1rem;
+        display: grid;
+        place-items: center;
+        transition: all 0.2s;
+      }
+      .qty-btn:hover {
+        background: var(--grad-fire);
+        border-color: transparent;
+      }
+      .qty-num {
+        min-width: 26px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+      .ci-remove {
+        background: none;
+        border: none;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 1.05rem;
+        padding: 4px;
+      }
+      .ci-remove:hover {
+        color: var(--red);
+      }
+      .cart-foot {
+        padding: 1.4rem 1.5rem;
+        border-top: 1px solid var(--stroke);
+        display: grid;
+        gap: 0.9rem;
+      }
+      .cart-total {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 800;
+        font-size: 1.1rem;
+      }
+      .cart-total span:last-child {
+        color: var(--orange);
+      }
+
+      /* ============ TOAST ============ */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(120px);
+        z-index: 300;
+        background: #16161f;
+        border: 1px solid rgba(255, 107, 0, 0.35);
+        padding: 0.9rem 1.4rem;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        box-shadow: 0 18px 44px -14px rgba(0, 0, 0, 0.8);
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        white-space: nowrap;
+        max-width: 92vw;
+      }
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* ============ MOBILE ORDER BAR ============ */
+      .mobile-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 150;
+        background: rgba(11, 11, 18, 0.9);
+        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(16px);
+        border-top: 1px solid var(--stroke);
+        padding: 0.75rem 4.5% calc(0.75rem + env(safe-area-inset-bottom));
+        display: none;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .mobile-bar .mb-cart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid var(--stroke);
+        border-radius: 14px;
+        padding: 0.8rem 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      .mobile-bar .btn {
+        flex: 2;
+      }
+
+      /* ============ RESPONSIVE ============ */
+      @media (max-width: 960px) {
+        .hero-grid,
+        .about-grid,
+        .location-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero {
+          padding-top: 6.5rem;
+          min-height: auto;
+        }
+        .hero-visual {
+          min-height: 380px;
+          order: -1;
+        }
+        .reviews-grid {
+          grid-template-columns: 1fr;
+        }
+        .about-visual {
+          grid-template-columns: 1fr 1fr;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .stat-divider {
+          display: none;
+        }
+        .nav-links {
+          position: fixed;
+          inset: 0 0 0 auto;
+          width: min(320px, 82vw);
+          height: 100dvh;
+          background: rgba(12, 12, 20, 0.97);
+          -webkit-backdrop-filter: blur(18px);
+          backdrop-filter: blur(18px);
+          flex-direction: column;
+          justify-content: center;
+          gap: 2rem;
+          transform: translateX(105%);
+          transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+          border-left: 1px solid var(--stroke);
+          z-index: 95;
+        }
+        .nav-links.open {
+          transform: translateX(0);
+        }
+        .nav-links a {
+          font-size: 1.15rem;
+          font-weight: 600;
+        }
+        .hamburger {
+          display: flex;
+          z-index: 110;
+        }
+        .mobile-bar {
+          display: flex;
+        }
+        body {
+          padding-bottom: 78px;
+        }
+        .toast {
+          bottom: 5.5rem;
+        }
+      }
+      @media (max-width: 560px) {
+        .section {
+          padding: 3.4rem 0;
+        }
+        .menu-grid {
+          grid-template-columns: 1fr;
+        }
+        .gc-2 {
+          left: -6%;
+        }
+        .gc-3 {
+          right: 0;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-cta .btn {
+          width: 100%;
+        }
+        .map-frame {
+          min-height: 320px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ======================= HEADER ======================= -->
+    <header id="siteHeader">
+      <div class="container">
+        <nav class="nav" aria-label="Main navigation">
+          <a
+            href="#hero"
+            class="brand"
+            aria-label="X Cafe Pizza and Burger House home"
+          >
+            <span class="brand-logo">🍕</span>
+            <span>X Cafe<small>Pizza &amp; Burger House</small></span>
+          </a>
+
+          <ul class="nav-links" id="navLinks">
+            <li><a href="#menu" class="nav-link">Menu</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#reviews" class="nav-link">Reviews</a></li>
+            <li><a href="#location" class="nav-link">Location</a></li>
+            <li>
+              <a
+                href="#location"
+                class="btn btn-primary"
+                style="padding: 0.65rem 1.3rem"
+                >Order Now</a
+              >
+            </li>
+          </ul>
+
+          <div class="nav-cta">
+            <button class="cart-btn" id="cartBtn" aria-label="Open cart">
+              🛒<span class="cart-count" id="cartCount">0</span>
+            </button>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+              <span></span><span></span><span></span>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ======================= HERO ======================= -->
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <span class="hero-badge"
+              ><span class="dot"></span> Handmade Fresh • Halal • 100%
+              Zaiqedar</span
+            >
+            <h1>
+              <span class="block">Budget Me</span>
+              <span class="block grad-text">Best Taste</span>
+            </h1>
+            <p class="hero-sub">
+              Peshawar Ring Road par sab se
+              <strong>sasta aur zaiqedar</strong> Pizza &amp; Burger —
+              <strong>Rs 1,000</strong> me full enjoy. Student-friendly,
+              family-approved.
+            </p>
+            <div class="hero-cta">
+              <a
+                href="https://wa.me/923371377555?text=Assalam-o-Alaikum%20X%20Cafe%2C%20mujhe%20order%20karna%20hai..."
+                target="_blank"
+                rel="noopener"
+                class="btn btn-primary"
+                >💬 WhatsApp Order</a
+              >
+              <a href="tel:+923371377555" class="btn btn-ghost">📞 Call Now</a>
+            </div>
+            <ul class="hero-features">
+              <li>✅ Halal Ingredients</li>
+              <li>🛵 Fast Delivery</li>
+              <li>💰 Sasta Prices</li>
+            </ul>
+          </div>
+
+          <div class="hero-visual">
+            <div class="flame-ring"></div>
+            <div class="pizza-plate">🍕</div>
+            <span class="float-emoji fe-1">🍔</span>
+            <span class="float-emoji fe-2">🌯</span>
+            <span class="float-emoji fe-3">🍟</span>
+            <span class="float-emoji fe-4">🥤</span>
+            <span class="burger-badge">🍔</span>
+
+            <div class="glow-card gc-1">
+              <span class="gc-ico">🍕</span>
+              <div>
+                Pizza Rs 650<span><small>se shuru</small></span>
+              </div>
+            </div>
+            <div class="glow-card gc-2">
+              <span class="gc-ico">⚡</span>
+              <div>
+                Deal Rs 999<span><small>family combo</small></span>
+              </div>
+            </div>
+            <div class="glow-card gc-3">
+              <span class="gc-ico">⏰</span>
+              <div>
+                Opens 11 AM<span><small>daily — 3 AM</small></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= STATS BAR ======================= -->
+    <section class="stats-bar" aria-label="X Cafe quick facts">
+      <div class="container">
+        <div class="stats-grid glass">
+          <div class="stat-item">
+            <div class="stat-value">
+              2.8 <span class="star">★</span>
+              <small
+                style="font-size: 0.8rem; color: var(--muted); font-weight: 500"
+                >/5</small
+              >
+            </div>
+            <div class="stat-label">148 Google Reviews</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">
+              Rs 1<span style="color: var(--muted); font-weight: 500">–</span
+              >1,000
+            </div>
+            <div class="stat-label">Per Person</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">
+              🛵 <span style="font-size: 1rem">Takeout</span>
+            </div>
+            <div class="stat-label">• Delivery Available</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">
+              11 AM <span style="font-size: 1rem">⏰</span>
+            </div>
+            <div class="stat-label">Opens Daily</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= MENU ======================= -->
+    <section class="section" id="menu">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">🔥 Fresh from our kitchen</span>
+          <h2>Naya <span class="grad-text">Zaika</span> Menu</h2>
+          <p>
+            Budget-friendly prices, zaiqedar taste. Add items to cart, ya seedha
+            WhatsApp par order karein.
+          </p>
+        </div>
+
+        <div
+          class="menu-tabs reveal"
+          id="menuTabs"
+          role="tablist"
+          aria-label="Menu categories"
+        >
+          <button class="menu-tab active" data-cat="pizza">🍕 Pizza</button>
+          <button class="menu-tab" data-cat="burgers">🍔 Burgers</button>
+          <button class="menu-tab" data-cat="shawarma">🌯 Shawarma</button>
+          <button class="menu-tab" data-cat="deals">
+            🔥 Deals &amp; Combos
+          </button>
+          <button class="menu-tab" data-cat="sides">
+            🍟 Sides &amp; Drinks
+          </button>
+        </div>
+
+        <div class="menu-grid" id="menuGrid"></div>
+        <div class="menu-empty" id="menuEmpty">
+          Zara sa intezar — menu load ho raha hai... 😄
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= ABOUT ======================= -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-visual reveal">
+            <div class="about-tile big">
+              <div class="tile-bg"><span>🍕</span></div>
+              <span class="tile-label">Fresh Dough • Daily</span>
+            </div>
+            <div class="about-tile">
+              <div class="tile-bg"><span>🍔</span></div>
+              <span class="tile-label">Crispy Zinger</span>
+            </div>
+            <div class="about-tile">
+              <div class="tile-bg"><span>🌯</span></div>
+              <span class="tile-label">Loaded Shawarma</span>
+            </div>
+          </div>
+
+          <div class="about-copy reveal">
+            <span class="eyebrow">💛 Our Story</span>
+            <h2>
+              Achini ka apna cafe —
+              <span class="grad-text">sasta, saaf, zaiqedar</span>
+            </h2>
+            <p>
+              <strong>X Cafe Pizza and Burger House</strong> Peshawar Ring Road
+              (Adeera Achini Payan) par woh jagah hai jahan
+              <strong>students aur families</strong> bina jeb khaali kiye acha
+              khana khate hain. Hum maante hain ke zaiqa mein compromise nahi
+              hota — chahe price kitni hi budget ho.
+            </p>
+            <p>
+              Har pizza fresh dough se banta hai, har zinger crisp aur juicy,
+              aur har shawarma apne secret sauce ke saath — sub kuch halal aur
+              hamesha fresh.
+            </p>
+            <ul class="about-points">
+              <li>
+                <span class="ap-ico">💸</span>
+                <div>
+                  <strong>Budget-friendly</strong> — Prices Rs 250 se shuru,
+                  poora khandan Rs 1,000 me full enjoy.
+                </div>
+              </li>
+              <li>
+                <span class="ap-ico">🍕</span>
+                <div>
+                  <strong>Fresh &amp; Halal</strong> — Daily fresh ingredients,
+                  quality pe kabhi compromise nahi.
+                </div>
+              </li>
+              <li>
+                <span class="ap-ico">🧑‍🎓</span>
+                <div>
+                  <strong>Student &amp; Family Favorite</strong> — Achini Payan
+                  aur aas-paas ke sab ki pehli pasand.
+                </div>
+              </li>
+            </ul>
+            <a href="#menu" class="btn btn-primary">Taste It — See Menu 🍽️</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= REVIEWS ======================= -->
+    <section class="section" id="reviews">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">⭐ Google Reviews</span>
+          <h2>Customers ka <span class="grad-text">Pyaar</span></h2>
+          <p>Real reviews — huqeeqat mein log kya kehte hain.</p>
+        </div>
+
+        <div class="reviews-grid" id="reviewsGrid">
+          <div class="review-card glass reveal">
+            <div class="review-stars">★★★★☆</div>
+            <p class="review-text">
+              "Taste genuinely good — malai boti pizza ka flavor zabardast hai.
+              Waitting time almost 1.5 hours tha, lekin taste worth it. Service
+              thori improve karein to kaam chalta rahega."
+            </p>
+            <div class="review-author">
+              <span class="review-avatar">MN</span>
+              <div>
+                <strong>Muhammad Noor</strong
+                ><small>Local Guide • "1.5hr wait but taste good"</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="review-card glass reveal">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">
+              "Ma Sha Allah very good taste in very low price. Zinger burger
+              crispy aur juicy, price bilkul reasonable. Peshawar mein itni
+              sasti achhi quality kahin nahi milti."
+            </p>
+            <div class="review-author">
+              <span class="review-avatar">RR</span>
+              <div>
+                <strong>Rameez Raja</strong
+                ><small>• "Very good taste in low price"</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="review-card glass reveal">
+            <div class="review-stars">★★★☆☆</div>
+            <p class="review-text">
+              "Sasta aur affordable food — pizza ka price budget students ke
+              liye perfect hai. Service mein improvement ki zaroorat hai, lekin
+              overall nashta zaiqedar tha."
+            </p>
+            <div class="review-author">
+              <span class="review-avatar">HS</span>
+              <div>
+                <strong>HUZAIFA SARIM</strong
+                ><small>• "Affordable, service needs improvement"</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= LOCATION & CONTACT ======================= -->
+    <section class="section" id="location">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">📍 Find Us</span>
+          <h2>Location &amp; <span class="grad-text">Contact</span></h2>
+          <p>
+            Hum kahin miley ga? Ring Road par, Achini Payan — aao milo, nehi to
+            call kar lo.
+          </p>
+        </div>
+
+        <div class="location-grid">
+          <div class="map-frame glass reveal">
+            <iframe
+              title="X Cafe Pizza and Burger House — 30 Peshawar Ring Rd, Adeera Achini Payan"
+              src="https://www.google.com/maps?q=30%20Peshawar%20Ring%20Rd%2C%20Adeera%20Achini%20Payan%2C%20Peshawar&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <div class="loc-info reveal">
+            <div class="loc-card glass">
+              <span class="loc-ico">📍</span>
+              <div>
+                <h4>Address</h4>
+                <p>30 Peshawar Ring Rd, Adeera Achini Payan, Peshawar</p>
+                <p>
+                  Plus Code:
+                  <strong style="color: var(--text)"
+                    >XFG9+3F Peshawar, Pakistan</strong
+                  >
+                </p>
+              </div>
+            </div>
+
+            <div class="loc-card glass">
+              <span class="loc-ico">📞</span>
+              <div>
+                <h4>Phone / WhatsApp</h4>
+                <a href="tel:+923371377555">+92 337 1377555</a>
+              </div>
+            </div>
+
+            <div class="loc-card glass">
+              <span class="loc-ico">🕚</span>
+              <div>
+                <h4>Opening Hours</h4>
+                <p>Monday – Sunday: 11:00 AM – 3:00 AM</p>
+              </div>
+            </div>
+
+            <div class="loc-card glass">
+              <span class="loc-ico">🛵</span>
+              <div>
+                <h4>Pickup &amp; Delivery</h4>
+                <p>
+                  Takeout &amp; local delivery — Ring Road, Achini, Pakha
+                  Ghulam, Aza Khel area tak.
+                </p>
+              </div>
+            </div>
+
+            <div class="contact-banner">
+              <h3>Bhookh lagi hai? 😋</h3>
+              <p>WhatsApp par message karein — 5 minute mein order confirm.</p>
+              <div class="hero-cta">
+                <a
+                  href="https://maps.google.com/?q=30+Peshawar+Ring+Rd,+Adeera+Achini+Payan,+Peshawar"
+                  target="_blank"
+                  rel="noopener"
+                  class="btn btn-ghost"
+                  id="mapBtn"
+                  >🗺️ Get Directions</a
+                >
+                <a
+                  href="https://wa.me/923371377555?text=Assalam-o-Alaikum%20X%20Cafe%2C%20mujhe%20order%20karna%20hai..."
+                  target="_blank"
+                  rel="noopener"
+                  class="btn btn-primary"
+                  id="waBannerBtn"
+                  >💬 WhatsApp Order</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= FOOTER ======================= -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="#hero" class="brand">
+              <span class="brand-logo">🍕</span>
+              <span>X Cafe<small>Pizza &amp; Burger House</small></span>
+            </a>
+            <p>
+              Budget Me Best Taste — Peshawar ka apna zaiqa. Ring Road par sab
+              se sasta aur zaiqedar pizza, burger aur shawarma.
+            </p>
+            <div class="socials">
+              <a
+                href="https://wa.me/923371377555"
+                target="_blank"
+                rel="noopener"
+                class="social-ico"
+                aria-label="WhatsApp"
+                >💬</a
+              >
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noopener"
+                class="social-ico"
+                aria-label="Facebook"
+                >📘</a
+              >
+              <a
+                href="https://www.instagram.com"
+                target="_blank"
+                rel="noopener"
+                class="social-ico"
+                aria-label="Instagram"
+                >📸</a
+              >
+              <a
+                href="https://www.tiktok.com"
+                target="_blank"
+                rel="noopener"
+                class="social-ico"
+                aria-label="TikTok"
+                >🎵</a
+              >
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h5>Quick Links</h5>
+            <ul>
+              <li><a href="#menu">🍕 Menu</a></li>
+              <li><a href="#about">💛 About Us</a></li>
+              <li><a href="#reviews">⭐ Reviews</a></li>
+              <li><a href="#location">📍 Location</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h5>Opening Hours</h5>
+            <div>
+              <div class="hours-row">
+                <span>Monday – Thursday</span><span>11 AM – 3 AM</span>
+              </div>
+              <div class="hours-row">
+                <span>Friday – Saturday</span><span>11 AM – 3 AM</span>
+              </div>
+              <div class="hours-row">
+                <span>Sunday</span><span>11 AM – 3 AM</span>
+              </div>
+              <div class="hours-row">
+                <span>Takeout / Delivery</span><span>✅ Available</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span
+            >© 2026 X Cafe Pizza and Burger House. All rights reserved.</span
+          >
+          <span>Peshawar Ring Road • Budget Me Best Taste 🍕🍔</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ======================= CART DRAWER ======================= -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart">
+      <div class="cart-head">
+        <h3>🛒 Aapka Cart</h3>
+        <button class="cart-close" id="cartClose" aria-label="Close cart">
+          ✕
+        </button>
+      </div>
+      <div class="cart-body" id="cartBody"></div>
+      <div class="cart-foot">
+        <div class="cart-total">
+          <span>Total</span><span id="cartTotal">Rs 0</span>
+        </div>
+        <a
+          href="#"
+          class="btn btn-primary"
+          id="checkoutBtn"
+          target="_blank"
+          rel="noopener"
+          >order karein — WhatsApp par ✅</a
+        >
+      </div>
+    </aside>
+
+    <!-- ======================= MOBILE ORDER BAR ======================= -->
+    <div class="mobile-bar">
+      <button class="mb-cart" id="mbCartBtn">
+        🛒 <span id="mbCartCount">0</span>
+      </button>
+      <a
+        href="https://wa.me/923371377555?text=Assalam-o-Alaikum%20X%20Cafe%2C%20mujhe%20order%20karna%20hai..."
+        target="_blank"
+        rel="noopener"
+        class="btn btn-primary"
+        >💬 WhatsApp Order</a
+      >
+    </div>
+
+    <!-- ======================= TOAST ======================= -->
+    <div class="toast" id="toast">✅ <span id="toastMsg">Item added</span></div>
+
+    <script>
+      /* ================================================================
+       X Cafe — Pizza and Burger House
+       Menu data, cart state, tab filtering, WhatsApp checkout
+    ================================================================ */
+      "use strict";
+
+      var PHONE_NUMBER = "923371377555";
+      var WHATSAPP_BASE = "https://wa.me/" + PHONE_NUMBER + "?text=";
+
+      /* ---------- Menu data ---------- */
+      var MENU = {
+        pizza: [
+          {
+            emoji: "🍕",
+            name: "Chicken Tikka",
+            sizes: { S: 650, M: 800, L: 1050 },
+            desc: "Classic masaledar tikka — smoky, spicy, perfect.",
+          },
+          {
+            emoji: "🍕",
+            name: "Chicken Fajita",
+            sizes: { S: 700, M: 850, L: 1100 },
+            desc: "Fajita veggies with juicy chicken & herbs.",
+          },
+          {
+            emoji: "🍕",
+            name: "Malai Boti",
+            sizes: { S: 750, M: 900, L: 1150 },
+            desc: "Creamy malai boti on cheesy overload base.",
+          },
+          {
+            emoji: "⭐",
+            name: "X Special Loaded",
+            sizes: { S: 800, M: 1000, L: 1300 },
+            desc: "Extra cheese + boti + tikka + fajita — sab kuch ek me. Special.",
+          },
+        ],
+        burgers: [
+          {
+            emoji: "🍔",
+            name: "Classic Zinger",
+            sizes: { "": 350 },
+            desc: "Crispy zinger fillet, mayo, lettuce — the OG.",
+          },
+          {
+            emoji: "🧀",
+            name: "Zinger Cheese",
+            sizes: { "": 400 },
+            desc: "Classic zinger + extra cheddar cheese slice.",
+          },
+          {
+            emoji: "🍔",
+            name: "Loaded Zinger",
+            sizes: { "": 450 },
+            desc: "Double fillet with cheese — heavy zaiqa, light price.",
+          },
+          {
+            emoji: "🦾",
+            name: "Mighty Zinger",
+            sizes: { "": 550 },
+            desc: "Double decker monster — fillet in fillet, cheese melt.",
+          },
+        ],
+        shawarma: [
+          {
+            emoji: "🌯",
+            name: "Chicken Shawarma",
+            sizes: { "": 250 },
+            desc: "Fresh flatbread, garlic sauce, juicy chicken.",
+          },
+          {
+            emoji: "🌯",
+            name: "Loaded Shawarma",
+            sizes: { "": 350 },
+            desc: "Extra chicken + cheese + fries ke saath.",
+          },
+          {
+            emoji: "🌯",
+            name: "Zinger Shawarma",
+            sizes: { "": 380 },
+            desc: "Crispy zinger fillet wrapped in shawarma style.",
+          },
+        ],
+        deals: [
+          {
+            emoji: "🔥",
+            name: "Deal 1 — Family Feast",
+            sizes: { "": 999 },
+            desc: "4x Loaded Zinger + 3x Shawarma + 1 Cold Drink.",
+            badge: "BEST VALUE",
+            oldPrice: 1400,
+          },
+          {
+            emoji: "⚡",
+            name: "Deal 2 — X Mega Combo",
+            sizes: { "": 1199 },
+            desc: "5x Loaded Zinger + 5x Loaded Shawarma + 1.5L Drink.",
+            oldPrice: 1600,
+          },
+          {
+            emoji: "🍕",
+            name: "Budget Pizza Deal",
+            sizes: { "": 800 },
+            desc: "Any Medium Pizza — sirf Rs 800. Din ka best deal!",
+            badge: "BEST VALUE",
+            oldPrice: 950,
+          },
+        ],
+        sides: [
+          {
+            emoji: "🍟",
+            name: "Fries",
+            sizes: { "": 200 },
+            desc: "Crispy golden fries with ketchup.",
+          },
+          {
+            emoji: "🧀",
+            name: "Loaded Fries",
+            sizes: { "": 350 },
+            desc: "Fries with cheese sauce + garlic mayo.",
+          },
+          {
+            emoji: "🍗",
+            name: "Nuggets (6 pcs)",
+            sizes: { "": 350 },
+            desc: "Crunchy chicken nuggets — kids ki pasand.",
+          },
+          {
+            emoji: "🥤",
+            name: "Cold Drink",
+            sizes: { "": 100 },
+            desc: "Chilled — 250ml bottle. Chai se zyada fresh!",
+          },
+        ],
+      };
+
+      /* ---------- Menu rendering ---------- */
+      var menuGrid = document.getElementById("menuGrid");
+      var menuEmpty = document.getElementById("menuEmpty");
+      var menuTabs = document.getElementById("menuTabs");
+      var activeCat = "pizza";
+
+      function sizeLabel(key) {
+        return key === "" ? "Rs " : key + " · Rs ";
+      }
+
+      function renderMenu(cat) {
+        var items = MENU[cat];
+        if (!items || !items.length) {
+          menuGrid.innerHTML = "";
+          menuEmpty.classList.add("show");
+          return;
+        }
+        menuEmpty.classList.remove("show");
+        menuGrid.innerHTML = items
+          .map(function (item, index) {
+            var chips = Object.keys(item.sizes)
+              .map(function (size) {
+                return (
+                  '<span class="price-chip">' +
+                  sizeLabel(size) +
+                  "<b>" +
+                  item.sizes[size].toLocaleString("en-PK") +
+                  "</b></span>"
+                );
+              })
+              .join("");
+
+            var dealMarkup = "";
+            if (item.badge) {
+              dealMarkup =
+                '<span class="deal-badge">⭐ ' + item.badge + "</span>";
+            }
+            var oldPrice = "";
+            if (item.oldPrice) {
+              oldPrice =
+                '<span class="deal-old">Rs ' +
+                item.oldPrice.toLocaleString("en-PK") +
+                '</span><span class="deal-save">Save ' +
+                (item.oldPrice - item.sizes[""]).toLocaleString("en-PK") +
+                "</span>";
+            }
+
+            var cardClass = "menu-card glass";
+            if (item.badge) cardClass += " best-value-card";
+
+            var priceLine = '<div class="menu-prices">' + chips + "</div>";
+            if (item.oldPrice) {
+              priceLine =
+                '<div class="menu-prices" style="align-items:center;">' +
+                '<span class="deal-price">Rs ' +
+                item.sizes[""].toLocaleString("en-PK") +
+                "</span>" +
+                oldPrice +
+                "</div>";
+            }
+
+            return (
+              '<article class="' +
+              cardClass +
+              '" style="animation-delay:' +
+              index * 70 +
+              'ms">' +
+              dealMarkup +
+              '<button class="add-btn" data-emoji="' +
+              item.emoji +
+              '" data-name="' +
+              item.name +
+              '" data-price="' +
+              item.sizes[""] +
+              '" aria-label="Add ' +
+              item.name +
+              ' to cart">+</button>' +
+              '<div class="menu-emoji">' +
+              item.emoji +
+              "</div>" +
+              '<div class="menu-info">' +
+              '<div class="menu-title">' +
+              item.name +
+              "</div>" +
+              '<div class="menu-desc">' +
+              item.desc +
+              "</div>" +
+              priceLine +
+              "</div>" +
+              "</article>"
+            );
+          })
+          .join("");
+      }
+
+      menuTabs.addEventListener("click", function (e) {
+        var tab = e.target.closest(".menu-tab");
+        if (!tab) return;
+        menuTabs.querySelectorAll(".menu-tab").forEach(function (t) {
+          t.classList.remove("active");
+        });
+        tab.classList.add("active");
+        activeCat = tab.dataset.cat;
+        renderMenu(activeCat);
+      });
+
+      renderMenu("pizza");
+
+      /* ---------- Cart state ---------- */
+      var cart = [];
+
+      var cartCountEl = document.getElementById("cartCount");
+      var mbCartCountEl = document.getElementById("mbCartCount");
+      var cartBody = document.getElementById("cartBody");
+      var cartTotalEl = document.getElementById("cartTotal");
+      var checkoutBtn = document.getElementById("checkoutBtn");
+      var cartOverlay = document.getElementById("cartOverlay");
+      var cartDrawer = document.getElementById("cartDrawer");
+      var cartBtn = document.getElementById("cartBtn");
+      var mbCartBtn = document.getElementById("mbCartBtn");
+      var cartClose = document.getElementById("cartClose");
+      var toastEl = document.getElementById("toast");
+      var toastMsg = document.getElementById("toastMsg");
+      var toastTimer = null;
+
+      function cartTotals() {
+        return cart.reduce(
+          function (acc, item) {
+            return {
+              count: acc.count + item.qty,
+              amount: acc.amount + item.qty * item.price,
+            };
+          },
+          { count: 0, amount: 0 },
+        );
+      }
+
+      function renderCartUI() {
+        var totals = cartTotals();
+        cartCountEl.textContent = totals.count;
+        mbCartCountEl.textContent = totals.count;
+        cartCountEl.classList.toggle("show", totals.count > 0);
+        mbCartCountEl.classList.toggle("show", totals.count > 0);
+        cartTotalEl.textContent = "Rs " + totals.amount.toLocaleString("en-PK");
+        renderCartBody();
+        updateCheckoutLink();
+      }
+
+      function renderCartBody() {
+        if (!cart.length) {
+          cartBody.innerHTML =
+            '<div class="cart-empty"><span class="ce-emoji">🛒</span>Cart khali hai.<br>Menu se kuch zaiqedar add karein!</div>';
+          return;
+        }
+        cartBody.innerHTML = cart
+          .map(function (item, index) {
+            return (
+              '<div class="cart-item">' +
+              '<span class="ci-emoji">' +
+              item.emoji +
+              "</span>" +
+              '<div class="ci-info">' +
+              '<div class="ci-name">' +
+              item.name +
+              "</div>" +
+              '<div class="ci-sub">' +
+              (item.sizeText || "Regular") +
+              "</div>" +
+              '<div class="ci-price">Rs ' +
+              (item.price * item.qty).toLocaleString("en-PK") +
+              "</div>" +
+              "</div>" +
+              '<div class="qty-controls">' +
+              '<button class="qty-btn" data-action="dec" data-index="' +
+              index +
+              '" aria-label="Decrease quantity">−</button>' +
+              '<span class="qty-num">' +
+              item.qty +
+              "</span>" +
+              '<button class="qty-btn" data-action="inc" data-index="' +
+              index +
+              '" aria-label="Increase quantity">+</button>' +
+              "</div>" +
+              '<button class="ci-remove" data-action="del" data-index="' +
+              index +
+              '" aria-label="Remove item">🗑</button>' +
+              "</div>"
+            );
+          })
+          .join("");
+      }
+
+      cartBody.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-action]");
+        if (!btn) return;
+        var index = +btn.dataset.index;
+        if (btn.dataset.action === "inc") {
+          cart[index].qty++;
+        }
+        if (btn.dataset.action === "dec") {
+          cart[index].qty--;
+        }
+        if (btn.dataset.action === "del" || cart[index].qty <= 0) {
+          cart.splice(index, 1);
+        }
+        renderCartUI();
+      });
+
+      function addToCart(emoji, name, price) {
+        var existing = cart.find(function (item) {
+          return item.name === name;
+        });
+        if (existing) {
+          existing.qty++;
+        } else {
+          cart.push({ emoji: emoji, name: name, price: price, qty: 1 });
+        }
+        renderCartUI();
+        showToast(name + " cart me add ho gaya ✅");
+      }
+
+      function showToast(msg) {
+        toastMsg.textContent = msg;
+        toastEl.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toastEl.classList.remove("show");
+        }, 2400);
+      }
+
+      menuGrid.addEventListener("click", function (e) {
+        var btn = e.target.closest(".add-btn");
+        if (!btn) return;
+        addToCart(btn.dataset.emoji, btn.dataset.name, +btn.dataset.price);
+        btn.classList.add("added");
+        setTimeout(function () {
+          btn.classList.remove("added");
+        }, 500);
+      });
+
+      /* ---------- Cart drawer ---------- */
+      function openCart() {
+        cartDrawer.classList.add("open");
+        cartOverlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+      function closeCart() {
+        cartDrawer.classList.remove("open");
+        cartOverlay.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      cartBtn.addEventListener("click", openCart);
+      mbCartBtn.addEventListener("click", openCart);
+      cartClose.addEventListener("click", closeCart);
+      cartOverlay.addEventListener("click", closeCart);
+
+      /* ---------- WhatsApp checkout ---------- */
+      function updateCheckoutLink() {
+        if (!cart.length) {
+          checkoutBtn.href =
+            WHATSAPP_BASE +
+            encodeURIComponent(
+              "Assalam-o-Alaikum X Cafe, mujhe order karna hai...",
+            );
+          return;
+        }
+        var lines = cart.map(function (item) {
+          return (
+            "- " +
+            item.name +
+            " x" +
+            item.qty +
+            " = Rs " +
+            (item.price * item.qty).toLocaleString("en-PK")
+          );
+        });
+        var total = cartTotals().amount;
+        var msg =
+          "Assalam-o-Alaikum X Cafe, mujhe order karna hai...\n\n" +
+          lines.join("\n") +
+          "\n\nTotal: Rs " +
+          total.toLocaleString("en-PK") +
+          "\n\n(Likha hua order — confirm karein)";
+        checkoutBtn.href = WHATSAPP_BASE + encodeURIComponent(msg);
+      }
+
+      updateCheckoutLink();
+      renderCartUI();
+
+      /* ---------- Header scroll + active nav ---------- */
+      var header = document.getElementById("siteHeader");
+      var navLinks = document.getElementById("navLinks");
+      var hamburger = document.getElementById("hamburger");
+      var sections = document.querySelectorAll("section[id]");
+
+      window.addEventListener(
+        "scroll",
+        function () {
+          header.classList.toggle("scrolled", window.scrollY > 24);
+
+          var pos = window.scrollY + 130;
+          var currentId = "hero";
+          sections.forEach(function (sec) {
+            if (sec.offsetTop <= pos) currentId = sec.id;
+          });
+          document.querySelectorAll(".nav-link").forEach(function (link) {
+            var href = link.getAttribute("href");
+            link.classList.toggle("active", href === "#" + currentId);
+          });
+        },
+        { passive: true },
+      );
+
+      /* ---------- Mobile menu ---------- */
+      hamburger.addEventListener("click", function () {
+        navLinks.classList.toggle("open");
+        hamburger.classList.toggle("open");
+      });
+      navLinks.addEventListener("click", function (e) {
+        if (e.target.closest("a")) {
+          navLinks.classList.remove("open");
+          hamburger.classList.remove("open");
+        }
+      });
+
+      /* ---------- Reveal on scroll ---------- */
+      var revealEls = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12 },
+        );
+        revealEls.forEach(function (el) {
+          io.observe(el);
+        });
+      } else {
+        revealEls.forEach(function (el) {
+          el.classList.add("visible");
+        });
+      }
+    </script>
+  </body>
+</html>
