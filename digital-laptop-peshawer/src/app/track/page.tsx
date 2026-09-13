@@ -18,6 +18,8 @@ import {
 import type { OrderStatus } from "@/db/schema";
 import { cn, formatDate, formatPKR, orderNumber } from "@/lib/utils";
 
+import { Suspense } from "react";
+
 type TrackedOrder = {
   order: {
     id: number;
@@ -143,6 +145,31 @@ function StatusTimeline({ status }: { status: OrderStatus }) {
 }
 
 export default function TrackPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="relative">
+          <div className="hero-glow absolute inset-x-0 top-0 h-[360px]" />
+          <div className="relative mx-auto max-w-3xl px-4 pb-24 pt-32 sm:px-6">
+            <div className="text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300">
+                Track Your Order
+              </p>
+              <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-white sm:text-5xl">
+                Order <span className="text-gradient">Tracking</span>
+              </h1>
+              <p className="mt-4 text-zinc-400">Loading…</p>
+            </div>
+          </div>
+        </div>
+      }
+    >
+      <TrackPageInner />
+    </Suspense>
+  );
+}
+
+function TrackPageInner() {
   const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
