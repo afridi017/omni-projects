@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   CheckCircle2,
@@ -17,8 +17,6 @@ import {
 } from "lucide-react";
 import type { OrderStatus } from "@/db/schema";
 import { cn, formatDate, formatPKR, orderNumber } from "@/lib/utils";
-
-import { Suspense } from "react";
 
 type TrackedOrder = {
   order: {
