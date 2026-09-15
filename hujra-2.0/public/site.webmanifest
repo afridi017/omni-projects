@@ -1,0 +1,9 @@
+{
+  "name": "HUJRA 2.0",
+  "short_name": "HUJRA",
+  "theme_color": "#07060d",
+  "background_color": "#07060d",
+  "description": "Live voice rooms for Gen Z — Tapay Night, Cricket Talk, Late Night Gup",
+  "display": "standalone",
+  "start_url": "/"
+}
