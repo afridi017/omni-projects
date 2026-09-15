@@ -86,7 +86,15 @@ type UploadOptions = {
   folder?: string;
 };
 
-/** Uploads an image buffer to Cloudinary using a signed request. */
+/**
+ * Optional unsigned upload preset. When set, uploads go straight to
+ * Cloudinary with the preset (no API-key signature needed). This is the
+ * recommended approach for accounts where the API key only has read access
+ * (signed uploads are rejected with "missing permissions (actions=[create])").
+ */
+export const CLOUDINARY_UPLOAD_PRESET = envValue("CLOUDINARY_UPLOAD_PRESET");
+
+/** Uploads an image buffer to Cloudinary (unsigned preset when available). */
 export async function uploadImage({
   buffer,
   mimeType,
@@ -101,21 +109,27 @@ export async function uploadImage({
     );
   }
 
-  const timestamp = Math.floor(Date.now() / 1000);
-  const signature = createHash("sha1")
-    .update(`folder=${folder}&timestamp=${timestamp}${config.apiSecret}`)
-    .digest("hex");
-
   const form = new FormData();
   form.append(
     "file",
     new Blob([new Uint8Array(buffer)], { type: mimeType }),
     filename,
   );
-  form.append("api_key", config.apiKey);
-  form.append("timestamp", String(timestamp));
-  form.append("folder", folder);
-  form.append("signature", signature);
+
+  if (CLOUDINARY_UPLOAD_PRESET) {
+    // Unsigned upload — no signature required. The preset also sets the folder.
+    form.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+  } else {
+    // Fallback: signed upload with the API secret.
+    const timestamp = Math.floor(Date.now() / 1000);
+    const signature = createHash("sha1")
+      .update(`folder=${folder}&timestamp=${timestamp}${config.apiSecret}`)
+      .digest("hex");
+    form.append("api_key", config.apiKey);
+    form.append("timestamp", String(timestamp));
+    form.append("folder", folder);
+    form.append("signature", signature);
+  }
 
   let response: Response;
   try {

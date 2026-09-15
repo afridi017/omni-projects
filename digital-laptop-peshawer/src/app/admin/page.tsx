@@ -65,10 +65,14 @@ export default function AdminPage() {
 
   const authedFetch = useCallback(
     async (url: string, init?: RequestInit) => {
+      const isFormData = init?.body instanceof FormData;
       const res = await fetch(url, {
         ...init,
         headers: {
-          "Content-Type": "application/json",
+          // Never force application/json for FormData bodies — the browser
+          // must set the multipart boundary itself or parsing fails with
+          // "Invalid upload request."
+          ...(isFormData ? {} : { "Content-Type": "application/json" }),
           "x-admin-key": key ?? "",
           ...(init?.headers ?? {}),
         },
